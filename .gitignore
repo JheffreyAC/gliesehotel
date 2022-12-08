@@ -7,6 +7,10 @@
 node_modules/
 dist/
 
+# Composer
+vendor/
+composer.lock
+
 # Compiled Java class files
 *.class
 
