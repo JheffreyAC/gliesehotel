@@ -1,0 +1,12 @@
+{
+    "name": "anonymous/gliese",
+    "require": {
+      "aura/session": "2.1.0",
+      "aura/sql": "4.0.0",
+      "firebase/php-jwt": "^5.0",
+	    "spipu/html2pdf": "^5.2",
+      "luecano/numero-a-letras": "^1.4",
+      "phpmailer/phpmailer": "^6.1",
+      "paragonie/sodium_compat": "^1.17"
+	}
+}
