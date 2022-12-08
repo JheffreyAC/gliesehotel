@@ -1,5 +1,5 @@
 <?php
-// -- Jeremi Gonzales 
+// -- Jeremi Gonzales mi bb and Ruben Dario
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 // --
