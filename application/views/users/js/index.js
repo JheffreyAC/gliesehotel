@@ -29,7 +29,7 @@ function load_datatable() {
                 class: 'center',
                 render: function (data, type, row, meta) {
                     // 
-                    if (row.active === "1") {
+                    if (row.active == "1") {
                         return ('<span class="badge rounded-pill badge-light-success" text-capitalized="">Activo</span>');
                     } else {
                         return ('<span class="badge rounded-pill badge-light-secondary" text-capitalized="">Inactivo</span>');
