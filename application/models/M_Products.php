@@ -3,7 +3,7 @@
 class M_Products extends Model {
     // --
     public function __construct() {
-		  parent::__construct();
+		parent::__construct();
     }
     
     // --
@@ -11,7 +11,7 @@ class M_Products extends Model {
         // --
         try {
             // --
-            $sql = 'SELECT id, description, timestamp_created, status FROM campus';
+            $sql = 'SELECT id, description, status FROM products WHERE status = 1';
             // --
             $result = $this->pdo->fetchAll($sql);
             // --
@@ -35,9 +35,9 @@ class M_Products extends Model {
         // --
         try {
             // --
-            $sql = 'SELECT id, description, timestamp_created, status FROM campus WHERE id = :id';
+            $sql = 'SELECT id, description, status FROM products WHERE id = :id_product';
             // --
-            $result = $this->pdo->fetchAll($sql, $bind);
+            $result = $this->pdo->fetchOne($sql, $bind);
             // --
             if ($result) {
                 // --
@@ -55,11 +55,11 @@ class M_Products extends Model {
     }
 
     // --
-    public function delete_product($bind) {
+    public function create_product($bind) {
         // --
         try {
             // --
-            $sql = 'DELETE FROM campus where id = :id_campus';
+            $sql = 'INSERT INTO products (description) VALUES (:description)';
             // --
             $result = $this->pdo->perform($sql, $bind);
             // --
@@ -77,5 +77,55 @@ class M_Products extends Model {
         // --
         return $response;
     }
+
+     // --
+     public function update_product($bind) {
+        // --
+        try {
+            // --
+            $sql = 'UPDATE products SET description = :description WHERE id = :id_product';
+            // --
+            $result = $this->pdo->perform($sql, $bind);
+            // --
+            if ($result) {
+                // --
+                $response = array('status' => 'OK', 'result' => array());
+            } else {
+                // --
+                $response = array('status' => 'ERROR', 'result' => array());
+            }
+        } catch (PDOException $e) {
+            // --
+            $response = array('status' => 'EXCEPTION', 'result' => $e);
+        }
+        // --
+        return $response;
+    }
+
+    // --
+    public function delete_product($bind) {
+        // --
+        try {
+            // --
+            $sql = 'DELETE FROM products where id = :id_product';
+            // --
+            $result = $this->pdo->perform($sql, $bind);
+            // --
+            if ($result) {
+                // --
+                $response = array('status' => 'OK', 'result' => array());
+            } else {
+                // --
+                $response = array('status' => 'ERROR', 'result' => array());
+            }
+        } catch (PDOException $e) {
+            // --
+            $response = array('status' => 'EXCEPTION', 'result' => $e);
+        }
+        // --
+        return $response;
+    }
+
+    
 
 }

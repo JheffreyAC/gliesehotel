@@ -36,9 +36,8 @@
                                 <table class="table" id="datatable-products">
                                     <thead>
                                         <tr>
-                                            <th data-i18n="Description">Description</th>
-                                            <th data-i18n="Created date">Created Date</th>
-                                            <th data-i18n="Actions">Actions</th>
+                                            <th>Descripcion</th>                   
+                                            <th>Acciones</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -48,8 +47,8 @@
                     <!-- /Table -->
 
 
-                    <!-- Create Categories Modal -->
-                    <div class="modal fade" id="create_categories_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"> <!--  aria-hidden="true" -->
+                    <!-- Create Product Modal -->
+                    <div class="modal fade" id="create_product_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"> <!--  aria-hidden="true" -->
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-header bg-transparent">
@@ -57,19 +56,19 @@
                                 </div>
                                 <div class="modal-body px-sm-5 pb-5">
                                     <div class="text-center mb-2">
-                                        <h1 class="mb-1" data-i18n="Add new campus">Add new campus</h1>
+                                        <h1 class="mb-1">Agregar nuevo producto</h1>
                                         <!-- <p data-i18n="Add new campus description">Permissions you may use and assign to your users.</p> -->
                                     </div>
-                                    <form method="POST" enctype="multipart/form-data" id="create_campus_form" class="row" onsubmit="return false">
+                                    <form method="POST" enctype="multipart/form-data" id="create_product_form" class="row" onsubmit="return false">
                                         <div class="col-12">
-                                            <label class="form-label" data-i18n="Description">Description</label>
-                                            <input type="text" name="description" class="form-control" data-i18n="[placeholder]Description" autofocus data-msg="" required />
+                                            <label class="form-label">Descripción</label>
+                                            <input type="text" name="description" class="form-control" placeholder="Descripción" autofocus data-msg="" required />
                                         </div>
                                         <br>
                                         <div class="col-12 text-center">
-                                            <button id="btn_create_campus" type="submit" class="btn btn-primary mt-2 me-1" data-i18n="Save">Save</button>
+                                            <button id="btn_create_product" type="submit" class="btn btn-primary mt-2 me-1">Guardar</button>
                                             <button type="reset" class="btn btn-outline-secondary mt-2 reset" data-bs-dismiss="modal" aria-label="Close">
-                                                <span data-i18n="Cancel">Cancel</span>
+                                                <span>Cancelar</span>
                                             </button>
                                         </div>
                                     </form>
@@ -77,12 +76,12 @@
                             </div>
                         </div>
                     </div>
-                    <!--/ Create Categories Modal -->
+                    <!--/ Create Product Modal -->
 
 
                     
-                    <!-- Update Categories Modal -->
-                    <div class="modal fade" id="update_categories_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"> <!--  aria-hidden="true" -->
+                    <!-- Update Product Modal -->
+                    <div class="modal fade" id="update_product_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"> <!--  aria-hidden="true" -->
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-header bg-transparent">
@@ -90,20 +89,20 @@
                                 </div>
                                 <div class="modal-body px-sm-5 pb-5">
                                     <div class="text-center mb-2">
-                                        <h1 class="mb-1" data-i18n="Update campus">Update campus</h1>
+                                        <h1 class="mb-1">Actualizar Producto</h1>
                                         <!-- <p data-i18n="Add new campus description">Permissions you may use and assign to your users.</p> -->
                                     </div>
-                                    <form method="POST" enctype="multipart/form-data" id="update_campus_form" class="row" onsubmit="return false">
+                                    <form method="POST" enctype="multipart/form-data" id="update_product_form" class="row" onsubmit="return false">
                                         <div class="col-12">
-                                            <label class="form-label" data-i18n="Description">Description</label>
-                                            <input type="text" name="description" class="form-control" data-i18n="[placeholder]Description" autofocus data-msg="" required />
+                                            <label class="form-label">Descripción</label>
+                                            <input type="text" name="description" class="form-control"placeholder="Descripción" autofocus data-msg="" required />
                                         </div>
-                                        <input type="hidden" name="id_campus">
+                                        <input type="hidden" name="id_product">
                                         <br>
                                         <div class="col-12 text-center">
-                                            <button id="btn_update_campus" type="submit" class="btn btn-primary mt-2 me-1" data-i18n="Save">Save</button>
+                                            <button id="btn_update_campus" type="submit" class="btn btn-primary mt-2 me-1">Guardar</button>
                                             <button type="reset" class="btn btn-outline-secondary mt-2 reset" data-bs-dismiss="modal" aria-label="Close">
-                                                <span data-i18n="Cancel">Cancel</span>
+                                                <span>Cancelar</span>
                                             </button>
                                         </div>
                                     </form>
