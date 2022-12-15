@@ -224,7 +224,7 @@ class C_Users extends Controller {
                 $document_number = $this->functions->clean_string($input['document_number']);
                 $address = $this->functions->clean_string($input['address']);
                 $user = $this->functions->clean_string($input['user']);
-                $password = $this->functions->clean_string($input['password']);
+                $password = $this->functions->encrypt_password($input['password']);
                 $telephone = $this->functions->clean_string($input['telephone']);
                 $email = $this->functions->clean_string($input['email']);
                 $role = $this->functions->clean_string($input['role']);

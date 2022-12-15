@@ -33,13 +33,16 @@ class C_Login extends Controller {
                 $obj_menu = $this->load_model('Menu');
                 // --
                 $user = trim($input['user']);
-                $password = trim($input['password']);
+                $password = $this->functions->encrypt_password($input['password']);
                 // --
                 $bind = array(
                     'user' => $user,
                     'password' => $password,
                     'status' => 1 // -- Active
                 );
+
+                
+
                 // --
                 $response = $obj_login->get_user($bind);
 
