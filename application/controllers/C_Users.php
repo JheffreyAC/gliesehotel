@@ -84,7 +84,93 @@ class C_Users extends Controller {
         echo json_encode($json);
     }
 
-    
+    // --
+    public function get_user_statistics() {
+        // --
+        $this->functions->validate_session($this->segment->get('isActive'));
+        // --
+        $request = $_SERVER['REQUEST_METHOD'];
+        // --
+        if ($request === 'GET') {
+            // --
+            $input = json_decode(file_get_contents('php://input'), true);
+            if (empty($input)) {
+                $input = filter_input_array(INPUT_GET);
+            }
+            // --
+            $obj = $this->load_model('Users');
+            $response = $obj->get_users();
+            // --
+            $data_active = 0;
+            $data_inactive = 0;
+            // --                           
+            foreach ($response['result'] as $item) {
+                // --
+                if (intval($item['active']) === 1) {
+                    $data_active++;
+                } else {
+                    $data_inactive++;
+                }
+            }
+            // --
+            $result = array(
+                'total' => $data_active + $data_inactive,
+                'active' => $data_active,
+                'inactive' => $data_inactive
+            );
+            // --
+            switch ($response['status']) {
+                // --
+                case 'OK':
+                    // --
+                    $json = array(
+                        'status' => 'OK',
+                        'type' => 'success',
+                        'msg' => 'Listado de registros encontrados.',
+                        'data' => $result
+                    );
+
+                    // --
+                    break;
+
+                case 'ERROR':
+                    // --
+                    $json = array(
+                        'status' => 'ERROR',
+                        'type' => 'warning',
+                        'msg' => 'No se encontraron registros en el sistema.',
+                        'data' => array(),
+                    );
+                    // --
+                    break;
+
+                case 'EXCEPTION':
+                    // --
+                    $json = array(
+                        'status' => 'ERROR',
+                        'type' => 'error',
+                        'msg' => $response['result']->getMessage(),
+                        'data' => array()
+                    );
+                    // --
+                    break;
+            }
+            
+        } else {
+            // --
+            $json = array(
+                'status' => 'ERROR',
+                'type' => 'error',
+                'msg' => 'Método no permitido.',
+                'data' => array()
+            ); 
+        }
+
+        // --
+        header('Content-Type: application/json');
+        echo json_encode($json);
+    }
+
     // --
     public function get_user_by_id() {
         // --
@@ -190,7 +276,6 @@ class C_Users extends Controller {
         echo json_encode($json);
     }
 
-
     // --
     public function create_user() {
         // --
@@ -224,7 +309,7 @@ class C_Users extends Controller {
                 $document_number = $this->functions->clean_string($input['document_number']);
                 $address = $this->functions->clean_string($input['address']);
                 $user = $this->functions->clean_string($input['user']);
-                $password = $this->functions->encrypt_password($input['password']);
+                $password = $this->functions->clean_string($input['password']);
                 $telephone = $this->functions->clean_string($input['telephone']);
                 $email = $this->functions->clean_string($input['email']);
                 $role = $this->functions->clean_string($input['role']);
@@ -303,7 +388,6 @@ class C_Users extends Controller {
         header('Content-Type: application/json');
         echo json_encode($json);
     }
-
 
     // --
     public function update_user() {
@@ -440,94 +524,6 @@ class C_Users extends Controller {
         header('Content-Type: application/json');
         echo json_encode($json);
     }
-    
-    // --
-    public function get_user_statistics() {
-        // --
-        $this->functions->validate_session($this->segment->get('isActive'));
-        // --
-        $request = $_SERVER['REQUEST_METHOD'];
-        // --
-        if ($request === 'GET') {
-            // --
-            $input = json_decode(file_get_contents('php://input'), true);
-            if (empty($input)) {
-                $input = filter_input_array(INPUT_GET);
-            }
-            // --
-            $obj = $this->load_model('Users');
-            $response = $obj->get_users();
-            // --
-            $data_active = 0;
-            $data_inactive = 0;
-            // --                           
-            foreach ($response['result'] as $item) {
-                // --
-                if (intval($item['active']) === 1) {
-                    $data_active++;
-                } else {
-                    $data_inactive++;
-                }
-            }
-            // --
-            $result = array(
-                'total' => $data_active + $data_inactive,
-                'active' => $data_active,
-                'inactive' => $data_inactive
-            );
-            // --
-            switch ($response['status']) {
-                // --
-                case 'OK':
-                    // --
-                    $json = array(
-                        'status' => 'OK',
-                        'type' => 'success',
-                        'msg' => 'Listado de registros encontrados.',
-                        'data' => $result
-                    );
-
-                    // --
-                    break;
-
-                case 'ERROR':
-                    // --
-                    $json = array(
-                        'status' => 'ERROR',
-                        'type' => 'warning',
-                        'msg' => 'No se encontraron registros en el sistema.',
-                        'data' => array(),
-                    );
-                    // --
-                    break;
-
-                case 'EXCEPTION':
-                    // --
-                    $json = array(
-                        'status' => 'ERROR',
-                        'type' => 'error',
-                        'msg' => $response['result']->getMessage(),
-                        'data' => array()
-                    );
-                    // --
-                    break;
-            }
-            
-        } else {
-            // --
-            $json = array(
-                'status' => 'ERROR',
-                'type' => 'error',
-                'msg' => 'Método no permitido.',
-                'data' => array()
-            ); 
-        }
-
-        // --
-        header('Content-Type: application/json');
-        echo json_encode($json);
-    }
-
 
     // --
     public function delete_user() {
@@ -626,5 +622,124 @@ class C_Users extends Controller {
         header('Content-Type: application/json');
         echo json_encode($json);
     }
+
+    // --
+    public function update_user_password() {
+        // --
+        $this->functions->validate_session($this->segment->get('isActive'));
+        // --
+        $request = $_SERVER['REQUEST_METHOD'];
+        // --
+        if ($request === 'POST') {
+            // --
+            $input = json_decode(file_get_contents('php://input'), true);
+            if (empty($input)) {
+                $input = filter_input_array(INPUT_POST);
+            }
+            // --
+            if (
+                !empty($input['id_user']) && 
+                !empty($input['password']) && 
+                !empty($input['new_password'])
+            )  {
+                // --
+                $id_user = $this->functions->clean_string($input['id_user']);
+                $password = $this->functions->encrypt_password($input['password']); // -- actual
+                $new_password = $this->functions->encrypt_password($input['new_password']); // -- nueva contraseña
+                // --
+                $bind = array(
+                    'id_user' => $id_user,
+                    'password' => $password,
+                    'new_password' => $new_password
+                );
+                // --
+                $obj = $this->load_model('Users');
+                $response_validate = $obj->validate_user_password($bind); 
+                // --
+                switch ($response_validate['status']) {
+                    case 'OK':
+                        // --
+                        $response_update = $obj->update_user_password($bind);
+                        // --
+                        switch ($response_update['status']) {
+                            // --
+                            case 'OK':
+                                // --
+                                $json = array(
+                                    'status' => 'OK',
+                                    'type' => 'success',
+                                    'msg' => 'Registro actualizado en el sistema con éxito.',
+                                    'data' => array()
+                                );
+                                // --
+                                break;
+
+                            case 'ERROR':
+                                // --
+                                $json = array(
+                                    'status' => 'ERROR',
+                                    'type' => 'warning',
+                                    'msg' => 'No fue posible actualizar la contraseña ingresada, verificar.',
+                                );
+                                // --
+                                break;
+
+                            case 'EXCEPTION':
+                                // --
+                                $json = array(
+                                    'status' => 'ERROR',
+                                    'type' => 'error',
+                                    'msg' => $response_update['result']->getMessage(),
+                                );
+                                // --
+                                break;
+                        }
+                        // --
+                        break;
+
+                    case 'ERROR':
+                        // --
+                        $json = array(
+                            'status' => 'ERROR',
+                            'type' => 'warning',
+                            'msg' => 'No fue posible actualizar la contraseña ingresada, verificar.',
+                        );
+                        // --
+                        break;
+
+                    case 'EXCEPTION':
+                        // --
+                        $json = array(
+                            'status' => 'ERROR',
+                            'type' => 'error',
+                            'msg' => $response_validate['result']->getMessage(),
+                        );
+                        // --
+                        break;
+                }
+
+            } else {
+                // --
+                $json = array(
+                    'status' => 'ERROR',
+                    'type' => 'warning',
+                    'msg' => 'No se enviaron los campos necesarios, verificar.',
+                );
+            }
+        
+        } else {
+            // --
+            $json = array(
+                'status' => 'ERROR',
+                'type' => 'error',
+                'msg' => 'Método no permitido.',
+            ); 
+        }
+
+        // --
+        header('Content-Type: application/json');
+        echo json_encode($json);
+    }
+
     
 }

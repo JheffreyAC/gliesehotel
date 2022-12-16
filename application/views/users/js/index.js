@@ -48,6 +48,10 @@ function load_datatable() {
                         '<button  class="btn btn-sm btn-danger btn-round btn-icon btn_delete" data-process-key="'+ row.id_user +'">' +
                         feather.icons['trash-2'].toSvg({ class: 'font-small-4' }) +
                         '</button>'
+                        + ' ' + 
+                        '<button class="btn btn-sm btn-info btn-round btn-icon btn_update_password" data-process-key="'+ row.id_user +'">' +
+                        feather.icons['key'].toSvg({ class: 'font-small-4' }) +
+                        '</button>'
                     );
                 }
             },
@@ -67,7 +71,6 @@ function load_datatable() {
         functions.toast_message(data.type, data.msg, data.status);
     });
 }
-
 
 // --
 function get_menu() {
@@ -180,11 +183,11 @@ function get_document_types() {
                 // -- Set values for select
                 $('#create_user_form :input[name=document_type]').html(html);
                 $('#update_user_form :input[name=document_type]').html(html);
+                $('#update_password_form :input[name=document_type]').html(html);
             }
         }
     })
 }
-
 
 // --
 function get_campus() {
@@ -247,7 +250,6 @@ function get_roles() {
     })
 }
 
-
 // --
 function create_user(form) {
     // --
@@ -285,7 +287,6 @@ function create_user(form) {
         }
     })
 }
-
 
 // --
 function update_user(form) {
@@ -325,6 +326,58 @@ function update_user(form) {
     })
 }
 
+// --
+function update_user_password(form) {
+    /* -- paso 01 full javascript
+
+    let password = $('#update_password_form :input[name=password]').val()
+    let new_password = $('#update_password_form :input[name=new_password]').val()
+    let confirm_password = $('#update_password_form :input[name=confirm_password]').val()
+
+    // -- validar que el campo nueva contraseña y confirmar contraseña, sean iguales
+    if (new_password == confirm_password) {
+        // -- paso 02
+        // -- validar que la contraseña ingresada (password), sea diferente que la nueva contraseña y confirmar contraseña
+        if (password !== new_password) {
+            llamar ajax para actualizar (update)
+        } else {
+            // -- mostrar una advertencia "xd"
+        }
+    } else {
+        // -- mostrar una advertencia "ytss"
+    }
+    */
+    // --
+    $('#btn_password_user').prop('disabled', true);
+    // --
+    let params = new FormData(form);
+    // --
+    $.ajax({
+        url: BASE_URL + 'Users/update_user_password',
+        type: 'POST',
+        data: params,
+        dataType: 'json',
+        contentType: false,
+        processData: false,
+        cache: false,
+        beforeSend: function() {
+            console.log('Cargando...');
+        },
+        success: function(data) {
+            // --
+            functions.toast_message(data.type, data.msg, data.status);
+            // --
+            if (data.status === 'OK') {
+                // --
+                $('#update_password_modal').modal('hide'); 
+                form.reset();
+            } else {
+                // --
+                $('btn_password_user').prop('disabled', false);
+            }
+        }
+    })
+}
 
 // --
 function get_values_for_checkbox(form, name) {
@@ -399,13 +452,14 @@ $(document).on('click', '.btn_update', function() {
     $('#update_user_modal').modal('show');
 })
 
-
-// // --
-// $(document).on('click', '#btn_cancel_user', function() {
-//     // $("#update_user_form").validate().resetForm(); // this should work now
-//     // $('#update_user_form')[0].reset();
-//     // $('#update_user_form').trigger("reset");
-// })
+//---
+$(document).on('click', '.btn_update_password', function() {
+    // --
+    let id_user = $(this).attr('data-process-key');
+    $('#update_password_form :input[name=id_user]').val(id_user);
+    // --
+    $('#update_password_modal').modal('show');
+})
 
 // --
 $(document).on('click', '.btn_delete', function() {
@@ -456,6 +510,7 @@ $(document).on('click', '.reset', function() {
     // --
     $('#create_user_form').validate().resetForm();
     $('#update_user_form').validate().resetForm();
+    $('#update_password_form').validate().resetForm();
 })
 
 // -- Validate form
@@ -473,6 +528,15 @@ $('#update_user_form').validate({
         update_user(form);
     }
 })
+
+// -- Validate form
+$('#update_password_form').validate({
+    // --
+    submitHandler: function(form) {
+        update_user_password(form);
+    }
+})
+
 /* Upload image
 // variables
 var accountUploadImg = $('#account-upload-img'),
@@ -504,7 +568,6 @@ if (accountUserImage) {
 }
 */
 
-
 // --
 $('.modal').on('hidden.bs.modal', function () {
     // --
@@ -512,6 +575,7 @@ $('.modal').on('hidden.bs.modal', function () {
     // --
     $('#btn_create_user').prop('disabled', false);
     $('#btn_update_user').prop('disabled', false);
+    $('#btn_password_user').prop('disabled', false);
 });
 
 

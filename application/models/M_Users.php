@@ -1,6 +1,7 @@
 <?php 
 // --
 class M_Users extends Model {
+
     // --
     public function __construct() {
 		parent::__construct();
@@ -170,7 +171,6 @@ class M_Users extends Model {
         return $response;
     }
 
-
     // --
     public function update_user($bind) {
         // --
@@ -255,8 +255,8 @@ class M_Users extends Model {
         return $response;
     }
 
-     // --
-     public function delete_user($bind) {
+    // --
+    public function delete_user($bind) {
         // --
         try {
             // --
@@ -277,8 +277,57 @@ class M_Users extends Model {
         }
         // --
         return $response;
-    }
+    }  
 
     // --
+    public function validate_user_password($bind) {
+        // --
+        try {
+            // --
+            $sql = 'SELECT id FROM user WHERE password = :password AND id = :id_user';
+            // --
+            $result = $this->pdo->fetchOne($sql, $bind);
+            // --
+            if ($result) {
+                // --
+                $response = array('status' => 'OK', 'result' => array());
+            } else {
+                // --
+                $response = array('status' => 'ERROR', 'result' => array());
+            }
+        } catch (PDOException $e) {
+            // --
+            $response = array('status' => 'EXCEPTION', 'result' => $e);
+        }
+        // --
+        return $response;
+    }
     
-}
+    // --
+    public function update_user_password($bind) {
+        // --
+        try {
+            // --
+            $sql = 'UPDATE user
+                SET 
+                    password = :new_password
+                WHERE id = :id_user';
+            // --
+            $result = $this->pdo->perform($sql, $bind);
+            // --
+            if ($result) {
+                // --
+                $response = array('status' => 'OK', 'result' => array());
+            } else {
+                // --
+                $response = array('status' => 'ERROR', 'result' => array());
+            }
+        } catch (PDOException $e) {
+            // --
+            $response = array('status' => 'EXCEPTION', 'result' => $e);
+        }
+        // --
+        return $response;
+    }
+    
+}    

@@ -349,7 +349,93 @@
                         </div>
                     </div>
                     <!--/ Update User Modal -->
-                
+
+
+                    <!--/ Update password Modal -->
+                    <div class="modal fade" id="update_password_modal"  data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+                        <div class="modal-dialog modal-lg modal-dialog-centered modal-edit-user">
+                            <div class="modal-content">
+                                <div class="modal-header bg-transparent">
+                                    <button type="reset" class="btn-close reset" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body pb-5 px-sm-5 pt-50">
+                                    <div class="text-center mb-2">
+                                        <h1 class="mb-1">CAMBIO DE CONTRASEÑA</h1>
+                                        <!-- <p>Updating user details will receive a privacy audit.</p> -->
+                                    </div>
+
+                                    <form  method="POST" enctype="multipart/form-data" id="update_password_form" class="row" onsubmit="return false">
+                                        <!-- header section -->
+                                        <!-- <div class="d-flex">
+                                            <a href="#" class="me-25">
+                                                <img src="<?php /*echo BASE_URL*/ ?>public/app-assets/images/portrait/small/avatar-s-11.jpg" id="account-upload-img" class="uploadedAvatar rounded me-50" alt="profile image" height="100" width="100" />
+                                            </a> -->
+                                            <!-- upload and reset button -->
+                                            <!-- <div class="d-flex align-items-end mt-75 ms-1">
+                                                <div>
+                                                    <label for="account-upload" class="btn btn-sm btn-primary mb-75 me-75">Upload</label>
+                                                    <input type="file" id="account-upload" hidden accept="image/*" />
+                                                    <button type="button" id="account-reset" class="btn btn-sm btn-outline-secondary mb-75">Reset</button>
+                                                    <p class="mb-0">Allowed file types: png, jpg, jpeg.</p>
+                                                </div>
+                                            </div> -->
+                                            <!--/ upload and reset button -->
+                                        <!-- </div> -->
+                                        <!--/ header section -->
+
+                                        <!--<div class="mb-1 col-md-6">
+                                            <div>
+                                                <label class="form-label">Email</label>
+                                                <input type="email" name="email" class="form-control" placeholder="Email" data-msg="" required/>
+                                            </div>
+                                        </div>-->
+
+                                        <div class="mb-1 col-md-9">
+                                            <div>
+                                                <label class="form-label">Contraseña actual</label>
+                                                <input type="password" name="password" class="form-control" placeholder="Contraseña actual" data-msg="" required/>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-1 col-md-9">
+                                            <div>
+                                                <label class="form-label">Nueva contraseña</label>
+                                                <input type="password" name="new_password" class="form-control" placeholder="Nueva contraseña" data-msg="" required/>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-1 col-md-9">
+                                            <div>
+                                                <label class="form-label">Confirmar nueva contraseña</label>
+                                                <input type="password" name="confirm_password" class="form-control" placeholder="Confirmar nueva contraseña" data-msg="" required/>
+                                            </div>
+                                        </div>
+                                       <!-- <div class="mb-1 col-md-6">
+                                            <div>
+                                                <label class="form-label">Estado</label>
+                                                <select name="active" class="form-select select2" data-msg="" required>
+                                                    <option value="">Seleccionar</option>
+                                                    <option value="1">ACTIVO</option>
+                                                    <option value="0">INACTIVO</option>
+                                                </select>
+                                            </div>
+                                        </div>-->
+
+                                        <input type="hidden" name="id_user">
+  
+                                        <div class="col-12 text-center mt-2 pt-50">
+                                            <button id="btn_password_user" type="submit" class="btn btn-primary me-1">Guardar</button>
+                                            <button type="reset" class="btn btn-outline-secondary reset" data-bs-dismiss="modal">Cancelar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/ Update password Modal -->
+
+
+
                 </section>
                 <!-- Users ends -->
 
