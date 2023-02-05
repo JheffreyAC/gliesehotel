@@ -1,5 +1,4 @@
 // -- Functions
-// -- JEREMI
 // --
 function destroy_datatable() {
     // --
