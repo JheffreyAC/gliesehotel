@@ -1,5 +1,6 @@
 <?php 
 // --
+// -- JEREMI
 class M_Users extends Model {
 
     // --

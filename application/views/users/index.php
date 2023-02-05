@@ -7,7 +7,7 @@
             </div>
             <div class="content-body">
                 <!-- Users Starts -->
-                <section id="users">
+                <section id="users"> 
            
                     <!-- Header title -->
                     <div class="content-header row">
@@ -433,8 +433,6 @@
                         </div>
                     </div>
                     <!--/ Update password Modal -->
-
-
 
                 </section>
                 <!-- Users ends -->

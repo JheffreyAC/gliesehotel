@@ -7,6 +7,31 @@ class M_Login extends Model {
     }
     
     // --
+    public function validate_user($bind){
+        // --
+        try {
+            // --
+            $sql = 'SELECT id FROM user WHERE id = :id_user AND active = :active' ;
+            // --
+            $result = $this->pdo->fetchOne($sql, $bind);
+            // --
+            if ($result) {
+                // --
+                $response = array('status' => 'OK', 'result' => array());
+            } else {
+                // --
+                $response = array('status' => 'ERROR', 'result' => array());
+            }
+        } catch (PDOException $e) {
+            // --
+            $response = array('status' => 'EXCEPTION', 'result' => $e);
+        }
+        // --
+        return $response;
+
+    }
+
+    // --
     public function get_user($bind) {
         // --
         try {
@@ -29,6 +54,7 @@ class M_Login extends Model {
                     u.user = :user AND 
                     u.password = :password AND 
                     u.status = :status';
+
             // --
             $result = $this->pdo->fetchAll($sql, $bind);
             // --
