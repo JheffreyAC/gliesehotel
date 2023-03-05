@@ -1,3 +1,10 @@
+-- --------------------------------------------------------
+-- Host:                         127.0.0.1
+-- Versión del servidor:         8.0.30 - MySQL Community Server - GPL
+-- SO del servidor:              Win64
+-- HeidiSQL Versión:             12.4.0.6659
+-- --------------------------------------------------------
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET NAMES utf8 */;
 /*!50503 SET NAMES utf8mb4 */;
@@ -7,10 +14,13 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+
+-- Volcando estructura de base de datos para db_gliese
 DROP DATABASE IF EXISTS `db_gliese`;
 CREATE DATABASE IF NOT EXISTS `db_gliese` /*!40100 DEFAULT CHARACTER SET utf8mb3 */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `db_gliese`;
 
+-- Volcando estructura para tabla db_gliese.campus
 DROP TABLE IF EXISTS `campus`;
 CREATE TABLE IF NOT EXISTS `campus` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -19,11 +29,13 @@ CREATE TABLE IF NOT EXISTS `campus` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
 
+-- Volcando datos para la tabla db_gliese.campus: ~3 rows (aproximadamente)
 INSERT INTO `campus` (`id`, `description`, `status`) VALUES
 	(1, 'CHANCAY', 1),
 	(2, 'HUARAL', 1),
 	(3, 'LIMA', 1);
 
+-- Volcando estructura para tabla db_gliese.categories
 DROP TABLE IF EXISTS `categories`;
 CREATE TABLE IF NOT EXISTS `categories` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -33,10 +45,12 @@ CREATE TABLE IF NOT EXISTS `categories` (
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
 
+-- Volcando datos para la tabla db_gliese.categories: ~2 rows (aproximadamente)
 INSERT INTO `categories` (`id`, `description`, `status`) VALUES
 	(2, 'VAMO A PROGRAMAR', 1),
 	(3, 'VENDEDORGF', 1);
 
+-- Volcando estructura para tabla db_gliese.document_type
 DROP TABLE IF EXISTS `document_type`;
 CREATE TABLE IF NOT EXISTS `document_type` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -45,9 +59,11 @@ CREATE TABLE IF NOT EXISTS `document_type` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 
+-- Volcando datos para la tabla db_gliese.document_type: ~0 rows (aproximadamente)
 INSERT INTO `document_type` (`id`, `description`, `status`) VALUES
 	(1, 'DNI', 1);
 
+-- Volcando estructura para tabla db_gliese.menu
 DROP TABLE IF EXISTS `menu`;
 CREATE TABLE IF NOT EXISTS `menu` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -57,12 +73,14 @@ CREATE TABLE IF NOT EXISTS `menu` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 
+-- Volcando datos para la tabla db_gliese.menu: ~4 rows (aproximadamente)
 INSERT INTO `menu` (`id`, `description`, `icon`, `order`) VALUES
 	(1, 'Home', 'home', 1),
 	(2, 'Almacén', 'archive', 2),
 	(3, 'Ventas', 'shopping-cart', 3),
 	(4, 'Administración', 'sliders', 4);
 
+-- Volcando estructura para tabla db_gliese.permission
 DROP TABLE IF EXISTS `permission`;
 CREATE TABLE IF NOT EXISTS `permission` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -76,6 +94,7 @@ CREATE TABLE IF NOT EXISTS `permission` (
   CONSTRAINT `FK_PERMISSION_SUB_MENU` FOREIGN KEY (`id_sub_menu`) REFERENCES `sub_menu` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb3;
 
+-- Volcando datos para la tabla db_gliese.permission: ~7 rows (aproximadamente)
 INSERT INTO `permission` (`id`, `id_role`, `id_sub_menu`, `status`) VALUES
 	(1, 1, 1, 1),
 	(2, 1, 6, 1),
@@ -85,6 +104,7 @@ INSERT INTO `permission` (`id`, `id_role`, `id_sub_menu`, `status`) VALUES
 	(6, 1, 10, 1),
 	(7, 1, 11, 1);
 
+-- Volcando estructura para tabla db_gliese.products
 DROP TABLE IF EXISTS `products`;
 CREATE TABLE IF NOT EXISTS `products` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -94,11 +114,13 @@ CREATE TABLE IF NOT EXISTS `products` (
   UNIQUE KEY `description` (`description`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3;
 
+-- Volcando datos para la tabla db_gliese.products: ~3 rows (aproximadamente)
 INSERT INTO `products` (`id`, `description`, `status`) VALUES
 	(1, 'PC GAMERs', 1),
 	(2, 'PORTATIL', 1),
 	(4, 'TECLADO', 1);
 
+-- Volcando estructura para tabla db_gliese.role
 DROP TABLE IF EXISTS `role`;
 CREATE TABLE IF NOT EXISTS `role` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -107,9 +129,11 @@ CREATE TABLE IF NOT EXISTS `role` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 
+-- Volcando datos para la tabla db_gliese.role: ~0 rows (aproximadamente)
 INSERT INTO `role` (`id`, `description`, `status`) VALUES
 	(1, 'ADMINISTRADOR', 1);
 
+-- Volcando estructura para tabla db_gliese.sub_menu
 DROP TABLE IF EXISTS `sub_menu`;
 CREATE TABLE IF NOT EXISTS `sub_menu` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -123,6 +147,7 @@ CREATE TABLE IF NOT EXISTS `sub_menu` (
   CONSTRAINT `FK_SUB_MENU_MENU` FOREIGN KEY (`id_menu`) REFERENCES `menu` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb3;
 
+-- Volcando datos para la tabla db_gliese.sub_menu: ~7 rows (aproximadamente)
 INSERT INTO `sub_menu` (`id`, `id_menu`, `description`, `icon`, `url`, `order`) VALUES
 	(1, 1, 'Dashboards', 'circle', 'Dashboards', 1),
 	(6, 2, 'Productos', 'circle', 'Products', 1),
@@ -132,6 +157,7 @@ INSERT INTO `sub_menu` (`id`, `id_menu`, `description`, `icon`, `url`, `order`) 
 	(10, 4, 'Roles', 'circle', 'Roles', 2),
 	(11, 4, 'Sedes', 'circle', 'Campus', 3);
 
+-- Volcando estructura para tabla db_gliese.user
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -157,22 +183,26 @@ CREATE TABLE IF NOT EXISTS `user` (
   CONSTRAINT `FK_USER_ROLE` FOREIGN KEY (`id_role`) REFERENCES `role` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb3;
 
+-- Volcando datos para la tabla db_gliese.user: ~3 rows (aproximadamente)
 INSERT INTO `user` (`id`, `id_role`, `id_document_type`, `first_name`, `last_name`, `document_number`, `address`, `telephone`, `email`, `user`, `password`, `image_url`, `status`, `active`) VALUES
 	(1, 1, 1, 'diego', 'uriarte chancafe', '74417614', 'Chancay', '913085587', 'grjere698@gmail.com', 'admin', '5a6d4d35597a41334e6a4a6a5a4459784d7a51355a6a457a596d593159324d7a597a566d4d5445784e7a633d', NULL, 1, 1),
 	(13, 1, 1, 'jeremi', 'gonzales', '72003668', 'Av. 1 de mayo 1031', '913085589', 'grjere698@gmail.com', 'admin2', '5a6d4d35597a41334e6a4a6a5a4459784d7a51355a6a457a596d593159324d7a597a566d4d5445784e7a633d', NULL, 1, 0),
 	(15, 1, 1, 'ruben', 'dario', '72003669', 'Av. 1 de mayo 1031', '999888777', 'essaulherrerasangay601@gmail.com', 'admin3', '5a6d4d35597a41334e6a4a6a5a4459784d7a51355a6a457a596d593159324d7a597a566d4d5445784e7a633d', NULL, 1, 1);
 
+-- Volcando estructura para tabla db_gliese.user_attempts
 DROP TABLE IF EXISTS `user_attempts`;
 CREATE TABLE IF NOT EXISTS `user_attempts` (
-  `id_user` int NOT NULL,
   `id` int NOT NULL AUTO_INCREMENT,
-  `count` int NOT NULL DEFAULT '0',
+  `id_user` int NOT NULL,
+  `count` tinyint NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  KEY `FK_USER_ATTEMPTS_USER` (`id_user`),
-  CONSTRAINT `FK_USER_ATTEMPTS_USER` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`)
+  KEY `id_user` (`id_user`),
+  CONSTRAINT `FK_USER_ATTEMPTS_USER` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
+-- Volcando datos para la tabla db_gliese.user_attempts: ~0 rows (aproximadamente)
 
+-- Volcando estructura para tabla db_gliese.user_campus
 DROP TABLE IF EXISTS `user_campus`;
 CREATE TABLE IF NOT EXISTS `user_campus` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -186,6 +216,7 @@ CREATE TABLE IF NOT EXISTS `user_campus` (
   CONSTRAINT `FK_USER_CAMPUS_USER` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb3;
 
+-- Volcando datos para la tabla db_gliese.user_campus: ~9 rows (aproximadamente)
 INSERT INTO `user_campus` (`id`, `id_user`, `id_campus`, `status`) VALUES
 	(1, 1, 1, 1),
 	(2, 1, 2, 1),
@@ -202,4 +233,3 @@ INSERT INTO `user_campus` (`id`, `id_user`, `id_campus`, `status`) VALUES
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
-
