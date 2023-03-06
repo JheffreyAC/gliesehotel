@@ -6,6 +6,57 @@ class M_Login extends Model {
 		  parent::__construct();
     }
     
+  // --
+  public function user_attemepts($bind){
+    // --
+    try {
+        // --
+        $sql = 'SELECT count(id) as "total_count" FROM intent WHERE token = :token' ;
+        // --
+        $result = $this->pdo->fetchOne($sql, $bind);
+        // --
+        if ($result) {
+            // --
+            $response = array('status' => 'OK', 'result' => $result);
+        } else {
+            // --
+            $response = array('status' => 'ERROR', 'result' => array());
+        }
+    } catch (PDOException $e) {
+        // --
+        $response = array('status' => 'EXCEPTION', 'result' => $e);
+    }
+    // --
+    return $response;
+
+}
+
+
+// --
+public function create_attempts($bind) {
+    // --
+    try {
+        // --
+        $sql = 'INSERT INTO intent (token) VALUES (:token)';
+        // --
+        $result = $this->pdo->perform($sql, $bind);
+        // --
+        if ($result) {
+            // --
+            $response = array('status' => 'OK', 'result' => array());
+        } else {
+            // --
+            $response = array('status' => 'ERROR', 'result' => array());
+        }
+    } catch (PDOException $e) {
+        // --
+        $response = array('status' => 'EXCEPTION', 'result' => $e);
+    }
+    // --
+    return $response;
+}
+// --
+
     // --
     public function validate_user($bind){
         // --
