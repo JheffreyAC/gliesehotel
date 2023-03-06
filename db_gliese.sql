@@ -2,7 +2,7 @@
 -- Host:                         127.0.0.1
 -- Versión del servidor:         8.0.30 - MySQL Community Server - GPL
 -- SO del servidor:              Win64
--- HeidiSQL Versión:             12.4.0.6659
+-- HeidiSQL Versión:             12.3.0.6589
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -59,9 +59,24 @@ CREATE TABLE IF NOT EXISTS `document_type` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla db_gliese.document_type: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla db_gliese.document_type: ~1 rows (aproximadamente)
 INSERT INTO `document_type` (`id`, `description`, `status`) VALUES
 	(1, 'DNI', 1);
+
+-- Volcando estructura para tabla db_gliese.intent
+DROP TABLE IF EXISTS `intent`;
+CREATE TABLE IF NOT EXISTS `intent` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `token` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
+
+-- Volcando datos para la tabla db_gliese.intent: ~4 rows (aproximadamente)
+INSERT INTO `intent` (`id`, `token`) VALUES
+	(3, 'EywE0T01JTnMYGmqJAO4E7PSEQ/sf9bf9RPedwJgqnNBDL2SydkQZIlafAVqerBPfy1WvzP3TKpx12kzSfWQjtfb5LcEWe8y/nXrp4vkn1a9v93OxzNtEgBUUjsWIYsjDbg0kg=='),
+	(4, 'EywE0T01JTnMYGmqJAO4E7PSEQ/sf9bf9RPedwJgqnNBDL2SydkQZIlafAVqerBPfy1WvzP3TKpx12kzSfWQjtfb5LcEWe8y/nXrp4vkn1a9v93OxzNtEgBUUjsWIYsjDbg0kg=='),
+	(5, 'EywE0T01JTnMYGmqJAO4E7PSEQ/sf9bf9RPedwJgqnNBDL2SydkQZIlafAVqerBPfy1WvzP3TKpx12kzSfWQjtfb5LcEWe8y/nXrp4vkn1a9v93OxzNtEgBUUjsWIYsjDbg0kg=='),
+	(6, 'EywE0T01JTnMYGmqJAO4E7PSEQ/sf9bf9RPedwJgqnNBDL2SydkQZIlafAVqerBPfy1WvzP3TKpx12kzSfWQjtfb5LcEWe8y/nXrp4vkn1a9v93OxzNtEgBUUjsWIYsjDbg0kg==');
 
 -- Volcando estructura para tabla db_gliese.menu
 DROP TABLE IF EXISTS `menu`;
@@ -186,15 +201,15 @@ CREATE TABLE IF NOT EXISTS `user` (
 -- Volcando datos para la tabla db_gliese.user: ~3 rows (aproximadamente)
 INSERT INTO `user` (`id`, `id_role`, `id_document_type`, `first_name`, `last_name`, `document_number`, `address`, `telephone`, `email`, `user`, `password`, `image_url`, `status`, `active`) VALUES
 	(1, 1, 1, 'diego', 'uriarte chancafe', '74417614', 'Chancay', '913085587', 'grjere698@gmail.com', 'admin', '5a6d4d35597a41334e6a4a6a5a4459784d7a51355a6a457a596d593159324d7a597a566d4d5445784e7a633d', NULL, 1, 1),
-	(13, 1, 1, 'jeremi', 'gonzales', '72003668', 'Av. 1 de mayo 1031', '913085589', 'grjere698@gmail.com', 'admin2', '5a6d4d35597a41334e6a4a6a5a4459784d7a51355a6a457a596d593159324d7a597a566d4d5445784e7a633d', NULL, 1, 0),
-	(15, 1, 1, 'ruben', 'dario', '72003669', 'Av. 1 de mayo 1031', '999888777', 'essaulherrerasangay601@gmail.com', 'admin3', '5a6d4d35597a41334e6a4a6a5a4459784d7a51355a6a457a596d593159324d7a597a566d4d5445784e7a633d', NULL, 1, 1);
+	(13, 1, 1, 'jeremi', 'gonzales', '72003668', 'Av. 1 de mayo 1031', '913085589', 'grjere698@gmail.com', 'admin2', '5a6d4d35597a41334e6a4a6a5a4459784d7a51355a6a457a596d593159324d7a597a566d4d5445784e7a633d', NULL, 1, 1),
+	(15, 1, 1, 'ruben', 'dario', '72003669', 'Av. 1 de mayo 1031', '999888777', 'essaulherrerasangay601@gmail.com', 'admin3', '5a6d4d35597a41334e6a4a6a5a4459784d7a51355a6a457a596d593159324d7a597a566d4d5445784e7a633d', NULL, 1, 0);
 
 -- Volcando estructura para tabla db_gliese.user_attempts
 DROP TABLE IF EXISTS `user_attempts`;
 CREATE TABLE IF NOT EXISTS `user_attempts` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_user` int NOT NULL,
-  `count` tinyint NOT NULL DEFAULT '0',
+  `jwt` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_user` (`id_user`),
   CONSTRAINT `FK_USER_ATTEMPTS_USER` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE CASCADE
