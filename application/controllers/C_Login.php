@@ -58,7 +58,7 @@ class C_Login extends Controller {
                 // -- timestamp en php time(); 594564564 (11:38)   ----- 94566565(12:00)  comparar los timestamp 
                 // -- validar los 10 min, diferencia entre timestamp
                 // --
-                if ($total_count > 2) {
+                if ($total_count > 10) {
                     // --
                     $json = array(
                         'status' => 'ERROR',

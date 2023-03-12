@@ -77,9 +77,7 @@
                         </div>
                     </div>
                     <!--/ Create Categories Modal -->
-
-
-                    
+       
                     <!-- Update Categories Modal -->
                     <div class="modal fade" id="update_category_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"> <!--  aria-hidden="true" -->
                         <div class="modal-dialog modal-dialog-centered">
