@@ -105,9 +105,10 @@ class C_Products extends Controller {
                 // --
                 $obj = $this->load_model('Products');
                 // --
-                $bind = array('id_product' => intval($input['id_product']));
+                $bind = array(
+                    'id_product' => intval($input['id_product']));
                 // --
-                $response = $obj->get_product($bind);
+                $response = $obj->get_product_by_id($bind);
                 // --
                 switch ($response['status']) {
                     // --
@@ -183,11 +184,26 @@ class C_Products extends Controller {
                 $input = filter_input_array(INPUT_POST);
             }
             // --
-            if (!empty($input['description'])) {
+            if (!empty($input['id_category']) &&
+                !empty($input['category']) &&
+                !empty($input['description']) &&
+                !empty($input['stock']) &&
+                !empty($input['code'])
+            ) {
                 // --
-                $description = strtoupper($this->functions->clean_string($input['description']));
+                $id_category = $this->functions->clean_string($input['id_category']);
+                $category = $this->functions->clean_string($input['category']);
+                $description = $this->functions->clean_string(strtoupper($input['description']));
+                $stock = $this->functions->clean_string($input['stock']);
+                $code = $this->functions->clean_string($input['code']);
                 // --
-                $bind = array('description' => $description);
+                $bind = array(
+                    'id_category' => $id_category,
+                    'category' => $category,
+                    'description' => $description,
+                    'stock' => $stock,
+                    'code' => $code
+                );
                 // --
                 $obj = $this->load_model('Products');
                 $response = $obj->create_product($bind);
@@ -267,14 +283,26 @@ class C_Products extends Controller {
                 $input = filter_input_array(INPUT_POST);
             }
             // --
-            if (!empty($input['id_product']) && !empty($input['description'])) {
+            if (!empty($input['id_product']) && 
+                !empty($input['id_category']) && 
+                !empty($input['description']) &&
+                !empty($input['stock']) &&
+                !empty($input['code'])
+            ) {
                 // --
                 $id_product = $this->functions->clean_string($input['id_product']);
-                $description = $this->functions->clean_string($input['description']);
+                $id_category = $this->functions->clean_string($input['id_category']);
+                $description = $this->functions->clean_string(strtoupper($input['description']));
+                $stock = $this->functions->clean_string($input['stock']);
+                $code = $this->functions->clean_string($input['code']);
                 // --
                 $bind = array(
                     'id_product' => $id_product,
-                    'description' => $description
+                    'id_category' => $id_category,
+                    'description' => $description,
+                    'stock' => $stock,
+                    'code' => $code
+
                 );
                 // --
                 $obj = $this->load_model('Products');

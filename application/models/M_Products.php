@@ -11,7 +11,17 @@ class M_Products extends Model {
         // --
         try {
             // --
-            $sql = 'SELECT id, description, status FROM products WHERE status = 1';
+                $sql = 'SELECT 
+                        p.id AS id_product,
+                        p.id_category,
+                        c.description AS category,
+                        p.description,
+                        p.stock,
+                        p.code,
+                        p.status
+                    FROM products p
+                    INNER JOIN categories c ON c.id = p.id_category
+                WHERE p.status = 1';
             // --
             $result = $this->pdo->fetchAll($sql);
             // --
@@ -31,11 +41,21 @@ class M_Products extends Model {
     }
 
     // --
-	public function get_product($bind) {
+	public function get_product_by_id($bind) {
         // --
         try {
             // --
-            $sql = 'SELECT id, description, status FROM products WHERE id = :id_product';
+            $sql = 'SELECT 
+                    p.id AS id_product,
+                    p.id_category,
+                    c.description AS category,
+                    p.description,
+                    p.stock,
+                    p.code,
+                    p.status
+                FROM products p
+                INNER JOIN categories c ON c.id = p.id_category
+                WHERE p.id = :id_product AND p.status = 1';
             // --
             $result = $this->pdo->fetchOne($sql, $bind);
             // --
@@ -59,7 +79,20 @@ class M_Products extends Model {
         // --
         try {
             // --
-            $sql = 'INSERT INTO products (description) VALUES (:description)';
+            $sql = 'INSERT INTO products 
+            (
+                id_category, 
+                description,
+                stock,
+                code
+            ) 
+            VALUES 
+            (
+                :id_category,
+                :description,
+                :stock,
+                :code     
+            )';
             // --
             $result = $this->pdo->perform($sql, $bind);
             // --
@@ -83,7 +116,13 @@ class M_Products extends Model {
         // --
         try {
             // --
-            $sql = 'UPDATE products SET description = :description WHERE id = :id_product';
+            $sql = 'UPDATE products 
+                SET
+                    id_category = :id_category,
+                    description = :description,
+                    stock = :stock,
+                    code = :code
+            WHERE id = :id_product';
             // --
             $result = $this->pdo->perform($sql, $bind);
             // --
