@@ -2,7 +2,7 @@
 -- Host:                         127.0.0.1
 -- Versión del servidor:         8.0.30 - MySQL Community Server - GPL
 -- SO del servidor:              Win64
--- HeidiSQL Versión:             12.3.0.6589
+-- HeidiSQL Versión:             12.4.0.6659
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -69,14 +69,15 @@ CREATE TABLE IF NOT EXISTS `intent` (
   `id` int NOT NULL AUTO_INCREMENT,
   `token` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla db_gliese.intent: ~4 rows (aproximadamente)
+-- Volcando datos para la tabla db_gliese.intent: ~5 rows (aproximadamente)
 INSERT INTO `intent` (`id`, `token`) VALUES
-	(3, 'EywE0T01JTnMYGmqJAO4E7PSEQ/sf9bf9RPedwJgqnNBDL2SydkQZIlafAVqerBPfy1WvzP3TKpx12kzSfWQjtfb5LcEWe8y/nXrp4vkn1a9v93OxzNtEgBUUjsWIYsjDbg0kg=='),
-	(4, 'EywE0T01JTnMYGmqJAO4E7PSEQ/sf9bf9RPedwJgqnNBDL2SydkQZIlafAVqerBPfy1WvzP3TKpx12kzSfWQjtfb5LcEWe8y/nXrp4vkn1a9v93OxzNtEgBUUjsWIYsjDbg0kg=='),
-	(5, 'EywE0T01JTnMYGmqJAO4E7PSEQ/sf9bf9RPedwJgqnNBDL2SydkQZIlafAVqerBPfy1WvzP3TKpx12kzSfWQjtfb5LcEWe8y/nXrp4vkn1a9v93OxzNtEgBUUjsWIYsjDbg0kg=='),
-	(6, 'EywE0T01JTnMYGmqJAO4E7PSEQ/sf9bf9RPedwJgqnNBDL2SydkQZIlafAVqerBPfy1WvzP3TKpx12kzSfWQjtfb5LcEWe8y/nXrp4vkn1a9v93OxzNtEgBUUjsWIYsjDbg0kg==');
+	(12, 'gjYSL8sm4porYSQSPo436rnlxTIqTpgfW9jgjnwtfze3caCPGAAZIHGF1n7mlWNvaA863E4TYam55/Pm+LwjiBGPnvSoTQ7QD88mYd5pM4cUpWQgJThJKHGRZL1EsNtsdpBAmg=='),
+	(13, 'gjYSL8sm4porYSQSPo436rnlxTIqTpgfW9jgjnwtfze3caCPGAAZIHGF1n7mlWNvaA863E4TYam55/Pm+LwjiBGPnvSoTQ7QD88mYd5pM4cUpWQgJThJKHGRZL1EsNtsdpBAmg=='),
+	(14, 'gjYSL8sm4porYSQSPo436rnlxTIqTpgfW9jgjnwtfze3caCPGAAZIHGF1n7mlWNvaA863E4TYam55/Pm+LwjiBGPnvSoTQ7QD88mYd5pM4cUpWQgJThJKHGRZL1EsNtsdpBAmg=='),
+	(15, 'gjYSL8sm4porYSQSPo436rnlxTIqTpgfW9jgjnwtfze3caCPGAAZIHGF1n7mlWNvaA863E4TYam55/Pm+LwjiBGPnvSoTQ7QD88mYd5pM4cUpWQgJThJKHGRZL1EsNtsdpBAmg=='),
+	(16, 'EFj4ncJXv2k7BoTw6rZUJ7Qto8w/U2stpqCNZY0boNeX8Q7/noplT8/at/4a55wyFySCmYyf5cN0rDX3c+p9u28OyYSJeeJsyvg7fgbo+3IihvmAWidiivGDJGYoJMywbhIZdA==');
 
 -- Volcando estructura para tabla db_gliese.menu
 DROP TABLE IF EXISTS `menu`;
@@ -123,17 +124,23 @@ INSERT INTO `permission` (`id`, `id_role`, `id_sub_menu`, `status`) VALUES
 DROP TABLE IF EXISTS `products`;
 CREATE TABLE IF NOT EXISTS `products` (
   `id` int NOT NULL AUTO_INCREMENT,
+  `id_category` int DEFAULT NULL,
   `description` varchar(100) NOT NULL,
-  `status` tinyint(1) NOT NULL,
+  `stock` int DEFAULT NULL,
+  `code` varchar(50) DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `description` (`description`)
+  UNIQUE KEY `description` (`description`),
+  UNIQUE KEY `code` (`code`),
+  KEY `id_categories` (`id_category`) USING BTREE,
+  CONSTRAINT `FK_PRODUCTS_CATEGORIES` FOREIGN KEY (`id_category`) REFERENCES `categories` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3;
 
 -- Volcando datos para la tabla db_gliese.products: ~3 rows (aproximadamente)
-INSERT INTO `products` (`id`, `description`, `status`) VALUES
-	(1, 'PC GAMERs', 1),
-	(2, 'PORTATIL', 1),
-	(4, 'TECLADO', 1);
+INSERT INTO `products` (`id`, `id_category`, `description`, `stock`, `code`, `status`) VALUES
+	(1, 2, 'PC GAMERs', NULL, NULL, 1),
+	(2, 2, 'PORTATIL', NULL, NULL, 1),
+	(4, 2, 'TECLADO', NULL, NULL, 1);
 
 -- Volcando estructura para tabla db_gliese.role
 DROP TABLE IF EXISTS `role`;
@@ -144,7 +151,7 @@ CREATE TABLE IF NOT EXISTS `role` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla db_gliese.role: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla db_gliese.role: ~1 rows (aproximadamente)
 INSERT INTO `role` (`id`, `description`, `status`) VALUES
 	(1, 'ADMINISTRADOR', 1);
 
@@ -202,20 +209,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 INSERT INTO `user` (`id`, `id_role`, `id_document_type`, `first_name`, `last_name`, `document_number`, `address`, `telephone`, `email`, `user`, `password`, `image_url`, `status`, `active`) VALUES
 	(1, 1, 1, 'diego', 'uriarte chancafe', '74417614', 'Chancay', '913085587', 'grjere698@gmail.com', 'admin', '5a6d4d35597a41334e6a4a6a5a4459784d7a51355a6a457a596d593159324d7a597a566d4d5445784e7a633d', NULL, 1, 1),
 	(13, 1, 1, 'jeremi', 'gonzales', '72003668', 'Av. 1 de mayo 1031', '913085589', 'grjere698@gmail.com', 'admin2', '5a6d4d35597a41334e6a4a6a5a4459784d7a51355a6a457a596d593159324d7a597a566d4d5445784e7a633d', NULL, 1, 1),
-	(15, 1, 1, 'ruben', 'dario', '72003669', 'Av. 1 de mayo 1031', '999888777', 'essaulherrerasangay601@gmail.com', 'admin3', '5a6d4d35597a41334e6a4a6a5a4459784d7a51355a6a457a596d593159324d7a597a566d4d5445784e7a633d', NULL, 1, 0);
-
--- Volcando estructura para tabla db_gliese.user_attempts
-DROP TABLE IF EXISTS `user_attempts`;
-CREATE TABLE IF NOT EXISTS `user_attempts` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `id_user` int NOT NULL,
-  `jwt` text NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `id_user` (`id_user`),
-  CONSTRAINT `FK_USER_ATTEMPTS_USER` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-
--- Volcando datos para la tabla db_gliese.user_attempts: ~0 rows (aproximadamente)
+	(15, 1, 1, 'ruben', 'dario', '72003669', 'Av. 1 de mayo 1031', '999888777', 'essaulherrerasangay601@gmail.com', 'admin3', '5a6d4d35597a41334e6a4a6a5a4459784d7a51355a6a457a596d593159324d7a597a566d4d5445784e7a633d', NULL, 1, 1);
 
 -- Volcando estructura para tabla db_gliese.user_campus
 DROP TABLE IF EXISTS `user_campus`;
