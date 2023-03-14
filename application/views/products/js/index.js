@@ -24,17 +24,20 @@ function load_datatable() {
             cache: false,
         },
         columns: [
-            { data: 'description' },
+            { data: 'code' },
+            { data: 'category' },
+            { data: 'description' },      
+            { data: 'stock' },    
             {
                 class: 'center',
                 render: function (data, type, row, meta) {
                     // --
                     return (
-                        '<button class="btn btn-sm btn-info btn-round btn-icon btn_update" data-process-key="'+ row.id +'">' +
+                        '<button class="btn btn-sm btn-info btn-round btn-icon btn_update" data-process-key="'+ row.id_product +'">' +
                         feather.icons['edit'].toSvg({ class: 'font-small-4' }) +
                         '</button>'
                         + ' ' + 
-                        '<button  class="btn btn-sm btn-danger btn-round btn-icon btn_delete" data-process-key="'+ row.id +'">' +
+                        '<button  class="btn btn-sm btn-danger btn-round btn-icon btn_delete" data-process-key="'+ row.id_product +'">' +
                         feather.icons['trash-2'].toSvg({ class: 'font-small-4' }) +
                         '</button>'
                     );
@@ -55,6 +58,37 @@ function load_datatable() {
         // --
         functions.toast_message(data.type, data.msg, data.status);
     });
+}
+
+// --
+function get_categories() {
+    // --
+    $.ajax({
+        url: BASE_URL + 'Categories/get_categories',
+        type: 'GET',
+        dataType: 'json',
+        contentType: false,
+        processData: false,
+        cache: false,
+        beforeSend: function() {
+            console.log('Cargando...');
+        },
+        success: function(data) {
+            // --
+            if (data.status === 'OK') {
+                // --
+                var html = '<option value="">Seleccionar</option>';
+                // var html = '';
+                // --
+                data.data.forEach(element => {
+                    html += '<option value="' + element.id + '">'+ element.description +'</option>';
+                });
+                // -- Set values for select
+                $('#create_product_form :input[name=id_category]').html(html);
+                $('#update_product_form :input[name=id_category]').html(html);
+            }
+        }
+    })
 }
 
 // --
@@ -152,8 +186,12 @@ $(document).on('click', '.btn_update', function() {
                 // --
                 let item = data.data
                 // --
-                $('#update_product_form :input[name=id_product]').val(item.id);
+                $('#update_product_form :input[name=id_product]').val(item.id_product);
+                $('#update_product_form :input[name=id_category]').val(item.id_category);
                 $('#update_product_form :input[name=description]').val(item.description);
+                $('#update_product_form :input[name=stock]').val(item.stock);
+                $('#update_product_form :input[name=code]').val(item.code);
+                // --
             }
         }
     })
@@ -236,4 +274,6 @@ $('.modal').on('hidden.bs.modal', function () {
 });
 
 //--
-load_datatable()
+get_categories();
+//--
+load_datatable();

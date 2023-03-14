@@ -36,7 +36,10 @@
                                 <table class="table" id="datatable-products">
                                     <thead>
                                         <tr>
-                                            <th>Descripcion</th>                   
+                                            <th>Codigo</th>
+                                            <th>Categoria</th>
+                                            <th>Descripcion</th>          
+                                            <th>Stock</th>                                       
                                             <th>Acciones</th>
                                         </tr>
                                     </thead>
@@ -60,6 +63,14 @@
                                         <!-- <p data-i18n="Add new campus description">Permissions you may use and assign to your users.</p> -->
                                     </div>
                                     <form method="POST" enctype="multipart/form-data" id="create_product_form" class="row" onsubmit="return false">
+                                        <div class="col-6">
+                                            <label class="form-label">Code</label>
+                                            <input type="text" name="code" class="form-control" placeholder="Code" autofocus data-msg="" required />
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label">Stock</label>
+                                            <input type="text" name="stock" class="form-control" placeholder="Stock" autofocus data-msg="" required />
+                                        </div>
                                         <div class="col-12">
                                             <div>
                                                 <label class="form-label">Categorias</label>
@@ -71,14 +82,6 @@
                                             <label class="form-label">Description
                                             </label>
                                             <input type="text" name="description" class="form-control" placeholder="Descripción" autofocus data-msg="" required />
-                                        </div>
-                                        <div class="col-6">
-                                            <label class="form-label">Stock</label>
-                                            <input type="text" name="stock" class="form-control" placeholder="Stock" autofocus data-msg="" required />
-                                        </div>
-                                        <div class="col-6">
-                                            <label class="form-label">Code</label>
-                                            <input type="text" name="code" class="form-control" placeholder="Code" autofocus data-msg="" required />
                                         </div>
                                         <br>
                                         <div class="col-12 text-center">
@@ -109,11 +112,28 @@
                                         <!-- <p data-i18n="Add new campus description">Permissions you may use and assign to your users.</p> -->
                                     </div>
                                     <form method="POST" enctype="multipart/form-data" id="update_product_form" class="row" onsubmit="return false">
+                                        <div class="col-6">
+                                            <label class="form-label">Code</label>
+                                            <input type="text" name="code" class="form-control" placeholder="Code" autofocus data-msg="" required />
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label">Stock</label>
+                                            <input type="text" name="stock" class="form-control" placeholder="Stock" autofocus data-msg="" required />
+                                        </div>
+                                        <div class="col-12">
+                                            <div>
+                                                <label class="form-label">Categorias</label>
+                                                <select name="id_category" class="form-select select2" data-msg="" required>
+                                                </select>
+                                            </div>
+                                        </div>
                                         <div class="col-12">
                                             <label class="form-label">Descripción</label>
                                             <input type="text" name="description" class="form-control"placeholder="Descripción" autofocus data-msg="" required />
                                         </div>
+
                                         <input type="hidden" name="id_product">
+
                                         <br>
                                         <div class="col-12 text-center">
                                             <button id="btn_update_campus" type="submit" class="btn btn-primary mt-2 me-1">Guardar</button>

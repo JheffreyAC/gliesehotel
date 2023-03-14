@@ -185,21 +185,18 @@ class C_Products extends Controller {
             }
             // --
             if (!empty($input['id_category']) &&
-                !empty($input['category']) &&
                 !empty($input['description']) &&
                 !empty($input['stock']) &&
                 !empty($input['code'])
             ) {
                 // --
                 $id_category = $this->functions->clean_string($input['id_category']);
-                $category = $this->functions->clean_string($input['category']);
                 $description = $this->functions->clean_string(strtoupper($input['description']));
                 $stock = $this->functions->clean_string($input['stock']);
                 $code = $this->functions->clean_string($input['code']);
                 // --
                 $bind = array(
                     'id_category' => $id_category,
-                    'category' => $category,
                     'description' => $description,
                     'stock' => $stock,
                     'code' => $code

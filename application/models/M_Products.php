@@ -146,7 +146,8 @@ class M_Products extends Model {
         // --
         try {
             // --
-            $sql = 'DELETE FROM products where id = :id_product';
+            $sql = 'DELETE FROM products 
+            where id = :id_product';
             // --
             $result = $this->pdo->perform($sql, $bind);
             // --
