@@ -187,20 +187,24 @@ class C_Products extends Controller {
             if (!empty($input['id_category']) &&
                 !empty($input['description']) &&
                 !empty($input['stock']) &&
-                !empty($input['code'])
+                !empty($input['code']) &&
+                !empty($input['expiration_date'])
             ) {
                 // --
                 $id_category = $this->functions->clean_string($input['id_category']);
                 $description = $this->functions->clean_string(strtoupper($input['description']));
                 $stock = $this->functions->clean_string($input['stock']);
                 $code = $this->functions->clean_string($input['code']);
+                $expiration_date = $this->functions->clean_string($input['expiration_date']);
                 // --
                 $bind = array(
                     'id_category' => $id_category,
                     'description' => $description,
                     'stock' => $stock,
-                    'code' => $code
+                    'code' => $code,
+                    'expiration_date' => $expiration_date
                 );
+                
                 // --
                 $obj = $this->load_model('Products');
                 $response = $obj->create_product($bind);
@@ -264,7 +268,9 @@ class C_Products extends Controller {
         // --
         header('Content-Type: application/json');
         echo json_encode($json);
+        
     }
+    
 
     // --
     public function update_product() {
@@ -284,7 +290,8 @@ class C_Products extends Controller {
                 !empty($input['id_category']) && 
                 !empty($input['description']) &&
                 !empty($input['stock']) &&
-                !empty($input['code'])
+                !empty($input['code']) &&
+                !empty($input['expiration_date'])
             ) {
                 // --
                 $id_product = $this->functions->clean_string($input['id_product']);
@@ -292,13 +299,15 @@ class C_Products extends Controller {
                 $description = $this->functions->clean_string(strtoupper($input['description']));
                 $stock = $this->functions->clean_string($input['stock']);
                 $code = $this->functions->clean_string($input['code']);
+                $expiration_date = $this->functions->clean_string($input['expiration_date']);
                 // --
                 $bind = array(
                     'id_product' => $id_product,
                     'id_category' => $id_category,
                     'description' => $description,
                     'stock' => $stock,
-                    'code' => $code
+                    'code' => $code,
+                    'expiration_date' => $expiration_date
 
                 );
                 // --
@@ -452,6 +461,9 @@ class C_Products extends Controller {
         header('Content-Type: application/json');
         echo json_encode($json);
     }
+
+
+    
 
 
     

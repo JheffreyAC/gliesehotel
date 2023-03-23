@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `document_type` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla db_gliese.document_type: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla db_gliese.document_type: ~0 rows (aproximadamente)
 INSERT INTO `document_type` (`id`, `description`, `status`) VALUES
 	(1, 'DNI', 1);
 
@@ -129,18 +129,25 @@ CREATE TABLE IF NOT EXISTS `products` (
   `stock` int DEFAULT NULL,
   `code` varchar(50) DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
+  `expiration_date` char(50) DEFAULT NULL,
+  `status_expiration_date` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `description` (`description`),
   UNIQUE KEY `code` (`code`),
   KEY `id_categories` (`id_category`) USING BTREE,
   CONSTRAINT `FK_PRODUCTS_CATEGORIES` FOREIGN KEY (`id_category`) REFERENCES `categories` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla db_gliese.products: ~3 rows (aproximadamente)
-INSERT INTO `products` (`id`, `id_category`, `description`, `stock`, `code`, `status`) VALUES
-	(1, 2, 'PC GAMERs', NULL, NULL, 1),
-	(2, 2, 'PORTATIL', NULL, NULL, 1),
-	(4, 2, 'TECLADO', NULL, NULL, 1);
+-- Volcando datos para la tabla db_gliese.products: ~9 rows (aproximadamente)
+INSERT INTO `products` (`id`, `id_category`, `description`, `stock`, `code`, `status`, `expiration_date`, `status_expiration_date`) VALUES
+	(65, 2, 'DESC 01', 10, '01', 1, '2023-03-18', 1),
+	(66, 3, 'DESC 02', 20, '02', 1, 'WITHOUT EXPIRATION', 1),
+	(67, 2, 'DESC 03', 30, '03', 1, '2023-03-18', 1),
+	(68, 3, 'DESC 04', 40, '04', 1, '2023-03-18', 1),
+	(69, 2, 'DESC 05', 40, '05', 1, '2023-03-18', 1),
+	(95, 3, 'DESC 06', 60, '06', 1, 'WITHOUT EXPIRATION', 1),
+	(96, 3, 'DESC 07', 70, '07', 1, '2023-03-20', 1),
+	(97, 3, 'DESC 08', 80, '08', 1, 'WITHOUT EXPIRATION', 1);
 
 -- Volcando estructura para tabla db_gliese.role
 DROP TABLE IF EXISTS `role`;
@@ -151,7 +158,7 @@ CREATE TABLE IF NOT EXISTS `role` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla db_gliese.role: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla db_gliese.role: ~0 rows (aproximadamente)
 INSERT INTO `role` (`id`, `description`, `status`) VALUES
 	(1, 'ADMINISTRADOR', 1);
 
