@@ -2,7 +2,7 @@
 -- Host:                         127.0.0.1
 -- Versión del servidor:         8.0.30 - MySQL Community Server - GPL
 -- SO del servidor:              Win64
--- HeidiSQL Versión:             12.4.0.6659
+-- HeidiSQL Versión:             12.3.0.6589
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -59,9 +59,35 @@ CREATE TABLE IF NOT EXISTS `document_type` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla db_gliese.document_type: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla db_gliese.document_type: ~0 rows (aproximadamente)
 INSERT INTO `document_type` (`id`, `description`, `status`) VALUES
 	(1, 'DNI', 1);
+
+-- Volcando estructura para tabla db_gliese.income
+DROP TABLE IF EXISTS `income`;
+CREATE TABLE IF NOT EXISTS `income` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_supplier` int NOT NULL,
+  `id_user` int NOT NULL,
+  `id_voucher_type` int NOT NULL,
+  `proof_series` varchar(7) DEFAULT NULL,
+  `voucher_series` varchar(10) NOT NULL,
+  `proof_date` int NOT NULL DEFAULT '0',
+  `IGV` decimal(4,2) NOT NULL,
+  `number_installments` int DEFAULT NULL,
+  `installment_value` decimal(11,2) DEFAULT NULL,
+  `full_purchase` decimal(11,2) NOT NULL,
+  `status` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  KEY `id_supplier` (`id_supplier`),
+  KEY `id_user` (`id_user`),
+  KEY `id_voucher_type` (`id_voucher_type`),
+  CONSTRAINT `FK_INCOME_SUPPLIER` FOREIGN KEY (`id_supplier`) REFERENCES `supplier` (`id`),
+  CONSTRAINT `FK_INCOME_USER` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`),
+  CONSTRAINT `FK_INCOME_VOUCHER_TYPE` FOREIGN KEY (`id_voucher_type`) REFERENCES `voucher_type` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+-- Volcando datos para la tabla db_gliese.income: ~0 rows (aproximadamente)
 
 -- Volcando estructura para tabla db_gliese.intent
 DROP TABLE IF EXISTS `intent`;
@@ -87,14 +113,15 @@ CREATE TABLE IF NOT EXISTS `menu` (
   `icon` varchar(45) DEFAULT NULL,
   `order` int NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
 
 -- Volcando datos para la tabla db_gliese.menu: ~4 rows (aproximadamente)
 INSERT INTO `menu` (`id`, `description`, `icon`, `order`) VALUES
 	(1, 'Home', 'home', 1),
 	(2, 'Almacén', 'archive', 2),
 	(3, 'Ventas', 'shopping-cart', 3),
-	(4, 'Administración', 'sliders', 4);
+	(4, 'Recepción', 'database', 4),
+	(5, 'Administración', 'sliders', 5);
 
 -- Volcando estructura para tabla db_gliese.permission
 DROP TABLE IF EXISTS `permission`;
@@ -108,7 +135,7 @@ CREATE TABLE IF NOT EXISTS `permission` (
   KEY `FK_PERMISSION_SUB_MENU` (`id_sub_menu`),
   CONSTRAINT `FK_PERMISSION_ROLE` FOREIGN KEY (`id_role`) REFERENCES `role` (`id`) ON DELETE CASCADE,
   CONSTRAINT `FK_PERMISSION_SUB_MENU` FOREIGN KEY (`id_sub_menu`) REFERENCES `sub_menu` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb3;
 
 -- Volcando datos para la tabla db_gliese.permission: ~7 rows (aproximadamente)
 INSERT INTO `permission` (`id`, `id_role`, `id_sub_menu`, `status`) VALUES
@@ -118,7 +145,8 @@ INSERT INTO `permission` (`id`, `id_role`, `id_sub_menu`, `status`) VALUES
 	(4, 1, 8, 1),
 	(5, 1, 9, 1),
 	(6, 1, 10, 1),
-	(7, 1, 11, 1);
+	(7, 1, 11, 1),
+	(15, 1, 12, 1);
 
 -- Volcando estructura para tabla db_gliese.products
 DROP TABLE IF EXISTS `products`;
@@ -151,7 +179,7 @@ CREATE TABLE IF NOT EXISTS `role` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla db_gliese.role: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla db_gliese.role: ~0 rows (aproximadamente)
 INSERT INTO `role` (`id`, `description`, `status`) VALUES
 	(1, 'ADMINISTRADOR', 1);
 
@@ -167,17 +195,37 @@ CREATE TABLE IF NOT EXISTS `sub_menu` (
   PRIMARY KEY (`id`),
   KEY `FK_SUB_MENU_MENU` (`id_menu`),
   CONSTRAINT `FK_SUB_MENU_MENU` FOREIGN KEY (`id_menu`) REFERENCES `menu` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla db_gliese.sub_menu: ~7 rows (aproximadamente)
+-- Volcando datos para la tabla db_gliese.sub_menu: ~8 rows (aproximadamente)
 INSERT INTO `sub_menu` (`id`, `id_menu`, `description`, `icon`, `url`, `order`) VALUES
 	(1, 1, 'Dashboards', 'circle', 'Dashboards', 1),
 	(6, 2, 'Productos', 'circle', 'Products', 1),
 	(7, 2, 'Categorias', 'circle', 'Categories', 2),
 	(8, 3, 'Clientes', 'circle', 'Clients', 1),
-	(9, 4, 'Usuarios', 'circle', 'Users', 1),
-	(10, 4, 'Roles', 'circle', 'Roles', 2),
-	(11, 4, 'Sedes', 'circle', 'Campus', 3);
+	(9, 5, 'Usuarios', 'circle', 'Users', 1),
+	(10, 5, 'Roles', 'circle', 'Roles', 2),
+	(11, 5, 'Sedes', 'circle', 'Campus', 3),
+	(12, 4, 'Ingresos', 'circle', 'income', 1);
+
+-- Volcando estructura para tabla db_gliese.supplier
+DROP TABLE IF EXISTS `supplier`;
+CREATE TABLE IF NOT EXISTS `supplier` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_document_type` int NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `document_number` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `address` varchar(150) DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `business_name` varchar(256) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `document_number` (`document_number`),
+  KEY `id_document_type` (`id_document_type`),
+  CONSTRAINT `FK_SUPPLIER_DOCUMENT_TYPE` FOREIGN KEY (`id_document_type`) REFERENCES `document_type` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+-- Volcando datos para la tabla db_gliese.supplier: ~0 rows (aproximadamente)
 
 -- Volcando estructura para tabla db_gliese.user
 DROP TABLE IF EXISTS `user`;
@@ -236,6 +284,25 @@ INSERT INTO `user_campus` (`id`, `id_user`, `id_campus`, `status`) VALUES
 	(20, 15, 1, 1),
 	(21, 15, 2, 1),
 	(22, 15, 3, 1);
+
+-- Volcando estructura para tabla db_gliese.voucher_type
+DROP TABLE IF EXISTS `voucher_type`;
+CREATE TABLE IF NOT EXISTS `voucher_type` (
+  `id` int NOT NULL,
+  `voucher_type_description` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+-- Volcando datos para la tabla db_gliese.voucher_type: ~8 rows (aproximadamente)
+INSERT INTO `voucher_type` (`id`, `voucher_type_description`) VALUES
+	(1, 'Factura'),
+	(2, 'Boleta de Venta'),
+	(3, 'Nota de Credito'),
+	(4, 'Guia de Remisión Remitente'),
+	(5, 'Cotización'),
+	(6, 'Orden de Pagos'),
+	(7, 'Ticket'),
+	(8, 'Prestamo');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
