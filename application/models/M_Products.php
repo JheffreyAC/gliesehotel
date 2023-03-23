@@ -18,6 +18,8 @@ class M_Products extends Model {
                         p.description,
                         p.stock,
                         p.code,
+                        p.expiration_date,
+                        p.status_expiration_date,
                         p.status
                     FROM products p
                     INNER JOIN categories c ON c.id = p.id_category
@@ -52,6 +54,8 @@ class M_Products extends Model {
                     p.description,
                     p.stock,
                     p.code,
+                    p.expiration_date,
+                    p.status_expiration_date,
                     p.status
                 FROM products p
                 INNER JOIN categories c ON c.id = p.id_category
@@ -84,6 +88,7 @@ class M_Products extends Model {
                 id_category, 
                 description,
                 stock,
+                expiration_date,
                 code
             ) 
             VALUES 
@@ -91,6 +96,7 @@ class M_Products extends Model {
                 :id_category,
                 :description,
                 :stock,
+                :expiration_date,
                 :code     
             )';
             // --
@@ -121,6 +127,7 @@ class M_Products extends Model {
                     id_category = :id_category,
                     description = :description,
                     stock = :stock,
+                    expiration_date = :expiration_date,
                     code = :code
             WHERE id = :id_product';
             // --
