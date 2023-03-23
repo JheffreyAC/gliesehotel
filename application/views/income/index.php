@@ -36,7 +36,7 @@
                                 <table class="table" id="datatable-income">
                                     <thead>
                                         <tr>
-                                            <th>Articulo</th>
+                                            <th>Producto</th>
                                             <th>Cantidad</th>          
                                             <th>Precio Compra</th>                 
                                             <th>IGV</th>
@@ -52,8 +52,8 @@
                     <!-- /Table -->
 
 
-                    <!-- Create Product Modal -->
-                    <div class="modal fade" id="create_income_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"> <!--  aria-hidden="true" -->
+                    <!-- Create Income Modal -->
+                    <div class="modal fade" id="eyelash_income_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"> <!--  aria-hidden="true" -->
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-header bg-transparent">
@@ -61,7 +61,7 @@
                                 </div>
                                 <div class="modal-body px-sm-5 pb-5">
                                     <div class="text-center mb-2">
-                                        <h1 class="mb-1">Agregar nuevo producto</h1>
+                                        <h1 class="mb-1">Ingreso de producto</h1>
                                         <!-- <p data-i18n="Add new campus description">Permissions you may use and assign to your users.</p> -->
                                     </div>
                                     <form method="POST" enctype="multipart/form-data" id="create_income_form" class="row" onsubmit="return false">
@@ -97,7 +97,7 @@
                             </div>
                         </div>
                     </div>
-                    <!--/ Create Product Modal -->
+                    <!--/ Create Income Modal -->
 
 
                     

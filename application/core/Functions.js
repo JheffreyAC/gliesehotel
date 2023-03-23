@@ -167,6 +167,29 @@ class Functions {
     }
 
     /**
+    * Custom buttons for data table tabs
+    * @param {*} eyelash // -- Pestañas
+    */ 
+    custom_tab_button_data_table(eyelash) {
+        // --
+        let buttons = [
+            {
+                text: feather.icons['plus'].toSvg({ class: 'me-50 font-small-4' }) + '<span>Agregar</span>',
+                className: 'create-new btn btn-primary',
+                attr: {
+                    'data-bs-toggle': 'eyelash',
+                    'data-bs-target': eyelash
+                },
+                init: function (api, node, config) {
+                    $(node).removeClass('btn-secondary');
+                }
+            }
+        ];
+        // --
+        return buttons;
+    }
+
+    /**
      * @param String name
      * @return String
      */

@@ -11,17 +11,7 @@ class M_Income extends Model {
         // --
         try {
             // --
-                $sql = 'SELECT 
-                        p.id AS id_income,
-                        p.id_category,
-                        c.description AS category,
-                        p.description,
-                        p.stock,
-                        p.code,
-                        p.status
-                    FROM income p
-                    INNER JOIN categories c ON c.id = p.id_category
-                WHERE p.status = 1';
+                $sql = '';
             // --
             $result = $this->pdo->fetchAll($sql);
             // --
@@ -45,17 +35,7 @@ class M_Income extends Model {
         // --
         try {
             // --
-            $sql = 'SELECT 
-                    p.id AS id_income,
-                    p.id_category,
-                    c.description AS category,
-                    p.description,
-                    p.stock,
-                    p.code,
-                    p.status
-                FROM income p
-                INNER JOIN categories c ON c.id = p.id_category
-                WHERE p.id = :id_income AND p.status = 1';
+            $sql = '';
             // --
             $result = $this->pdo->fetchOne($sql, $bind);
             // --
