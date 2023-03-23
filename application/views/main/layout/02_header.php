@@ -129,7 +129,25 @@
                         </li>
                     </ul>
                 </li> -->
-                <li class="nav-item dropdown dropdown-notification me-25"><a class="nav-link" href="#" data-bs-toggle="dropdown"><i class="ficon" data-feather="bell"></i><span class="badge rounded-pill bg-danger badge-up">5</span></a>
+                <li class="nav-item dropdown dropdown-notification me-25">
+                    <a class="nav-link" href="#" data-bs-toggle="dropdown">
+                        <i class="ficon" data-feather="bell"></i>
+                        <span class="badge rounded-pill bg-danger badge-up" id="notification-badge">0</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-media dropdown-menu-end">
+                        <li class="dropdown-menu-header">
+                            <div class="dropdown-header d-flex">
+                                <h4 class="notification-title mb-0 me-auto">Notifications</h4>
+                                <div class="badge rounded-pill badge-light-primary"><span id="new-notifications-count">0</span> New</div>
+                            </div>
+                        </li>
+                        <li class="scrollable-container media-list" id="notification-list"></li>
+                    </ul>
+                </li>
+
+
+
+                <!-- <li class="nav-item dropdown dropdown-notification me-25"><a class="nav-link" href="#" data-bs-toggle="dropdown"><i class="ficon" data-feather="bell"></i><span class="badge rounded-pill bg-danger badge-up">5</span></a>
                     <ul class="dropdown-menu dropdown-menu-media dropdown-menu-end">
                         <li class="dropdown-menu-header">
                             <div class="dropdown-header d-flex">
@@ -210,7 +228,7 @@
                         </li>
                         <li class="dropdown-menu-footer"><a class="btn btn-primary w-100" href="#">Read all notifications</a></li>
                     </ul>
-                </li>
+                </li> -->
                 <li class="nav-item dropdown dropdown-user"><a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <div class="user-nav d-sm-flex d-none"><span class="user-name fw-bolder"></span><span class="user-status">Admin</span></div><span class="avatar"><img class="round" src="<?php echo BASE_URL ?>public/app-assets/images/portrait/small/avatar-s-11.jpg" alt="avatar" height="40" width="40"><span class="avatar-status-online"></span></span>
                     </a>
