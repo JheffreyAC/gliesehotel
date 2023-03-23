@@ -45,7 +45,7 @@ function load_datatable() {
             },
         ],
         dom: functions.head_datatable(),
-        buttons: functions.custom_buttons_datatable([2], '#create_income_modal'), // -- Number of columns
+        buttons: functions.custom_tab_button_data_table([2], '#eyelash_income_modal'), // -- Number of columns
         language: {
             url: BASE_URL + 'public/assets/json/languaje-es.json'
         }
