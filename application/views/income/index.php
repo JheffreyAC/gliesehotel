@@ -38,11 +38,8 @@
                                         <tr>
                                             <th>Fecha</th>
                                             <th>Proovedor</th>          
-                                            <th>Usuario</th>                 
                                             <th>Documento</th>
                                             <th>Numero</th>
-                                            <th>Nº De Cuota</th>
-                                            <th>Valor De Cuota</th>
                                             <th>Total De Compra</th>
                                             <th>Acciones</th>
                                         </tr>

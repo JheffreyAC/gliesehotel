@@ -25,8 +25,7 @@ function load_datatable() {
         },
         columns: [
             { data: 'proof_date' },
-            { data: 'business_name' },
-            { data: 'first_name' },      
+            { data: 'business_name' },      
             { data: 'voucher_type_description' } ,    
             { 
                 class: 'center',
@@ -37,8 +36,6 @@ function load_datatable() {
                     );
                 }  
             },
-            { data: 'number_installments' },
-            { data: 'installment_value' }, 
             { data: 'full_purchase' },   
             {
                 class: 'center',
