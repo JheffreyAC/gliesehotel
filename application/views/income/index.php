@@ -36,13 +36,15 @@
                                 <table class="table" id="datatable-income">
                                     <thead>
                                         <tr>
-                                            <th>Producto</th>
-                                            <th>Cantidad</th>          
-                                            <th>Precio Compra</th>                 
-                                            <th>IGV</th>
-                                            <th>Precio Venta</th>
-                                            <th>Subtotal</th>
-                                            <th>Opciones</th>
+                                            <th>Fecha</th>
+                                            <th>Proovedor</th>          
+                                            <th>Usuario</th>                 
+                                            <th>Documento</th>
+                                            <th>Numero</th>
+                                            <th>Nº De Cuota</th>
+                                            <th>Valor De Cuota</th>
+                                            <th>Total De Compra</th>
+                                            <th>Acciones</th>
                                         </tr>
                                     </thead>
                                 </table>

@@ -11,7 +11,27 @@ class M_Income extends Model {
         // --
         try {
             // --
-                $sql = '';
+                $sql = 'SELECT
+                        i.id AS id_income,
+                        i.id_supplier,
+                        s.business_name, 
+                        i.id_voucher_type,
+                        vt.voucher_type_description,
+                        i.id_user,
+                        u.first_name,
+                        i.proof_date,
+                        i.proof_series,
+                        i.voucher_series,
+                        i.igv,
+                        i.number_installments,
+                        i.installment_value,
+                        i.full_purchase,
+                        i.status
+                    FROM income i 
+                    INNER JOIN supplier s ON s.id = i.id_supplier
+                    INNER JOIN voucher_type vt ON vt.id = i.id_voucher_type
+                    INNER JOIN user u ON u.id = i.id_user
+                    WHERE i.status = 1';
             // --
             $result = $this->pdo->fetchAll($sql);
             // --
@@ -35,7 +55,27 @@ class M_Income extends Model {
         // --
         try {
             // --
-            $sql = '';
+            $sql = 'SELECT
+                    i.id AS id_income,
+                    i.id_supplier,
+                    s.business_name, 
+                    i.id_voucher_type,
+                    vt.voucher_type_description,
+                    i.id_user,
+                    u.first_name,
+                    i.proof_date,
+                    i.proof_series,
+                    i.voucher_series,
+                    i.igv,
+                    i.number_installments,
+                    i.installment_value,
+                    i.full_purchase,
+                    i.status
+                FROM income i 
+                INNER JOIN supplier s ON s.id = i.id_supplier
+                INNER JOIN voucher_type vt ON vt.id = i.id_voucher_type
+                INNER JOIN user u ON u.id = i.id_user
+                WHERE i.id = :id_income AND i.status = 1';
             // --
             $result = $this->pdo->fetchOne($sql, $bind);
             // --
@@ -61,17 +101,29 @@ class M_Income extends Model {
             // --
             $sql = 'INSERT INTO income 
             (
-                id_category, 
-                description,
-                stock,
-                code
+                id_suplier, 
+                id_user,
+                id_voucher_type,
+                proof_series,
+                voucher_series,
+                proof_date,
+                igv,
+                number_installments,
+                installment_value,
+                full_purchase
             ) 
             VALUES 
             (
-                :id_category,
-                :description,
-                :stock,
-                :code     
+                :id_suplier,
+                :id_user,
+                :id_voucher_type,
+                :proof_series,
+                :voucher_series,
+                :proof_date,
+                :igv,
+                :number_installments,
+                :installment_value,
+                :full_purchase     
             )';
             // --
             $result = $this->pdo->perform($sql, $bind);
@@ -98,10 +150,16 @@ class M_Income extends Model {
             // --
             $sql = 'UPDATE income 
                 SET
-                    id_category = :id_category,
-                    description = :description,
-                    stock = :stock,
-                    code = :code
+                    id_suplier = :id_suplier,
+                    id_user = :id_user,
+                    id_voucher_type = :id_voucher_type,
+                    proof_series = :proof_series,
+                    voucher_series = :voucher_series,
+                    proof_date = :proof_date,
+                    igv = igv,
+                    number_installments = :number_installments,
+                    installment_value = :installment_value,
+                    full_purchase = :full_purchase
             WHERE id = :id_income';
             // --
             $result = $this->pdo->perform($sql, $bind);

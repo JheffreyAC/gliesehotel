@@ -184,22 +184,39 @@ class C_Income extends Controller {
                 $input = filter_input_array(INPUT_POST);
             }
             // --
-            if (!empty($input['id_category']) &&
-                !empty($input['description']) &&
-                !empty($input['stock']) &&
-                !empty($input['code'])
+            if (!empty($input['business_name']) &&
+                !empty($input['first_name']) &&
+                !empty($input['voucher_type_description']) &&
+                !empty($input['proof_series']) &&
+                !empty($input['voucher_series']) &&
+                !empty($input['proof_date']) &&
+                !empty($input['igv']) &&
+                !empty($input['number_installments']) &&
+                !empty($input['installment_value']) &&
+                !empty($input['full_purchase']) 
             ) {
                 // --
-                $id_category = $this->functions->clean_string($input['id_category']);
-                $description = $this->functions->clean_string(strtoupper($input['description']));
-                $stock = $this->functions->clean_string($input['stock']);
-                $code = $this->functions->clean_string($input['code']);
+                $business_name = $this->functions->clean_string($input['business_name']);
+                $first_name = $this->functions->clean_string(strtoupper($input['first_name']));
+                $voucher_type_description = $this->functions->clean_string($input['voucher_type_description']);
+                $proof_series = $this->functions->clean_string($input['proof_series']);
+                $voucher_series = $this->functions->clean_string($input['voucher_series']);
+                $proof_date = $this->functions->clean_string($input['proof_date']);
+                $igv = $this->functions->clean_string($input['igv']);
+                $number_installments = $this->functions->clean_string($input['number_installments']);
+                $installment_value = $this->functions->clean_string($input['installment_value']);
+                $full_purchase = $this->functions->clean_string($input['full_purchase']);
                 // --
                 $bind = array(
-                    'id_category' => $id_category,
-                    'description' => $description,
-                    'stock' => $stock,
-                    'code' => $code
+                    'business_name' => $business_name,
+                    'first_name' => $first_name,
+                    'voucher_type_description' => $voucher_type_description,
+                    'proof_series' => $proof_series,
+                    'voucher_series' => $voucher_series,
+                    'proof_date' => $proof_date,
+                    'number_installments' => $number_installments,
+                    'installment_value' => $installment_value,
+                    'full_purchase' => $full_purchase,
                 );
                 // --
                 $obj = $this->load_model('Income');
@@ -281,24 +298,41 @@ class C_Income extends Controller {
             }
             // --
             if (!empty($input['id_income']) && 
-                !empty($input['id_category']) && 
-                !empty($input['description']) &&
-                !empty($input['stock']) &&
-                !empty($input['code'])
+                !empty($input['id_supplier']) && 
+                !empty($input['id_user']) &&
+                !empty($input['id_voucher_type']) &&
+                !empty($input['proof_series']) &&
+                !empty($input['voucher_series']) &&
+                !empty($input['proof_date']) &&
+                !empty($input['igv']) &&
+                !empty($input['number_installments']) &&
+                !empty($input['installment_value']) &&
+                !empty($input['full_purchase'])
             ) {
                 // --
                 $id_income = $this->functions->clean_string($input['id_income']);
-                $id_category = $this->functions->clean_string($input['id_category']);
-                $description = $this->functions->clean_string(strtoupper($input['description']));
-                $stock = $this->functions->clean_string($input['stock']);
-                $code = $this->functions->clean_string($input['code']);
+                $id_supplier = $this->functions->clean_string(strtoupper($input['id_supplier']));
+                $id_user = $this->functions->clean_string($input['id_user']);
+                $id_voucher_type = $this->functions->clean_string($input['id_voucher_type']);
+                $proof_series = $this->functions->clean_string($input['proof_series']);
+                $voucher_series = $this->functions->clean_string($input['voucher_series']);
+                $proof_date = $this->functions->clean_string($input['proof_date']);
+                $igv = $this->functions->clean_string($input['igv']);
+                $number_installments = $this->functions->clean_string($input['number_installments']);
+                $installment_value = $this->functions->clean_string($input['installment_value']);
+                $full_purchase = $this->functions->clean_string($input['full_purchase']);
                 // --
                 $bind = array(
                     'id_income' => $id_income,
-                    'id_category' => $id_category,
-                    'description' => $description,
-                    'stock' => $stock,
-                    'code' => $code
+                    'id_supplier' => $id_supplier,
+                    'id_user' => $id_user,
+                    'id_voucher_type' => $id_voucher_type,
+                    'proof_series' => $proof_series,
+                    'voucher_series' => $voucher_series,
+                    'proof_date' => $proof_date,
+                    'number_installments' => $number_installments,
+                    'installment_value' => $installment_value,
+                    'full_purchase' => $full_purchase
 
                 );
                 // --

@@ -24,10 +24,22 @@ function load_datatable() {
             cache: false,
         },
         columns: [
-            { data: 'code' },
-            { data: 'category' },
-            { data: 'description' },      
-            { data: 'stock' },    
+            { data: 'proof_date' },
+            { data: 'business_name' },
+            { data: 'first_name' },      
+            { data: 'voucher_type_description' } ,    
+            { 
+                class: 'center',
+                render: function (data, type, row, meta) {
+                    // --
+                    return (
+                        row.proof_series + ' - ' + row.voucher_series
+                    );
+                }  
+            },
+            { data: 'number_installments' },
+            { data: 'installment_value' }, 
+            { data: 'full_purchase' },   
             {
                 class: 'center',
                 render: function (data, type, row, meta) {
@@ -45,7 +57,7 @@ function load_datatable() {
             },
         ],
         dom: functions.head_datatable(),
-        buttons: functions.custom_tab_button_data_table([2], '#eyelash_income_modal'), // -- Number of columns
+        buttons: functions.custom_buttons_datatable([8], '#create_income_modal'), // -- Number of columns
         language: {
             url: BASE_URL + 'public/assets/json/languaje-es.json'
         }
@@ -56,7 +68,7 @@ function load_datatable() {
         // --
         var data = dataTable.ajax.json();
         // --
-        functions.toast_message(data.type, data.msg, data.status);
+        //functions.toast_message(data.type, data.msg, data.status);
     });
 }
 
@@ -241,6 +253,11 @@ $(document).on('click', '.btn_delete', function() {
     });
 })
 
+/*$('#btn_test').click(function() {
+    console.log('adkasdhadsk')
+})*/
+
+
 // -- Reset forms
 $(document).on('click', '.reset', function() {
     // --
@@ -272,6 +289,8 @@ $('.modal').on('hidden.bs.modal', function () {
     $('#btn_create_income').prop('disabled', false);
     $('#btn_update_income').prop('disabled', false);
 });
+
+
 
 //--
 get_categories();
