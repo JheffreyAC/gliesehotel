@@ -103,7 +103,17 @@ class Functions {
      * @param {*} columns
      * @param {*} modal // -- ID 
      */
-    custom_buttons_datatable(columns, modal) {
+    custom_buttons_datatable(columns, modal, isLoadAttributes = true) {
+        // --
+        var attr = {}
+        // --
+        if (isLoadAttributes) {
+            // --
+            attr = {
+                'data-bs-toggle': 'modal',
+                'data-bs-target': modal
+            }
+        }
         // --
         let buttons = [
             {
@@ -153,38 +163,13 @@ class Functions {
             {
                 text: feather.icons['plus'].toSvg({ class: 'me-50 font-small-4' }) + '<span>Agregar</span>',
                 className: 'create-new btn btn-primary',
-                attr: {
-                    'data-bs-toggle': 'modal',
-                    'data-bs-target': modal
-                },
+                attr: attr,
                 init: function (api, node, config) {
                     $(node).removeClass('btn-secondary');
                 }
             }
         ];
-        // --
-        return buttons;
-    }
 
-    /**
-    * Custom buttons for data table tabs
-    * @param {*} eyelash // -- Pestañas
-    */ 
-    custom_tab_button_data_table(eyelash) {
-        // --
-        let buttons = [
-            {
-                text: feather.icons['plus'].toSvg({ class: 'me-50 font-small-4' }) + '<span>Agregar</span>',
-                className: 'create-new btn btn-primary',
-                attr: {
-                    'data-bs-toggle': 'eyelash',
-                    'data-bs-target': eyelash
-                },
-                init: function (api, node, config) {
-                    $(node).removeClass('btn-secondary');
-                }
-            }
-        ];
         // --
         return buttons;
     }

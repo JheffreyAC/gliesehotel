@@ -43,7 +43,7 @@ class C_Products extends Controller {
                     $json = array(
                         'status' => 'OK',
                         'type' => 'success',
-                        'msg' => 'Listado de registros encontrados.',
+                        'msg' => $this->messages->message['list'],
                         'data' => $response['result']
                     );
                     // --

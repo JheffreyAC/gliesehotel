@@ -54,7 +54,7 @@ function load_datatable() {
             },
         ],
         dom: functions.head_datatable(),
-        buttons: functions.custom_buttons_datatable([8], '#create_income_modal'), // -- Number of columns
+        buttons: functions.custom_buttons_datatable([8], '#create_income_modal', false), // -- Number of columns
         language: {
             url: BASE_URL + 'public/assets/json/languaje-es.json'
         }
@@ -65,7 +65,7 @@ function load_datatable() {
         // --
         var data = dataTable.ajax.json();
         // --
-        //functions.toast_message(data.type, data.msg, data.status);
+        functions.toast_message(data.type, data.msg, data.status);
     });
 }
 
@@ -87,7 +87,6 @@ function get_categories() {
             if (data.status === 'OK') {
                 // --
                 var html = '<option value="">Seleccionar</option>';
-                // var html = '';
                 // --
                 data.data.forEach(element => {
                     html += '<option value="' + element.id + '">'+ element.description +'</option>';
@@ -250,10 +249,11 @@ $(document).on('click', '.btn_delete', function() {
     });
 })
 
-/*$('#btn_test').click(function() {
-    console.log('adkasdhadsk')
-})*/
-
+// -- Redirect new controller
+$(document).on('click', '.create-new', function() {
+    // --
+    window.location.assign(BASE_URL + 'Test');
+})
 
 // -- Reset forms
 $(document).on('click', '.reset', function() {
