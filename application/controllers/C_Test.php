@@ -18,4 +18,5 @@ class C_Test extends Controller {
         $this->view->set_view('index');     // -- Load View
     }
 
+
 }
