@@ -55,6 +55,7 @@ DROP TABLE IF EXISTS `detail_income`;
 CREATE TABLE IF NOT EXISTS `detail_income` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_product` int NOT NULL,
+  `id_income` int NOT NULL,
   `stock` int NOT NULL,
   `purchase_price` decimal(11,2) NOT NULL,
   `sale_price` decimal(11,2) NOT NULL,
@@ -63,9 +64,9 @@ CREATE TABLE IF NOT EXISTS `detail_income` (
   CONSTRAINT `FK_INCOME_PRODUCT` FOREIGN KEY (`id_product`) REFERENCES `products` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla db_gliese.detail_income: ~0 rows (aproximadamente)
-INSERT INTO `detail_income` (`id`, `id_product`, `stock`, `purchase_price`, `sale_price`) VALUES
-	(1, 100, 60, 100.52, 300.00);
+-- Volcando datos para la tabla db_gliese.detail_income: ~1 rows (aproximadamente)
+INSERT INTO `detail_income` (`id`, `id_product`, `id_income`, `stock`, `purchase_price`, `sale_price`) VALUES
+	(1, 100, 0, 60, 100.52, 300.00);
 
 -- Volcando estructura para tabla db_gliese.document_type
 DROP TABLE IF EXISTS `document_type`;
@@ -156,7 +157,7 @@ CREATE TABLE IF NOT EXISTS `permission` (
   KEY `FK_PERMISSION_SUB_MENU` (`id_sub_menu`),
   CONSTRAINT `FK_PERMISSION_ROLE` FOREIGN KEY (`id_role`) REFERENCES `role` (`id`) ON DELETE CASCADE,
   CONSTRAINT `FK_PERMISSION_SUB_MENU` FOREIGN KEY (`id_sub_menu`) REFERENCES `sub_menu` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb3;
 
 -- Volcando datos para la tabla db_gliese.permission: ~8 rows (aproximadamente)
 INSERT INTO `permission` (`id`, `id_role`, `id_sub_menu`, `status`) VALUES
@@ -167,7 +168,8 @@ INSERT INTO `permission` (`id`, `id_role`, `id_sub_menu`, `status`) VALUES
 	(5, 1, 9, 1),
 	(6, 1, 10, 1),
 	(7, 1, 11, 1),
-	(15, 1, 12, 1);
+	(15, 1, 12, 1),
+	(16, 1, 13, 1);
 
 -- Volcando estructura para tabla db_gliese.products
 DROP TABLE IF EXISTS `products`;
@@ -185,7 +187,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   UNIQUE KEY `code` (`code`),
   KEY `id_categories` (`id_category`) USING BTREE,
   CONSTRAINT `FK_PRODUCTS_CATEGORIES` FOREIGN KEY (`id_category`) REFERENCES `categories` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=utf8mb3;
 
 -- Volcando datos para la tabla db_gliese.products: ~8 rows (aproximadamente)
 INSERT INTO `products` (`id`, `id_category`, `description`, `stock`, `code`, `status`, `expiration_date`, `status_expiration_date`) VALUES
@@ -197,7 +199,8 @@ INSERT INTO `products` (`id`, `id_category`, `description`, `stock`, `code`, `st
 	(95, 3, 'DESC 06', 60, '06', 1, 'WITHOUT EXPIRATION', 1),
 	(96, 3, 'DESC 07', 70, '07', 1, '2023-03-20', 1),
 	(97, 3, 'DESC 08', 80, '08', 1, 'WITHOUT EXPIRATION', 1),
-	(100, 2, 'PC_GAMER', 10, '58654', 1, '2023-04-09', 1);
+	(100, 2, 'PC_GAMER', 10, '58654', 1, '2023-04-09', 1),
+	(101, 3, 'DES09', 10, '09', 1, 'WITHOUT EXPIRATION', 1);
 
 -- Volcando estructura para tabla db_gliese.role
 DROP TABLE IF EXISTS `role`;
@@ -224,9 +227,9 @@ CREATE TABLE IF NOT EXISTS `sub_menu` (
   PRIMARY KEY (`id`),
   KEY `FK_SUB_MENU_MENU` (`id_menu`),
   CONSTRAINT `FK_SUB_MENU_MENU` FOREIGN KEY (`id_menu`) REFERENCES `menu` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla db_gliese.sub_menu: ~8 rows (aproximadamente)
+-- Volcando datos para la tabla db_gliese.sub_menu: ~9 rows (aproximadamente)
 INSERT INTO `sub_menu` (`id`, `id_menu`, `description`, `icon`, `url`, `order`) VALUES
 	(1, 1, 'Dashboards', 'circle', 'Dashboards', 1),
 	(6, 2, 'Productos', 'circle', 'Products', 1),
@@ -235,7 +238,8 @@ INSERT INTO `sub_menu` (`id`, `id_menu`, `description`, `icon`, `url`, `order`) 
 	(9, 5, 'Usuarios', 'circle', 'Users', 1),
 	(10, 5, 'Roles', 'circle', 'Roles', 2),
 	(11, 5, 'Sedes', 'circle', 'Campus', 3),
-	(12, 4, 'Ingresos', 'circle', 'Income', 1);
+	(12, 4, 'Ingresos', 'circle', 'Income', 1),
+	(13, 4, 'Proveedores', 'circle', 'Suppliers', 1);
 
 -- Volcando estructura para tabla db_gliese.supplier
 DROP TABLE IF EXISTS `supplier`;
@@ -254,7 +258,7 @@ CREATE TABLE IF NOT EXISTS `supplier` (
   CONSTRAINT `FK_SUPPLIER_DOCUMENT_TYPE` FOREIGN KEY (`id_document_type`) REFERENCES `document_type` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla db_gliese.supplier: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla db_gliese.supplier: ~1 rows (aproximadamente)
 INSERT INTO `supplier` (`id`, `id_document_type`, `name`, `document_number`, `address`, `phone`, `business_name`, `email`) VALUES
 	(1, 1, 'Alex', '71695889', 'lopez de zuñiga', '915959584', 'R&J ACTION', 'generateindollars@gmail.com');
 
