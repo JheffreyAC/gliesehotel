@@ -2,7 +2,7 @@
 -- Host:                         127.0.0.1
 -- Versión del servidor:         8.0.30 - MySQL Community Server - GPL
 -- SO del servidor:              Win64
--- HeidiSQL Versión:             12.3.0.6589
+-- HeidiSQL Versión:             12.4.0.6659
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `detail_income` (
   CONSTRAINT `FK_INCOME_PRODUCT` FOREIGN KEY (`id_product`) REFERENCES `products` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla db_gliese.detail_income: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla db_gliese.detail_income: ~0 rows (aproximadamente)
 INSERT INTO `detail_income` (`id`, `id_product`, `id_income`, `stock`, `purchase_price`, `sale_price`) VALUES
 	(1, 100, 0, 60, 100.52, 300.00);
 
@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `document_type` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla db_gliese.document_type: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla db_gliese.document_type: ~1 rows (aproximadamente)
 INSERT INTO `document_type` (`id`, `description`, `status`) VALUES
 	(1, 'DNI', 1);
 
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS `income` (
   CONSTRAINT `FK_INCOME_VOUCHER_TYPE` FOREIGN KEY (`id_voucher_type`) REFERENCES `voucher_type` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla db_gliese.income: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla db_gliese.income: ~1 rows (aproximadamente)
 INSERT INTO `income` (`id`, `id_supplier`, `id_user`, `id_voucher_type`, `proof_series`, `voucher_series`, `proof_date`, `igv`, `number_installments`, `installment_value`, `full_purchase`, `status`) VALUES
 	(1, 1, 13, 1, 'F001', '000000001', '2023-03-24 00:25:04', 0.18, 0, 0.00, 500.30, '1');
 
@@ -115,9 +115,9 @@ CREATE TABLE IF NOT EXISTS `intent` (
   `id` int NOT NULL AUTO_INCREMENT,
   `token` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla db_gliese.intent: ~7 rows (aproximadamente)
+-- Volcando datos para la tabla db_gliese.intent: ~8 rows (aproximadamente)
 INSERT INTO `intent` (`id`, `token`) VALUES
 	(12, 'gjYSL8sm4porYSQSPo436rnlxTIqTpgfW9jgjnwtfze3caCPGAAZIHGF1n7mlWNvaA863E4TYam55/Pm+LwjiBGPnvSoTQ7QD88mYd5pM4cUpWQgJThJKHGRZL1EsNtsdpBAmg=='),
 	(13, 'gjYSL8sm4porYSQSPo436rnlxTIqTpgfW9jgjnwtfze3caCPGAAZIHGF1n7mlWNvaA863E4TYam55/Pm+LwjiBGPnvSoTQ7QD88mYd5pM4cUpWQgJThJKHGRZL1EsNtsdpBAmg=='),
@@ -125,7 +125,8 @@ INSERT INTO `intent` (`id`, `token`) VALUES
 	(15, 'gjYSL8sm4porYSQSPo436rnlxTIqTpgfW9jgjnwtfze3caCPGAAZIHGF1n7mlWNvaA863E4TYam55/Pm+LwjiBGPnvSoTQ7QD88mYd5pM4cUpWQgJThJKHGRZL1EsNtsdpBAmg=='),
 	(16, 'EFj4ncJXv2k7BoTw6rZUJ7Qto8w/U2stpqCNZY0boNeX8Q7/noplT8/at/4a55wyFySCmYyf5cN0rDX3c+p9u28OyYSJeeJsyvg7fgbo+3IihvmAWidiivGDJGYoJMywbhIZdA=='),
 	(17, 'RXy0/jSAd5JczrdApFzVgMPPoN9ZJ7RR1JdvuG5bKZ3443zRi8vjrEqYRwkikqQ2fU7BKe3H3A3IACnGLt97aVeRUDl9VL/3hqUx7HSR+EtlAj6HGCZ6TKjLL6bm3GiNuI8MIQ=='),
-	(18, 'RXy0/jSAd5JczrdApFzVgMPPoN9ZJ7RR1JdvuG5bKZ3443zRi8vjrEqYRwkikqQ2fU7BKe3H3A3IACnGLt97aVeRUDl9VL/3hqUx7HSR+EtlAj6HGCZ6TKjLL6bm3GiNuI8MIQ==');
+	(18, 'RXy0/jSAd5JczrdApFzVgMPPoN9ZJ7RR1JdvuG5bKZ3443zRi8vjrEqYRwkikqQ2fU7BKe3H3A3IACnGLt97aVeRUDl9VL/3hqUx7HSR+EtlAj6HGCZ6TKjLL6bm3GiNuI8MIQ=='),
+	(19, 'VYtGUGue1OCp8/5QBhcIi3ShJbk85/YmVbk3iENr8rIseReWUKYmyZ9BPSmQJflxXaZlVIg62LFTcneW9aJBMVZT6srkr+wXoTGA0pzbPKXKZOPIF+U2dwTS6JX3RDysc12VjA==');
 
 -- Volcando estructura para tabla db_gliese.menu
 DROP TABLE IF EXISTS `menu`;
@@ -159,7 +160,7 @@ CREATE TABLE IF NOT EXISTS `permission` (
   CONSTRAINT `FK_PERMISSION_SUB_MENU` FOREIGN KEY (`id_sub_menu`) REFERENCES `sub_menu` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla db_gliese.permission: ~8 rows (aproximadamente)
+-- Volcando datos para la tabla db_gliese.permission: ~9 rows (aproximadamente)
 INSERT INTO `permission` (`id`, `id_role`, `id_sub_menu`, `status`) VALUES
 	(1, 1, 1, 1),
 	(2, 1, 6, 1),
@@ -189,9 +190,9 @@ CREATE TABLE IF NOT EXISTS `products` (
   CONSTRAINT `FK_PRODUCTS_CATEGORIES` FOREIGN KEY (`id_category`) REFERENCES `categories` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla db_gliese.products: ~8 rows (aproximadamente)
+-- Volcando datos para la tabla db_gliese.products: ~10 rows (aproximadamente)
 INSERT INTO `products` (`id`, `id_category`, `description`, `stock`, `code`, `status`, `expiration_date`, `status_expiration_date`) VALUES
-	(65, 2, 'DESC 01', 10, '01', 1, '2023-03-18', 1),
+	(65, 2, 'DESC 01', 11, '01', 1, '2023-03-18', 1),
 	(66, 3, 'DESC 02', 20, '02', 1, 'WITHOUT EXPIRATION', 1),
 	(67, 2, 'DESC 03', 30, '03', 1, '2023-03-18', 1),
 	(68, 3, 'DESC 04', 40, '04', 1, '2023-03-18', 1),
@@ -239,7 +240,7 @@ INSERT INTO `sub_menu` (`id`, `id_menu`, `description`, `icon`, `url`, `order`) 
 	(10, 5, 'Roles', 'circle', 'Roles', 2),
 	(11, 5, 'Sedes', 'circle', 'Campus', 3),
 	(12, 4, 'Ingresos', 'circle', 'Income', 1),
-	(13, 4, 'Proveedores', 'circle', 'Suppliers', 1);
+	(13, 4, 'Proveedores', 'circle', 'Suppliers', 2);
 
 -- Volcando estructura para tabla db_gliese.supplier
 DROP TABLE IF EXISTS `supplier`;
@@ -252,15 +253,17 @@ CREATE TABLE IF NOT EXISTS `supplier` (
   `phone` varchar(20) DEFAULT NULL,
   `business_name` varchar(256) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `document_number` (`document_number`),
   KEY `id_document_type` (`id_document_type`),
   CONSTRAINT `FK_SUPPLIER_DOCUMENT_TYPE` FOREIGN KEY (`id_document_type`) REFERENCES `document_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla db_gliese.supplier: ~1 rows (aproximadamente)
-INSERT INTO `supplier` (`id`, `id_document_type`, `name`, `document_number`, `address`, `phone`, `business_name`, `email`) VALUES
-	(1, 1, 'Alex', '71695889', 'lopez de zuñiga', '915959584', 'R&J ACTION', 'generateindollars@gmail.com');
+-- Volcando datos para la tabla db_gliese.supplier: ~2 rows (aproximadamente)
+INSERT INTO `supplier` (`id`, `id_document_type`, `name`, `document_number`, `address`, `phone`, `business_name`, `email`, `status`) VALUES
+	(1, 1, 'ALEXANDER', '71695889', 'lopez de zuñiga', '915959584', 'R&amp;J ACTION', 'generateindollars@gmail.com', 1),
+	(3, 1, 'JEREMI', '72003664', 'Av 1 de mayo', '936672334', 'J&amp;D ACTION', 'jeregr.21042002@gmail.com', 1);
 
 -- Volcando estructura para tabla db_gliese.user
 DROP TABLE IF EXISTS `user`;
