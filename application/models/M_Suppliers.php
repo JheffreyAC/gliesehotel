@@ -181,6 +181,35 @@ class M_Suppliers extends Model {
         return $response;
     }
 
+    // -- 
+     // --
+	public function get_social_reason() {
+        // --
+        try {
+            // --
+            $sql = 'SELECT 
+                    id,
+                    business_name,
+                    status
+                FROM supplier';
+            // --
+            $result = $this->pdo->fetchAll($sql);
+            // --
+            if ($result) {
+                // --
+                $response = array('status' => 'OK', 'result' => $result);
+            } else {
+                // --
+                $response = array('status' => 'ERROR', 'result' => array());
+            }
+        } catch (PDOException $e) {
+            // --
+            $response = array('status' => 'EXCEPTION', 'result' => $e);
+        }
+        // --
+        return $response;
+    }
+
     
 
 }

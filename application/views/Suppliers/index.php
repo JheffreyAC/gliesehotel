@@ -183,10 +183,8 @@
                     </div>
                     <!--/ Update Supplier Modal -->
 
-
                 </section>
                 <!-- Permissions ends -->
-
             </div>
         </div>
     </div>

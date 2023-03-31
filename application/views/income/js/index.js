@@ -26,7 +26,7 @@ function load_datatable() {
         columns: [
             { data: 'proof_date' },
             { data: 'business_name' },      
-            { data: 'voucher_type_description' } ,    
+            { data: 'description' } ,    
             { 
                 class: 'center',
                 render: function (data, type, row, meta) {

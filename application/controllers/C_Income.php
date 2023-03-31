@@ -186,7 +186,7 @@ class C_Income extends Controller {
             // --
             if (!empty($input['business_name']) &&
                 !empty($input['first_name']) &&
-                !empty($input['voucher_type_description']) &&
+                !empty($input['description']) &&
                 !empty($input['proof_series']) &&
                 !empty($input['voucher_series']) &&
                 !empty($input['proof_date']) &&
@@ -198,7 +198,7 @@ class C_Income extends Controller {
                 // --
                 $business_name = $this->functions->clean_string($input['business_name']);
                 $first_name = $this->functions->clean_string(strtoupper($input['first_name']));
-                $voucher_type_description = $this->functions->clean_string($input['voucher_type_description']);
+                $voucher_type_description = $this->functions->clean_string($input['description']);
                 $proof_series = $this->functions->clean_string($input['proof_series']);
                 $voucher_series = $this->functions->clean_string($input['voucher_series']);
                 $proof_date = $this->functions->clean_string($input['proof_date']);
@@ -210,7 +210,7 @@ class C_Income extends Controller {
                 $bind = array(
                     'business_name' => $business_name,
                     'first_name' => $first_name,
-                    'voucher_type_description' => $voucher_type_description,
+                    'description' => $description,
                     'proof_series' => $proof_series,
                     'voucher_series' => $voucher_series,
                     'proof_date' => $proof_date,
