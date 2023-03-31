@@ -2,7 +2,7 @@
 -- Host:                         127.0.0.1
 -- Versión del servidor:         8.0.30 - MySQL Community Server - GPL
 -- SO del servidor:              Win64
--- HeidiSQL Versión:             12.3.0.6589
+-- HeidiSQL Versión:             12.4.0.6659
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `document_type` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla db_gliese.document_type: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla db_gliese.document_type: ~1 rows (aproximadamente)
 INSERT INTO `document_type` (`id`, `description`, `status`) VALUES
 	(1, 'DNI', 1);
 
@@ -106,7 +106,9 @@ CREATE TABLE IF NOT EXISTS `income` (
   CONSTRAINT `FK_INCOME_VOUCHER_TYPE` FOREIGN KEY (`id_voucher_type`) REFERENCES `voucher_type` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla db_gliese.income: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla db_gliese.income: ~1 rows (aproximadamente)
+INSERT INTO `income` (`id`, `id_supplier`, `id_user`, `id_voucher_type`, `id_payment_type`, `proof_series`, `voucher_series`, `proof_date`, `igv`, `number_installments`, `installment_value`, `full_purchase`, `status`) VALUES
+	(1, 1, 13, 1, 1, 'B001', '00000001', '2023-03-30 21:43:58', 0.18, NULL, NULL, 100.50, '1');
 
 -- Volcando estructura para tabla db_gliese.intent
 DROP TABLE IF EXISTS `intent`;
@@ -356,7 +358,7 @@ CREATE TABLE IF NOT EXISTS `voucher_type` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla db_gliese.voucher_type: ~8 rows (aproximadamente)
+-- Volcando datos para la tabla db_gliese.voucher_type: ~0 rows (aproximadamente)
 INSERT INTO `voucher_type` (`id`, `description`, `status`) VALUES
 	(1, 'Factura', 1),
 	(2, 'Boleta de Venta', 1),
