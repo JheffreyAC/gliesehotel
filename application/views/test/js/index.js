@@ -1,10 +1,10 @@
 // -- Functions
 
 // --
-function get_social_reason() {
+function get_business_name() {
     // --
     $.ajax({
-        url: BASE_URL + 'Suppliers/get_social_reason',
+        url: BASE_URL + 'Suppliers/get_business_name',
         type: 'GET',
         dataType: 'json',
         contentType: false,
@@ -53,8 +53,8 @@ function get_voucher_type() {
                     html += '<option value="' + element.id + '">'+ element.description +'</option>';
                 });
                 // -- Set values for select
-                $('#test :input[name=v_description]').html(html);
-                $('#test :input[name=v_description]').html(html);
+                $('#test :input[name=vt_description]').html(html);
+                $('#test :input[name=vt_description]').html(html);
             }
         }
     })
@@ -83,14 +83,75 @@ function get_payment_type() {
                     html += '<option value="' + element.id + '">'+ element.description +'</option>';
                 });
                 // -- Set values for select
-                $('#test :input[name=p_description]').html(html);
-                $('#test :input[name=p_description]').html(html);
+                $('#test :input[name=pt_description]').html(html);
+                $('#test :input[name=pt_description]').html(html);
             }
         }
     })
 }
 
+// --
+function create_income(form) {
+    // --
+    $('#btn_create_income').prop('disabled', true);
+    // --
+    let params = new FormData(form);
+    // --
+    $.ajax({
+        url: BASE_URL + 'Test/create_income',
+        type: 'POST',
+        data: params,
+        dataType: 'json',
+        contentType: false,
+        processData: false,
+        cache: false,
+        beforeSend: function() {
+            console.log('Cargando...');
+        },
+        success: function(data) {
+            // --
+            functions.toast_message(data.type, data.msg, data.status);
+            // --
+            if (data.status === 'OK') {
+                // --
+                $('#create_income_modal').modal('hide');
+                form.reset();
+                refresh_datatable();
+
+            } else {
+                // --
+                $('#btn_create_income').prop('disabled', false);
+            }
+        }
+    })
+}
+
+// -- Events
+
+// -- Reset forms
+$(document).on('click', '.reset', function() {
+    // --
+    $('#create_income_form').validate().resetForm();
+})
+
+// -- Validate form
+$('#create_income_form').validate({
+    // --
+    submitHandler: function(form) {
+        create_income(form);
+    }
+})
+
+// -- Reset form on modal hidden
+$('.modal').on('hidden.bs.modal', function () {
+    // --
+    $(this).find('form')[0].reset();
+    // --
+    $('#btn_create_income').prop('disabled', false);
+});
+
+
 get_payment_type();
-get_social_reason();
+get_business_name();
 get_voucher_type();
 // --

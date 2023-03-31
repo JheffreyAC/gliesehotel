@@ -40,7 +40,7 @@
                                     <div class="col-md-4">
                                         <div>
                                             <label class="form-label">Tipo de Comprobante</label>
-                                            <select name="v_description" class="form-select select2" data-msg="" required>
+                                            <select name="vt_description" class="form-select select2" data-msg="" required>
                                             </select>
                                         </div>
                                     </div>
@@ -48,17 +48,17 @@
 
                                 <div class="row mb-3">
                                     <div class="col-md-4">
-                                        <label for="serie" class="form-label">Serie</label>
-                                        <input type="text" class="form-control" id="serie" name="serie">
+                                        <label class="form-label">Serie</label>
+                                        <input name="proof_series" type="text" class="form-control">
                                     </div>
                                     <div class="col-md-4">
-                                        <label for="numero" class="form-label">Número</label>
-                                        <input type="text" class="form-control" id="numero" name="numero">
+                                        <label class="form-label">Numero De Serie</label>
+                                        <input name="voucher_series" type="text" class="form-control">
                                     </div>
                                     <div class="col-md-4">
                                         <div>
                                             <label class="form-label">Tipo de Pago</label>
-                                            <select name="p_description" class="form-select select2" data-msg="" required>
+                                            <select name="pt_description" class="form-select select2" data-msg="" required>
                                             </select>
                                         </div>
                                     </div>
@@ -77,7 +77,7 @@
                                             <table class="table" id="datatable-income">
                                                 <thead>
                                                     <tr>
-                                                        <th>Opcion</th>
+                                                        <th>Acciones</th>
                                                         <th>Articulo</th>
                                                         <th>Cantidad</th>
                                                         <th>Precio compra</th>

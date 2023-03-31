@@ -474,7 +474,7 @@ class C_Suppliers extends Controller {
     }
 
     //--
-    public function get_social_reason() {
+    public function get_business_name() {
         // --
         $this->functions->validate_session($this->segment->get('isActive'));
         // --
@@ -489,7 +489,7 @@ class C_Suppliers extends Controller {
             // --
             $obj = $this->load_model('Suppliers');
             // --
-            $response = $obj->get_social_reason();
+            $response = $obj->get_business_name();
             // --
             switch ($response['status']) {
                 // --

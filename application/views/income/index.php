@@ -37,7 +37,8 @@
                                     <thead>
                                         <tr>
                                             <th>Fecha</th>
-                                            <th>Proovedor</th>          
+                                            <th>Proovedor</th>.
+                                            <th>Usuario</th>            
                                             <th>Documento</th>
                                             <th>Numero</th>
                                             <th>Total De Compra</th>

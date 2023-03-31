@@ -183,7 +183,7 @@ class M_Suppliers extends Model {
 
     // -- 
      // --
-	public function get_social_reason() {
+	public function get_business_name() {
         // --
         try {
             // --
