@@ -65,8 +65,6 @@ CREATE TABLE IF NOT EXISTS `detail_income` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 
 -- Volcando datos para la tabla db_gliese.detail_income: ~0 rows (aproximadamente)
-INSERT INTO `detail_income` (`id`, `id_product`, `id_income`, `stock`, `purchase_price`, `sale_price`) VALUES
-	(1, 100, 0, 60, 100.52, 300.00);
 
 -- Volcando estructura para tabla db_gliese.document_type
 DROP TABLE IF EXISTS `document_type`;
@@ -77,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `document_type` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla db_gliese.document_type: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla db_gliese.document_type: ~0 rows (aproximadamente)
 INSERT INTO `document_type` (`id`, `description`, `status`) VALUES
 	(1, 'DNI', 1);
 
@@ -105,7 +103,7 @@ CREATE TABLE IF NOT EXISTS `income` (
   CONSTRAINT `FK_INCOME_VOUCHER_TYPE` FOREIGN KEY (`id_voucher_type`) REFERENCES `voucher_type` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla db_gliese.income: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla db_gliese.income: ~0 rows (aproximadamente)
 INSERT INTO `income` (`id`, `id_supplier`, `id_user`, `id_voucher_type`, `proof_series`, `voucher_series`, `proof_date`, `igv`, `number_installments`, `installment_value`, `full_purchase`, `status`) VALUES
 	(1, 1, 13, 1, 'F001', '000000001', '2023-03-24 00:25:04', 0.18, 0, 0.00, 500.30, '1');
 
@@ -115,9 +113,9 @@ CREATE TABLE IF NOT EXISTS `intent` (
   `id` int NOT NULL AUTO_INCREMENT,
   `token` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla db_gliese.intent: ~8 rows (aproximadamente)
+-- Volcando datos para la tabla db_gliese.intent: ~7 rows (aproximadamente)
 INSERT INTO `intent` (`id`, `token`) VALUES
 	(12, 'gjYSL8sm4porYSQSPo436rnlxTIqTpgfW9jgjnwtfze3caCPGAAZIHGF1n7mlWNvaA863E4TYam55/Pm+LwjiBGPnvSoTQ7QD88mYd5pM4cUpWQgJThJKHGRZL1EsNtsdpBAmg=='),
 	(13, 'gjYSL8sm4porYSQSPo436rnlxTIqTpgfW9jgjnwtfze3caCPGAAZIHGF1n7mlWNvaA863E4TYam55/Pm+LwjiBGPnvSoTQ7QD88mYd5pM4cUpWQgJThJKHGRZL1EsNtsdpBAmg=='),
@@ -126,7 +124,9 @@ INSERT INTO `intent` (`id`, `token`) VALUES
 	(16, 'EFj4ncJXv2k7BoTw6rZUJ7Qto8w/U2stpqCNZY0boNeX8Q7/noplT8/at/4a55wyFySCmYyf5cN0rDX3c+p9u28OyYSJeeJsyvg7fgbo+3IihvmAWidiivGDJGYoJMywbhIZdA=='),
 	(17, 'RXy0/jSAd5JczrdApFzVgMPPoN9ZJ7RR1JdvuG5bKZ3443zRi8vjrEqYRwkikqQ2fU7BKe3H3A3IACnGLt97aVeRUDl9VL/3hqUx7HSR+EtlAj6HGCZ6TKjLL6bm3GiNuI8MIQ=='),
 	(18, 'RXy0/jSAd5JczrdApFzVgMPPoN9ZJ7RR1JdvuG5bKZ3443zRi8vjrEqYRwkikqQ2fU7BKe3H3A3IACnGLt97aVeRUDl9VL/3hqUx7HSR+EtlAj6HGCZ6TKjLL6bm3GiNuI8MIQ=='),
-	(19, 'VYtGUGue1OCp8/5QBhcIi3ShJbk85/YmVbk3iENr8rIseReWUKYmyZ9BPSmQJflxXaZlVIg62LFTcneW9aJBMVZT6srkr+wXoTGA0pzbPKXKZOPIF+U2dwTS6JX3RDysc12VjA==');
+	(19, 'VYtGUGue1OCp8/5QBhcIi3ShJbk85/YmVbk3iENr8rIseReWUKYmyZ9BPSmQJflxXaZlVIg62LFTcneW9aJBMVZT6srkr+wXoTGA0pzbPKXKZOPIF+U2dwTS6JX3RDysc12VjA=='),
+	(20, '3ckmMmMWPQfjL1f5lUk3P+kf38KcpJca/H8FExPCtPDZ6qvN/JaaZAMP/yevdj6Kglp/jhDZhTnnjOs88mh6FM8au67U+FLaEFtG5Jktwhs9e0rjGrfCbbLWnhojZWb53P1/Jg=='),
+	(21, 'ao4rLnLR32VGiEXTRJnRDvUa0/YeDi30TSIcPdbYLAdF8SS54edHQXF3yx6rCs3XBfuHr4C04kmqU9XJd5Ya5YlMZSdQDgCZTykvcHIrHGC+QrXzHtu8YLeshLb3W5pmQW5avw==');
 
 -- Volcando estructura para tabla db_gliese.menu
 DROP TABLE IF EXISTS `menu`;
@@ -145,6 +145,21 @@ INSERT INTO `menu` (`id`, `description`, `icon`, `order`) VALUES
 	(3, 'Ventas', 'shopping-cart', 3),
 	(4, 'Recepción', 'database', 4),
 	(5, 'Administración', 'sliders', 5);
+
+-- Volcando estructura para tabla db_gliese.payment_type
+DROP TABLE IF EXISTS `payment_type`;
+CREATE TABLE IF NOT EXISTS `payment_type` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `description` varchar(50) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+
+-- Volcando datos para la tabla db_gliese.payment_type: ~2 rows (aproximadamente)
+INSERT INTO `payment_type` (`id`, `description`, `status`) VALUES
+	(1, 'Contado', 1),
+	(2, 'Credito', 1),
+	(3, 'Transferencia', 1);
 
 -- Volcando estructura para tabla db_gliese.permission
 DROP TABLE IF EXISTS `permission`;
@@ -200,7 +215,6 @@ INSERT INTO `products` (`id`, `id_category`, `description`, `stock`, `code`, `st
 	(95, 3, 'DESC 06', 60, '06', 1, 'WITHOUT EXPIRATION', 1),
 	(96, 3, 'DESC 07', 70, '07', 1, '2023-03-20', 1),
 	(97, 3, 'DESC 08', 80, '08', 1, 'WITHOUT EXPIRATION', 1),
-	(100, 2, 'PC_GAMER', 10, '58654', 1, '2023-04-09', 1),
 	(101, 3, 'DES09', 10, '09', 1, 'WITHOUT EXPIRATION', 1);
 
 -- Volcando estructura para tabla db_gliese.role
@@ -260,7 +274,7 @@ CREATE TABLE IF NOT EXISTS `supplier` (
   CONSTRAINT `FK_SUPPLIER_DOCUMENT_TYPE` FOREIGN KEY (`id_document_type`) REFERENCES `document_type` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla db_gliese.supplier: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla db_gliese.supplier: ~1 rows (aproximadamente)
 INSERT INTO `supplier` (`id`, `id_document_type`, `name`, `document_number`, `address`, `phone`, `business_name`, `email`, `status`) VALUES
 	(1, 1, 'ALEXANDER', '71695889', 'lopez de zuñiga', '915959584', 'R&amp;J ACTION', 'generateindollars@gmail.com', 1),
 	(3, 1, 'JEREMI', '72003664', 'Av 1 de mayo', '936672334', 'J&amp;D ACTION', 'jeregr.21042002@gmail.com', 1);
@@ -327,20 +341,21 @@ INSERT INTO `user_campus` (`id`, `id_user`, `id_campus`, `status`) VALUES
 DROP TABLE IF EXISTS `voucher_type`;
 CREATE TABLE IF NOT EXISTS `voucher_type` (
   `id` int NOT NULL,
-  `voucher_type_description` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `description` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `status` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 -- Volcando datos para la tabla db_gliese.voucher_type: ~8 rows (aproximadamente)
-INSERT INTO `voucher_type` (`id`, `voucher_type_description`) VALUES
-	(1, 'Factura'),
-	(2, 'Boleta de Venta'),
-	(3, 'Nota de Credito'),
-	(4, 'Guia de Remisión Remitente'),
-	(5, 'Cotización'),
-	(6, 'Orden de Pagos'),
-	(7, 'Ticket'),
-	(8, 'Prestamo');
+INSERT INTO `voucher_type` (`id`, `description`, `status`) VALUES
+	(1, 'Factura', 1),
+	(2, 'Boleta de Venta', 1),
+	(3, 'Nota de Credito', 1),
+	(4, 'Guia de Remisión Remitente', 1),
+	(5, 'Cotización', 1),
+	(6, 'Orden de Pagos', 1),
+	(7, 'Ticket', 1),
+	(8, 'Prestamo', 1);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
