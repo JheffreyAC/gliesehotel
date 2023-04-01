@@ -141,7 +141,10 @@ function create_product(form) {
                         message: `El producto expira en ${daysUntilExpiration} días el ${newExpirationDate.toLocaleDateString()}.`
                     };
         
-                    
+                    // Para evitar toda esta logica :v tenian que hacer un query, mas naaaaaa
+                    // -- Ese dia les mencione que tenian que hacer su función, por rango de fechas
+                    // para evitar toda esta logica, es dms codigo
+                    // PAra ello, supoooooooooooongo que guardan la fecha en timestamp (int) 
                     /* Comprobando si daysUntilExpiration es menor o igual a 30 y mayor que
                     0. Si es así, agregará daysUntilExpiration al mensaje. si es igual
                     a 0, cambiará el título a 'Producto expirado' y agregará '(hoy)' al

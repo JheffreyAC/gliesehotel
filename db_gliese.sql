@@ -73,11 +73,12 @@ CREATE TABLE IF NOT EXISTS `document_type` (
   `description` varchar(45) NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla db_gliese.document_type: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla db_gliese.document_type: ~0 rows (aproximadamente)
 INSERT INTO `document_type` (`id`, `description`, `status`) VALUES
-	(1, 'DNI', 1);
+	(1, 'DNI', 1),
+	(2, 'RUC', 1);
 
 -- Volcando estructura para tabla db_gliese.income
 DROP TABLE IF EXISTS `income`;
@@ -106,7 +107,7 @@ CREATE TABLE IF NOT EXISTS `income` (
   CONSTRAINT `FK_INCOME_VOUCHER_TYPE` FOREIGN KEY (`id_voucher_type`) REFERENCES `voucher_type` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla db_gliese.income: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla db_gliese.income: ~0 rows (aproximadamente)
 INSERT INTO `income` (`id`, `id_supplier`, `id_user`, `id_voucher_type`, `id_payment_type`, `proof_series`, `voucher_series`, `proof_date`, `igv`, `number_installments`, `installment_value`, `full_purchase`, `status`) VALUES
 	(1, 1, 13, 1, 1, 'B001', '00000001', '2023-03-30 21:43:58', 0.18, NULL, NULL, 100.50, '1');
 
@@ -116,7 +117,7 @@ CREATE TABLE IF NOT EXISTS `intent` (
   `id` int NOT NULL AUTO_INCREMENT,
   `token` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb3;
 
 -- Volcando datos para la tabla db_gliese.intent: ~10 rows (aproximadamente)
 INSERT INTO `intent` (`id`, `token`) VALUES
@@ -129,7 +130,9 @@ INSERT INTO `intent` (`id`, `token`) VALUES
 	(18, 'RXy0/jSAd5JczrdApFzVgMPPoN9ZJ7RR1JdvuG5bKZ3443zRi8vjrEqYRwkikqQ2fU7BKe3H3A3IACnGLt97aVeRUDl9VL/3hqUx7HSR+EtlAj6HGCZ6TKjLL6bm3GiNuI8MIQ=='),
 	(19, 'VYtGUGue1OCp8/5QBhcIi3ShJbk85/YmVbk3iENr8rIseReWUKYmyZ9BPSmQJflxXaZlVIg62LFTcneW9aJBMVZT6srkr+wXoTGA0pzbPKXKZOPIF+U2dwTS6JX3RDysc12VjA=='),
 	(20, '3ckmMmMWPQfjL1f5lUk3P+kf38KcpJca/H8FExPCtPDZ6qvN/JaaZAMP/yevdj6Kglp/jhDZhTnnjOs88mh6FM8au67U+FLaEFtG5Jktwhs9e0rjGrfCbbLWnhojZWb53P1/Jg=='),
-	(21, 'ao4rLnLR32VGiEXTRJnRDvUa0/YeDi30TSIcPdbYLAdF8SS54edHQXF3yx6rCs3XBfuHr4C04kmqU9XJd5Ya5YlMZSdQDgCZTykvcHIrHGC+QrXzHtu8YLeshLb3W5pmQW5avw==');
+	(21, 'ao4rLnLR32VGiEXTRJnRDvUa0/YeDi30TSIcPdbYLAdF8SS54edHQXF3yx6rCs3XBfuHr4C04kmqU9XJd5Ya5YlMZSdQDgCZTykvcHIrHGC+QrXzHtu8YLeshLb3W5pmQW5avw=='),
+	(22, '4M2cNr72yhLkmPpw+xXJt82moY7QeBgsAWNznGMkjnIbP3LrxA8OFdi3itOI9y38HC0rsQrgxKnE43AKUpVTTnRM/yUME4sFTUVKX/iWYvsYdkqcfh8P662f+Apoj0/chlz3Og=='),
+	(23, '4LDRDYaAaQu9fMJdJdpk43GN4uDk4tNzN6RZEhYdSJqSXlCSuDNPZA+wqVY5RVTw+qNyOVA+YbNjZrkXDMINumRg1st8sftzpcQvvp57tbDD3077aHoHnOP2CJ+78V8795lA1g==');
 
 -- Volcando estructura para tabla db_gliese.menu
 DROP TABLE IF EXISTS `menu`;
@@ -203,7 +206,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   `stock` int DEFAULT NULL,
   `code` varchar(50) DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
-  `expiration_date` char(50) DEFAULT NULL,
+  `expiration_date` int DEFAULT NULL,
   `status_expiration_date` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `description` (`description`),
@@ -212,17 +215,16 @@ CREATE TABLE IF NOT EXISTS `products` (
   CONSTRAINT `FK_PRODUCTS_CATEGORIES` FOREIGN KEY (`id_category`) REFERENCES `categories` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla db_gliese.products: ~9 rows (aproximadamente)
+-- Volcando datos para la tabla db_gliese.products: ~8 rows (aproximadamente)
 INSERT INTO `products` (`id`, `id_category`, `description`, `stock`, `code`, `status`, `expiration_date`, `status_expiration_date`) VALUES
-	(65, 2, 'DESC 01', 11, '01', 1, '2023-03-18', 1),
-	(66, 3, 'DESC 02', 20, '02', 1, 'WITHOUT EXPIRATION', 1),
-	(67, 2, 'DESC 03', 30, '03', 1, '2023-03-18', 1),
-	(68, 3, 'DESC 04', 40, '04', 1, '2023-03-18', 1),
-	(69, 2, 'DESC 05', 40, '05', 1, '2023-03-18', 1),
-	(95, 3, 'DESC 06', 60, '06', 1, 'WITHOUT EXPIRATION', 1),
-	(96, 3, 'DESC 07', 70, '07', 1, '2023-03-20', 1),
-	(97, 3, 'DESC 08', 80, '08', 1, 'WITHOUT EXPIRATION', 1),
-	(101, 3, 'DES09', 10, '09', 1, 'WITHOUT EXPIRATION', 1);
+	(65, 2, 'DESC 01', 11, '01', 1, 1680007892, 1),
+	(66, 3, 'DESC 02', 20, '02', 1, 1680007892, 1),
+	(67, 2, 'DESC 03', 30, '03', 1, 1679748692, 1),
+	(68, 3, 'DESC 04', 40, '04', 1, 1679748692, 1),
+	(69, 2, 'DESC 05', 40, '05', 1, NULL, 1),
+	(95, 3, 'DESC 06', 60, '06', 1, NULL, 1),
+	(96, 3, 'DESC 07', 70, '07', 1, NULL, 1),
+	(97, 3, 'DESC 08', 80, '08', 1, NULL, 1);
 
 -- Volcando estructura para tabla db_gliese.role
 DROP TABLE IF EXISTS `role`;
@@ -233,7 +235,7 @@ CREATE TABLE IF NOT EXISTS `role` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla db_gliese.role: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla db_gliese.role: ~1 rows (aproximadamente)
 INSERT INTO `role` (`id`, `description`, `status`) VALUES
 	(1, 'ADMINISTRADOR', 1);
 
@@ -272,24 +274,25 @@ DROP TABLE IF EXISTS `supplier`;
 CREATE TABLE IF NOT EXISTS `supplier` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_document_type` int NOT NULL,
-  `name` varchar(100) NOT NULL,
+  `name` varchar(100) CHARACTER SET utf8mb3 NOT NULL,
   `document_number` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
-  `address` varchar(150) DEFAULT NULL,
-  `phone` varchar(20) DEFAULT NULL,
-  `business_name` varchar(256) DEFAULT NULL,
-  `email` varchar(50) DEFAULT NULL,
+  `address` varchar(150) CHARACTER SET utf8mb3 DEFAULT NULL,
+  `phone` varchar(20) CHARACTER SET utf8mb3 DEFAULT NULL,
+  `business_name` varchar(256) CHARACTER SET utf8mb3 DEFAULT NULL,
+  `email` varchar(50) CHARACTER SET utf8mb3 DEFAULT NULL,
   `status` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `document_number` (`document_number`),
   KEY `id_document_type` (`id_document_type`),
   CONSTRAINT `FK_SUPPLIER_DOCUMENT_TYPE` FOREIGN KEY (`id_document_type`) REFERENCES `document_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Volcando datos para la tabla db_gliese.supplier: ~3 rows (aproximadamente)
+-- Volcando datos para la tabla db_gliese.supplier: ~4 rows (aproximadamente)
 INSERT INTO `supplier` (`id`, `id_document_type`, `name`, `document_number`, `address`, `phone`, `business_name`, `email`, `status`) VALUES
 	(1, 1, 'ALEXANDER', '71695889', 'lopez de zuñiga', '915959584', 'R&amp;J ACTION', 'generateindollars@gmail.com', 1),
-	(3, 1, 'JEREMI', '72003664', 'Av 1 de mayo', '936672334', 'J&amp;D ACTION', 'jeregr.21042002@gmail.com', 1),
-	(4, 1, 'RUBEN DARIO', '721368235', 'Chancay Lopez 04', '987975591', 'R&amp;R ACTION', 'rubendario7tu@gmail.com', 1);
+	(3, 1, 'JEREMI', '72003664', 'Av 1 de mayo', '936672334', 'J&amp;amp;D ACTION', 'jeregr.21042002@gmail.com12', 1),
+	(4, 1, 'RUBEN DARIO', '721368235', 'Chancay Lopez 04', '987975591', 'R&amp;R ACTION', 'rubendario7tu@gmail.com', 1),
+	(5, 1, 'JEREMI ARMANDO GONZALES RUEDA', '7', 'Av 1 de mayo', '8', 'J&amp;D ACTION ', 'jeregr.21042002@gmail.com', 1);
 
 -- Volcando estructura para tabla db_gliese.user
 DROP TABLE IF EXISTS `user`;
@@ -308,6 +311,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `image_url` varchar(100) DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
   `active` tinyint(1) DEFAULT '1',
+  `ts_start` bigint DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_UNIQUE` (`user`),
   UNIQUE KEY `document_number_UNIQUE` (`document_number`),
@@ -315,13 +319,14 @@ CREATE TABLE IF NOT EXISTS `user` (
   KEY `FK_USER_DOCUMENT_TYPE` (`id_document_type`),
   CONSTRAINT `FK_USER_DOCUMENT_TYPE` FOREIGN KEY (`id_document_type`) REFERENCES `document_type` (`id`),
   CONSTRAINT `FK_USER_ROLE` FOREIGN KEY (`id_role`) REFERENCES `role` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla db_gliese.user: ~3 rows (aproximadamente)
-INSERT INTO `user` (`id`, `id_role`, `id_document_type`, `first_name`, `last_name`, `document_number`, `address`, `telephone`, `email`, `user`, `password`, `image_url`, `status`, `active`) VALUES
-	(1, 1, 1, 'diego', 'uriarte chancafe', '74417614', 'Chancay', '913085587', 'grjere698@gmail.com', 'admin', '5a6d4d35597a41334e6a4a6a5a4459784d7a51355a6a457a596d593159324d7a597a566d4d5445784e7a633d', NULL, 1, 1),
-	(13, 1, 1, 'jeremi', 'gonzales', '72003668', 'Av. 1 de mayo 1031', '913085589', 'grjere698@gmail.com', 'admin2', '5a6d4d35597a41334e6a4a6a5a4459784d7a51355a6a457a596d593159324d7a597a566d4d5445784e7a633d', NULL, 1, 1),
-	(15, 1, 1, 'ruben', 'dario', '72003669', 'Av. 1 de mayo 1031', '999888777', 'essaulherrerasangay601@gmail.com', 'admin3', '5a6d4d35597a41334e6a4a6a5a4459784d7a51355a6a457a596d593159324d7a597a566d4d5445784e7a633d', NULL, 1, 1);
+-- Volcando datos para la tabla db_gliese.user: ~4 rows (aproximadamente)
+INSERT INTO `user` (`id`, `id_role`, `id_document_type`, `first_name`, `last_name`, `document_number`, `address`, `telephone`, `email`, `user`, `password`, `image_url`, `status`, `active`, `ts_start`) VALUES
+	(1, 1, 2, 'Diego', 'Uriarte chancafe', '10123456781', 'Chancay', '913085587', 'grjere698@gmail.com', 'admin', '5a6d4d35597a41334e6a4a6a5a4459784d7a51355a6a457a596d593159324d7a597a566d4d5445784e7a633d', NULL, 1, 1, 1680330202),
+	(13, 1, 1, 'Jeremi', 'Gonzales', '8', 'Av. 1 de mayo 1031', '913085589', 'grjere698@gmail.com', 'admin2', '5a6d4d35597a41334e6a4a6a5a4459784d7a51355a6a457a596d593159324d7a597a566d4d5445784e7a633d', NULL, 1, 1, NULL),
+	(15, 1, 1, 'Ruben', 'Dario', '4', 'Av. 1 de mayo 1031', '999888777', 'essaulherrerasangay601@gmail.com', 'admin3', '5a6d4d35597a41334e6a4a6a5a4459784d7a51355a6a457a596d593159324d7a597a566d4d5445784e7a633d', NULL, 1, 1, NULL),
+	(18, 1, 1, 'Alex', 'Diaz', '88888', 'Calichera', '8', 'generateindollars@gmail.com12', 'admin4', 'admin', NULL, 1, 1, NULL);
 
 -- Volcando estructura para tabla db_gliese.user_campus
 DROP TABLE IF EXISTS `user_campus`;
@@ -335,9 +340,9 @@ CREATE TABLE IF NOT EXISTS `user_campus` (
   KEY `FK_USER_CAMPUS_USER` (`id_user`),
   CONSTRAINT `FK_USER_CAMPUS_CAMPUS` FOREIGN KEY (`id_campus`) REFERENCES `campus` (`id`) ON DELETE CASCADE,
   CONSTRAINT `FK_USER_CAMPUS_USER` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla db_gliese.user_campus: ~9 rows (aproximadamente)
+-- Volcando datos para la tabla db_gliese.user_campus: ~12 rows (aproximadamente)
 INSERT INTO `user_campus` (`id`, `id_user`, `id_campus`, `status`) VALUES
 	(1, 1, 1, 1),
 	(2, 1, 2, 1),
@@ -347,7 +352,10 @@ INSERT INTO `user_campus` (`id`, `id_user`, `id_campus`, `status`) VALUES
 	(19, 13, 3, 1),
 	(20, 15, 1, 1),
 	(21, 15, 2, 1),
-	(22, 15, 3, 1);
+	(22, 15, 3, 1),
+	(23, 18, 1, 1),
+	(24, 18, 2, 1),
+	(25, 18, 3, 1);
 
 -- Volcando estructura para tabla db_gliese.voucher_type
 DROP TABLE IF EXISTS `voucher_type`;
@@ -358,7 +366,7 @@ CREATE TABLE IF NOT EXISTS `voucher_type` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla db_gliese.voucher_type: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla db_gliese.voucher_type: ~8 rows (aproximadamente)
 INSERT INTO `voucher_type` (`id`, `description`, `status`) VALUES
 	(1, 'Factura', 1),
 	(2, 'Boleta de Venta', 1),

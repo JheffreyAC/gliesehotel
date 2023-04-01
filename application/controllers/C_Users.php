@@ -306,10 +306,10 @@ class C_Users extends Controller {
                 $first_name = $this->functions->clean_string(strtolower($input['first_name']));
                 $last_name = $this->functions->clean_string(strtolower($input['last_name']));
                 $document_type = $this->functions->clean_string($input['document_type']);
-                $document_number = $this->functions->clean_string($input['document_number']);
+                $document_number = $this->functions->clean_string(strlen($input['document_number']));
                 $address = $this->functions->clean_string($input['address']);
                 $user = $this->functions->clean_string($input['user']);
-                $password = $this->functions->clean_string($input['password']);
+                $password = $this->functions->encrypt_password($input['password']);
                 $telephone = $this->functions->clean_string($input['telephone']);
                 $email = $this->functions->clean_string($input['email']);
                 $role = $this->functions->clean_string($input['role']);
@@ -413,13 +413,15 @@ class C_Users extends Controller {
                 !empty($input['telephone']) &&
                 !empty($input['email']) &&
                 !empty($input['role']) &&
-                !empty($input['campus'])
+                !empty($input['campus']) &&
+                !empty($input['description_document_type'])
             ) {
                 // --
                 $id_user = $this->functions->clean_string($input['id_user']);
-                $first_name = $this->functions->clean_string(strtolower($input['first_name']));
-                $last_name = $this->functions->clean_string(strtolower($input['last_name']));
+                $first_name = $this->functions->clean_string(ucfirst ($input['first_name']));
+                $last_name = $this->functions->clean_string(ucfirst ($input['last_name']));
                 $document_type = $this->functions->clean_string($input['document_type']);
+                $description_document_type = $this->functions->clean_string($input['description_document_type']);
                 $document_number = $this->functions->clean_string($input['document_number']);
                 $address = $this->functions->clean_string($input['address']);
                 $user = $this->functions->clean_string($input['user']);
@@ -428,80 +430,92 @@ class C_Users extends Controller {
                 $role = $this->functions->clean_string($input['role']);
                 $active = $this->functions->clean_string($input['active']);
                 $campus = json_decode($input['campus'], true);
+                $is_verified = $this->functions->verified_document_type($description_document_type, $document_number); // -- verified document type
                 // --
-                $obj_campus = $this->load_model('Campus');
-                $response_campus = $obj_campus->get_campus();
-                // --
-                $array_campus = array();
-                // --
-                foreach ($response_campus['result'] as $item) {
+                if ($is_verified) {
                     // --
-                    $status = 0; // -- Inactive for default
+                    $obj_campus = $this->load_model('Campus');
+                    $response_campus = $obj_campus->get_campus();
                     // --
-                    foreach ($campus as $row) {
+                    $array_campus = array();
+                    // --
+                    foreach ($response_campus['result'] as $item) {
                         // --
-                        if (intval($row) === intval($item['id'])) {
-                            $status = 1; // -- Active
+                        $status = 0; // -- Inactive for default
+                        // --
+                        foreach ($campus as $row) {
+                            // --
+                            if (intval($row) === intval($item['id'])) {
+                                $status = 1; // -- Active
+                            }
                         }
+                        // --
+                        $array_campus[] = array(
+                            'id' => $item['id'],
+                            'status' => $status
+                        );
                     }
                     // --
-                    $array_campus[] = array(
-                        'id' => $item['id'],
-                        'status' => $status
+                    $bind = array(
+                        'id_user' => $id_user,
+                        'id_role' => $role,
+                        'id_document_type' => $document_type,
+                        'first_name' => $first_name,
+                        'last_name' => $last_name,
+                        'document_number' => $document_number,
+                        'address' => $address,
+                        'user' => $user,
+                        'telephone' => $telephone,
+                        'email' => $email,
+                        'campus' => $array_campus,
+                        'active' => $active,
+                        'ts_start' => time() // -- usar timestamp papis
+                    );
+                    // --
+                    $obj = $this->load_model('Users');
+                    $response = $obj->update_user($bind);
+                    // --
+                    switch ($response['status']) {
+                        // --
+                        case 'OK':
+                            // --
+                            $json = array(
+                                'status' => 'OK',
+                                'type' => 'success',
+                                'msg' => 'Registro actualizado en el sistema con éxito.',
+                                'data' => array()
+                            );
+                            // --
+                            break;
+
+                        case 'ERROR':
+                            // --
+                            $json = array(
+                                'status' => 'ERROR',
+                                'type' => 'warning',
+                                'msg' => 'No fue posible guardar el registro ingresado, verificar.',
+                            );
+                            // --
+                            break;
+
+                        case 'EXCEPTION':
+                            // --
+                            $json = array(
+                                'status' => 'ERROR',
+                                'type' => 'error',
+                                'msg' => $response['result']->getMessage(),
+                            );
+                            // --
+                            break;
+                    }
+                } else {
+                    $json = array(
+                        'status' => 'ERROR',
+                        'type' => 'warning',
+                        'msg' => 'Número de documento invalido, verificar.',
                     );
                 }
-                // --
-                $bind = array(
-                    'id_user' => $id_user,
-                    'id_role' => $role,
-                    'id_document_type' => $document_type,
-                    'first_name' => $first_name,
-                    'last_name' => $last_name,
-                    'document_number' => $document_number,
-                    'address' => $address,
-                    'user' => $user,
-                    'telephone' => $telephone,
-                    'email' => $email,
-                    'campus' => $array_campus,
-                    'active' => $active
-                );
-                // --
-                $obj = $this->load_model('Users');
-                $response = $obj->update_user($bind);
-                // --
-                switch ($response['status']) {
-                    // --
-                    case 'OK':
-                        // --
-                        $json = array(
-                            'status' => 'OK',
-                            'type' => 'success',
-                            'msg' => 'Registro actualizado en el sistema con éxito.',
-                            'data' => array()
-                        );
-                        // --
-                        break;
 
-                    case 'ERROR':
-                        // --
-                        $json = array(
-                            'status' => 'ERROR',
-                            'type' => 'warning',
-                            'msg' => 'No fue posible guardar el registro ingresado, verificar.',
-                        );
-                        // --
-                        break;
-
-                    case 'EXCEPTION':
-                        // --
-                        $json = array(
-                            'status' => 'ERROR',
-                            'type' => 'error',
-                            'msg' => $response['result']->getMessage(),
-                        );
-                        // --
-                        break;
-                }
             } else {
                 // --
                 $json = array(

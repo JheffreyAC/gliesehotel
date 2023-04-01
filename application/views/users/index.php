@@ -390,21 +390,21 @@
                                             </div>
                                         </div>-->
 
-                                        <div class="mb-1 col-md-9">
+                                        <div class="mb-1 col-md-12">
                                             <div>
                                                 <label class="form-label">Contraseña actual</label>
                                                 <input type="password" name="password" class="form-control" placeholder="Contraseña actual" data-msg="" required/>
                                             </div>
                                         </div>
 
-                                        <div class="mb-1 col-md-9">
+                                        <div class="mb-1 col-md-12">
                                             <div>
                                                 <label class="form-label">Nueva contraseña</label>
                                                 <input type="password" name="new_password" class="form-control" placeholder="Nueva contraseña" data-msg="" required/>
                                             </div>
                                         </div>
 
-                                        <div class="mb-1 col-md-9">
+                                        <div class="mb-1 col-md-912>
                                             <div>
                                                 <label class="form-label">Confirmar nueva contraseña</label>
                                                 <input type="password" name="confirm_password" class="form-control" placeholder="Confirmar nueva contraseña" data-msg="" required/>

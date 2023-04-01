@@ -59,33 +59,33 @@ class M_Main extends Model {
         return $response;
     }
 
-        //--
-        public function get_payment_type() {
+    //--
+    public function get_payment_type() {
+        // --
+        try {
             // --
-            try {
+            $sql = 'SELECT 
+                        id, 
+                        description, 
+                        status 
+                    FROM payment_type;';
+            // --
+            $result = $this->pdo->fetchAll($sql);
+            // --
+            if ($result) {
                 // --
-                $sql = 'SELECT 
-                            id, 
-                            description, 
-                            status 
-                        FROM payment_type;';
+                $response = array('status' => 'OK', 'result' => $result);
+            } else {
                 // --
-                $result = $this->pdo->fetchAll($sql);
-                // --
-                if ($result) {
-                    // --
-                    $response = array('status' => 'OK', 'result' => $result);
-                } else {
-                    // --
-                    $response = array('status' => 'ERROR', 'result' => array());
-                }
-            } catch (PDOException $e) {
-                // --
-                $response = array('status' => 'EXCEPTION', 'result' => $e);
+                $response = array('status' => 'ERROR', 'result' => array());
             }
+        } catch (PDOException $e) {
             // --
-            return $response;
+            $response = array('status' => 'EXCEPTION', 'result' => $e);
         }
+        // --
+        return $response;
+    }
 
     // --
 	public function get_campus() {

@@ -127,11 +127,50 @@ class Functions {
         // --
         $string = trim($string);
         $string = strip_tags($string);
-        $string = htmlspecialchars($string);
+        $string = htmlspecialchars($string); 
         // --
         return $string;
     }
-    
+
+    /**
+     * Validate Length
+     */
+    public function verified_document_type($document_type, $document_number) {
+        // -- validar por tipo de documento (step 1)
+        // -- validar longitud por tipo de docuento
+        /**
+         * dni -> 8
+         * ce -> 20
+         * ruc -> 11
+         */
+
+        $count = strlen($document_number);
+        // --
+        switch ($document_type) {
+        case 'DNI':
+            // --
+            if ($count === 8) {
+                return true;
+            }
+            // --
+            break;
+
+        case 'RUC':
+            // --
+            if ($count === 11) {
+                return true;
+            }
+            // --
+            break;
+
+        default:
+            // --
+            break;
+        }
+        // --
+        return false;
+    }
+
 
     /**
      * Calculate distance between geographical points

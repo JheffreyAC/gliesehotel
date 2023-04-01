@@ -293,7 +293,10 @@ function update_user(form) {
     $('#btn_update_user').prop('disabled', true);
     // --
     let params = new FormData(form);
+    let documentType = $('#update_user_form :input[name=document_type]').find('option:selected').text();
+    // --
     params.append('campus', JSON.stringify($('#update_user_form :input[name=campus]').val()));
+    params.append('description_document_type', documentType);
     // --
     $.ajax({
         url: BASE_URL + 'Users/update_user',
@@ -327,25 +330,6 @@ function update_user(form) {
 
 // --
 function update_user_password(form) {
-    /* -- paso 01 full javascript
-
-    let password = $('#update_password_form :input[name=password]').val()
-    let new_password = $('#update_password_form :input[name=new_password]').val()
-    let confirm_password = $('#update_password_form :input[name=confirm_password]').val()
-
-    // -- validar que el campo nueva contraseña y confirmar contraseña, sean iguales
-    if (new_password == confirm_password) {
-        // -- paso 02
-        // -- validar que la contraseña ingresada (password), sea diferente que la nueva contraseña y confirmar contraseña
-        if (password !== new_password) {
-            llamar ajax para actualizar (update)
-        } else {
-            // -- mostrar una advertencia "xd"
-        }
-    } else {
-        // -- mostrar una advertencia "ytss"
-    }
-    */
     // --
     $('#btn_password_user').prop('disabled', true);
     // --

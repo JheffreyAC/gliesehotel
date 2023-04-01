@@ -189,7 +189,8 @@ class M_Users extends Model {
                     telephone = :telephone,
                     email = :email,
                     user = :user,
-                    active = :active
+                    active = :active,
+                    ts_start = :ts_start
                 WHERE id = :id_user
             ';
             // --

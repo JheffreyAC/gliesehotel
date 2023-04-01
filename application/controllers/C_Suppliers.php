@@ -194,11 +194,11 @@ class C_Suppliers extends Controller {
             ) {
                 // --
                 $document_type = $this->functions->clean_string($input['document_type']);
-                $name = $this->functions->clean_string(strtoupper($input['name']));
+                $name = $this->functions->clean_string(strtoupper(ucfirst($input['name'])));
                 $document_number = $this->functions->clean_string($input['document_number']);
                 $address = $this->functions->clean_string($input['address']);
                 $phone = $this->functions->clean_string($input['phone']);
-                $business_name = $this->functions->clean_string($input['business_name']);
+                $business_name = $this->functions->clean_string($input['business_name']); 
                 $email = $this->functions->clean_string($input['email']);
                 // --
                 $bind = array(
@@ -303,7 +303,7 @@ class C_Suppliers extends Controller {
                 // --
                 $id_supplier = $this->functions->clean_string($input['id_supplier']);
                 $document_type = $this->functions->clean_string($input['document_type']);
-                $name = $this->functions->clean_string(strtoupper($input['name']));
+                $name = $this->functions->clean_string(strtoupper(ucfirst($input['name'])));
                 $document_number = $this->functions->clean_string($input['document_number']);
                 $address = $this->functions->clean_string($input['address']);
                 $phone = $this->functions->clean_string($input['phone']);
