@@ -255,7 +255,10 @@ function create_user(form) {
     $('#btn_create_user').prop('disabled', true);
     // --
     let params = new FormData(form);
+    let documentType = $('#create_user_form :input[name=document_type]').find('option:selected').text();
+    //--
     params.append('campus', JSON.stringify($('#create_user_form :input[name=campus]').val()));
+    params.append('description_document_type', documentType);
     // --
     $.ajax({
         url: BASE_URL + 'Users/create_user',

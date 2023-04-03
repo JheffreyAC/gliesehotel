@@ -300,13 +300,15 @@ class C_Users extends Controller {
                 !empty($input['telephone']) &&
                 !empty($input['email']) &&
                 !empty($input['role']) &&
-                !empty($input['campus'])
+                !empty($input['campus']) &&
+                !empty($input['description_document_type'])
             ) {
                 // --
                 $first_name = $this->functions->clean_string(strtolower($input['first_name']));
                 $last_name = $this->functions->clean_string(strtolower($input['last_name']));
                 $document_type = $this->functions->clean_string($input['document_type']);
-                $document_number = $this->functions->clean_string(strlen($input['document_number']));
+                $document_number = $this->functions->clean_string($input['document_number']);
+                $description_document_type = $this->functions->clean_string($input['description_document_type']);
                 $address = $this->functions->clean_string($input['address']);
                 $user = $this->functions->clean_string($input['user']);
                 $password = $this->functions->encrypt_password($input['password']);
@@ -314,56 +316,67 @@ class C_Users extends Controller {
                 $email = $this->functions->clean_string($input['email']);
                 $role = $this->functions->clean_string($input['role']);
                 $campus = json_decode($input['campus'], true);
+                $is_verified = $this->functions->verified_document_type($description_document_type, $document_number); // -- verified document type
                 // --
-                $bind = array(
-                    'first_name' => $first_name,
-                    'last_name' => $last_name,
-                    'id_document_type' => $document_type,
-                    'document_number' => $document_number,
-                    'address' => $address,
-                    'user' => $user,
-                    'password' => $password,
-                    'telephone' => $telephone,
-                    'email' => $email,
-                    'id_role' => $role,
-                    'campus' => $campus
-                );
-                // --
-                $obj = $this->load_model('Users');
-                $response = $obj->create_user($bind);
-                // --
-                switch ($response['status']) {
+                if ($is_verified) {
                     // --
-                    case 'OK':
+                    $bind = array(
+                        'first_name' => $first_name,
+                        'last_name' => $last_name,
+                        'id_document_type' => $document_type,
+                        'document_number' => $document_number,
+                        'address' => $address,
+                        'user' => $user,
+                        'password' => $password,
+                        'telephone' => $telephone,
+                        'email' => $email,
+                        'id_role' => $role,
+                        'campus' => $campus,
+                        
+                    );
+                    // --
+                    $obj = $this->load_model('Users');
+                    $response = $obj->create_user($bind);
+                    // --
+                    switch ($response['status']) {
                         // --
-                        $json = array(
-                            'status' => 'OK',
-                            'type' => 'success',
-                            'msg' => 'Registro almacenado en el sistema con éxito.',
-                            'data' => array()
-                        );
-                        // --
-                        break;
+                        case 'OK':
+                            // --
+                            $json = array(
+                                'status' => 'OK',
+                                'type' => 'success',
+                                'msg' => 'Registro almacenado en el sistema con éxito.',
+                                'data' => array()
+                            );
+                            // --
+                            break;
 
-                    case 'ERROR':
-                        // --
-                        $json = array(
-                            'status' => 'ERROR',
-                            'type' => 'warning',
-                            'msg' => 'No fue posible guardar el registro ingresado, verificar.',
-                        );
-                        // --
-                        break;
+                        case 'ERROR':
+                            // --
+                            $json = array(
+                                'status' => 'ERROR',
+                                'type' => 'warning',
+                                'msg' => 'No fue posible guardar el registro ingresado, verificar.',
+                            );
+                            // --
+                            break;
 
-                    case 'EXCEPTION':
-                        // --
-                        $json = array(
-                            'status' => 'ERROR',
-                            'type' => 'error',
-                            'msg' => $response['result']->getMessage(),
-                        );
-                        // --
-                        break;
+                        case 'EXCEPTION':
+                            // --
+                            $json = array(
+                                'status' => 'ERROR',
+                                'type' => 'error',
+                                'msg' => $response['result']->getMessage(),
+                            );
+                            // --
+                            break;
+                    }
+                } else {
+                    $json = array(
+                        'status' => 'ERROR',
+                        'type' => 'warning',
+                        'msg' => 'Número de documento invalido, verificar.',
+                    );
                 }
             } else {
                 // --
