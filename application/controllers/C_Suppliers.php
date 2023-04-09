@@ -190,67 +190,82 @@ class C_Suppliers extends Controller {
                 !empty($input['address']) &&
                 !empty($input['phone']) &&
                 !empty($input['business_name']) &&
-                !empty($input['email']) 
+                !empty($input['email']) &&
+                !empty($input['description_document_type'])
             ) {
                 // --
                 $document_type = $this->functions->clean_string($input['document_type']);
                 $name = $this->functions->clean_string(strtoupper(ucfirst($input['name'])));
                 $document_number = $this->functions->clean_string($input['document_number']);
+                $description_document_type = $this->functions->clean_string($input['description_document_type']);
                 $address = $this->functions->clean_string($input['address']);
                 $phone = $this->functions->clean_string($input['phone']);
                 $business_name = $this->functions->clean_string($input['business_name']); 
                 $email = $this->functions->clean_string($input['email']);
                 // --
-                $bind = array(
-                    'id_document_type' => $document_type,
-                    'name' => $name,
-                    'document_number' => $document_number,
-                    'address' => $address,
-                    'phone' => $phone,
-                    'business_name' => $business_name,
-                    'email' => $email
-                );
-                
+                $is_verified = $this->functions->verified_document_type($description_document_type, $document_number); // -- verified document type
                 // --
-                $obj = $this->load_model('Suppliers');
-                $response = $obj->create_supplier($bind);
-                // --
-                switch ($response['status']) {
+                if ($is_verified) {
+                    $bind = array(
+                        'id_document_type' => $document_type,
+                        'name' => $name,
+                        'document_number' => $document_number,
+                        'address' => $address,
+                        'phone' => $phone,
+                        'business_name' => $business_name,
+                        'email' => $email
+                    );
+                    
                     // --
-                    case 'OK':
+                    $obj = $this->load_model('Suppliers');
+                    $response = $obj->create_supplier($bind);
+                    // --
+                    switch ($response['status']) {
                         // --
-                        $json = array(
-                            'status' => 'OK',
-                            'type' => 'success',
-                            'msg' => 'Registro almacenado en el sistema con éxito.',
-                            // 'msg' => ,
-                            'data' => array()
-                        );
-                        // --
-                        break;
-
-                    case 'ERROR':
-                        // --
-                        $json = array(
-                            'status' => 'ERROR',
-                            'type' => 'warning',
-                            'msg' => 'No fue posible guardar el registro ingresado, verificar.',
-                            'data' => array(),
-                        );
-                        // --
-                        break;
-
-                    case 'EXCEPTION':
-                        // --
-                        $json = array(
-                            'status' => 'ERROR',
-                            'type' => 'error',
-                            'msg' => $response['result']->getMessage(),
-                            'data' => array()
-                        );
-                        // --
-                        break;
+                        case 'OK':
+                            // --
+                            $json = array(
+                                'status' => 'OK',
+                                'type' => 'success',
+                                'msg' => 'Registro almacenado en el sistema con éxito.',
+                                // 'msg' => ,
+                                'data' => array()
+                            );
+                            // --
+                            break;
+    
+                        case 'ERROR':
+                            // --
+                            $json = array(
+                                'status' => 'ERROR',
+                                'type' => 'warning',
+                                'msg' => 'No fue posible guardar el registro ingresado, verificar.',
+                                'data' => array(),
+                            );
+                            // --
+                            break;
+    
+                        case 'EXCEPTION':
+                            // --
+                            $json = array(
+                                'status' => 'ERROR',
+                                'type' => 'error',
+                                'msg' => $response['result']->getMessage(),
+                                'data' => array()
+                            );
+                            // --
+                            break;
+                    }
+                } else {
+                    // --
+                    $json = array(
+                        'status' => 'ERROR',
+                        'type' => 'warning',
+                        'msg' => 'No se enviaron los campos necesarios, verificar.',
+                        'data' => array()
+                    );
                 }
+                
             } else {
                 // --
                 $json = array(
@@ -298,67 +313,80 @@ class C_Suppliers extends Controller {
                 !empty($input['address']) &&
                 !empty($input['phone'])&&
                 !empty($input['business_name']) &&
-                !empty($input['email'])  
+                !empty($input['email']) &&
+                !empty($input['description_document_type'])
             ) {
                 // --
                 $id_supplier = $this->functions->clean_string($input['id_supplier']);
                 $document_type = $this->functions->clean_string($input['document_type']);
                 $name = $this->functions->clean_string(strtoupper(ucfirst($input['name'])));
                 $document_number = $this->functions->clean_string($input['document_number']);
+                $description_document_type = $this->functions->clean_string($input['description_document_type']);   
                 $address = $this->functions->clean_string($input['address']);
                 $phone = $this->functions->clean_string($input['phone']);
                 $business_name = $this->functions->clean_string($input['business_name']);
                 $email = $this->functions->clean_string($input['email']);
                 // --
-                $bind = array(
-                    'id_supplier' => $id_supplier,
-                    'id_document_type' => $document_type,
-                    'name' => $name,
-                    'document_number' => $document_number,
-                    'address' => $address,
-                    'phone' => $phone,
-                    'business_name' => $business_name,
-                    'email' => $email
-
-                );
+                $is_verified = $this->functions->verified_document_type($description_document_type, $document_number); // -- verified document type
                 // --
-                $obj = $this->load_model('Suppliers');
-                $response = $obj->update_supplier($bind);
-                // --
-                switch ($response['status']) {
+                if ($is_verified) {
+                    // -- 
+                    $bind = array(
+                        'id_supplier' => $id_supplier,
+                        'id_document_type' => $document_type,
+                        'name' => $name,
+                        'document_number' => $document_number,
+                        'address' => $address,
+                        'phone' => $phone,
+                        'business_name' => $business_name,
+                        'email' => $email
+    
+                    );
                     // --
-                    case 'OK':
+                    $obj = $this->load_model('Suppliers');
+                    $response = $obj->update_supplier($bind);
+                    // --
+                    switch ($response['status']) {
                         // --
-                        $json = array(
-                            'status' => 'OK',
-                            'type' => 'success',
-                            'msg' => 'Registro actualizado en el sistema con éxito.',
-                            'data' => array()
-                        );
-                        // --
-                        break;
-
-                    case 'ERROR':
-                        // --
-                        $json = array(
-                            'status' => 'ERROR',
-                            'type' => 'warning',
-                            'msg' => 'No fue posible guardar el registro ingresado, verificar.',
-                            'data' => array(),
-                        );
-                        // --
-                        break;
-
-                    case 'EXCEPTION':
-                        // --
-                        $json = array(
-                            'status' => 'ERROR',
-                            'type' => 'error',
-                            'msg' => $response['result']->getMessage(),
-                            'data' => array()
-                        );
-                        // --
-                        break;
+                        case 'OK':
+                            // --
+                            $json = array(
+                                'status' => 'OK',
+                                'type' => 'success',
+                                'msg' => 'Registro actualizado en el sistema con éxito.',
+                                'data' => array()
+                            );
+                            // --
+                            break;
+    
+                        case 'ERROR':
+                            // --
+                            $json = array(
+                                'status' => 'ERROR',
+                                'type' => 'warning',
+                                'msg' => 'No fue posible guardar el registro ingresado, verificar.',
+                                'data' => array(),
+                            );
+                            // --
+                            break;
+    
+                        case 'EXCEPTION':
+                            // --
+                            $json = array(
+                                'status' => 'ERROR',
+                                'type' => 'error',
+                                'msg' => $response['result']->getMessage(),
+                                'data' => array()
+                            );
+                            // --
+                            break;
+                    }
+                } else {
+                    $json = array(
+                        'status' => 'ERROR',
+                        'type' => 'warning',
+                        'msg' => 'Número de documento invalido, verificar.',
+                    );
                 }
 
             } else {

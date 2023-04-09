@@ -100,6 +100,9 @@ function create_supplier(form) {
     $('#btn_create_supplier').prop('disabled', true);
     // --
     let params = new FormData(form);
+    let documentType = $('#create_supplier_form :input[name=document_type]').find('option:selected').text();
+    // --
+    params.append('description_document_type', documentType);
     // --
     $.ajax({
         url: BASE_URL + 'Suppliers/create_supplier',
@@ -136,7 +139,10 @@ function update_supplier(form) {
     $('#btn_update_supplier').prop('disabled', true);
     // --
     let params = new FormData(form);
+    let documentType = $('#update_supplier_form :input[name=document_type]').find('option:selected').text();
     // --
+    params.append('description_document_type', documentType);
+    // -- 
     $.ajax({
         url: BASE_URL + 'Suppliers/update_supplier',
         type: 'POST',
@@ -198,7 +204,7 @@ $(document).on('click', '.btn_update', function() {
                 $('#update_supplier_form :input[name=business_name]').val(item.business_name);
                 $('#update_supplier_form :input[name=email]').val(item.email);
                 //--
-                $('#update_supplier_form :input[name=document_type]').val(item_user.id_document_type).trigger('change');
+                $('#update_supplier_form :input[name=document_type]').val(item.id_document_type).trigger('change');
             }
         }
     })
