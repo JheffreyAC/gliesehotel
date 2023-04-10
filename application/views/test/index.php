@@ -65,11 +65,120 @@
                                 </div>
                                 
                                 <div class="row mb-3">
-                                    <div class="col-12">
-                                        <button class="btn btn-primary">Agregar productos</button>
-                                    </div>
+                                <div class="col-12">
+                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create_product_modal">Agregar productos</button>
+                                </div>
                                 </div>
 
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <div class="modal fade" id="create_product_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+                                        <div class="modal-dialog modal-lg modal-dialog-centered modal-edit-product">
+                                            <!-- Contenido del modal -->
+                                            <div class="modal-content">
+                                                <div class="modal-header bg-transparent pb-3">
+                                                    <h2 class="modal-title text-center" style="position: relative; left: 380px; top: 50px;">Seleccione Producto</h2>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body pb-5 px-sm-5 pt-50 text-center">
+                                                    <div class="row mb-3" style="position: relative; top: 20px;">
+                                                        <div class="col">
+                                                            <input type="text" class="form-control" placeholder="Buscar">
+                                                        </div>
+                                                        <div class="col-auto">
+                                                            <button type="button" class="btn btn-primary">Buscar</button>
+                                                        </div>
+                                                    </div>
+                                                    <table class="table table-striped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Opciones</th>
+                                                                <th>Nombre</th>
+                                                                <th>U.Medida</th>
+                                                                <th>Categoría</th>
+                                                                <th>Código</th>
+                                                                <th>Stock</th>
+                                                                <th>Precio Venta</th>
+                                                                <th>Afectación</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <button type="button" class="btn btn-primary">✚</button>
+                                                                </td>
+                                                                <td>Producto 1</td>
+                                                                <td>Pieza</td>
+                                                                <td>Categoría 1</td>
+                                                                <td>123456</td>
+                                                                <td>50</td>
+                                                                <td>100</td>
+                                                                <td>Exento</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <button type="button" class="btn btn-primary">✚</button>
+                                                                </td>
+                                                                <td>Producto 2</td>
+                                                                <td>Pieza</td>
+                                                                <td>Categoría 1</td>
+                                                                <td>123456</td>
+                                                                <td>50</td>
+                                                                <td>100</td>
+                                                                <td>Exento</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <button type="button" class="btn btn-primary">✚</button>
+                                                                </td>
+                                                                <td>Producto 3</td>
+                                                                <td>Pieza</td>
+                                                                <td>Categoría 1</td>
+                                                                <td>123456</td>
+                                                                <td>50</td>
+                                                                <td>100</td>
+                                                                <td>Exento</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <button type="button" class="btn btn-primary">✚</button>
+                                                                </td>
+                                                                <td>Producto 4</td>
+                                                                <td>Pieza</td>
+                                                                <td>Categoría 1</td>
+                                                                <td>123456</td>
+                                                                <td>50</td>
+                                                                <td>100</td>
+                                                                <td>Exento</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <button type="button" class="btn btn-primary">✚</button>
+                                                                </td>
+                                                                <td>Producto 5</td>
+                                                                <td>Pieza</td>
+                                                                <td>Categoría 1</td>
+                                                                <td>123456</td>
+                                                                <td>50</td>
+                                                                <td>100</td>
+                                                                <td>Exento</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <nav aria-label="Page navigation">
+                                                        <ul class="pagination justify-content-center my-2">
+                                                            <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Anterior</a></li>
+                                                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                                            <li class="page-item"><a class="page-link" href="#">Siguiente</a></li>
+                                                        </ul>
+                                                    </nav>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                           
                                 <!-- Table -->
                                 <div class="row">
                                     <div class="col-12">
