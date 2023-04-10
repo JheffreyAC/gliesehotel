@@ -483,7 +483,6 @@ class C_Users extends Controller {
                         'email' => $email,
                         'campus' => $array_campus,
                         'active' => $active,
-                        'ts_start' => time() // -- usar timestamp papis
                     );
                     // --
                     $obj = $this->load_model('Users');
