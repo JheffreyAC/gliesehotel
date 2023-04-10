@@ -316,6 +316,7 @@ class C_Users extends Controller {
                 $email = $this->functions->clean_string($input['email']);
                 $role = $this->functions->clean_string($input['role']);
                 $campus = json_decode($input['campus'], true);
+                // --
                 $is_verified = $this->functions->verified_document_type($description_document_type, $document_number); // -- verified document type
                 // --
                 if ($is_verified) {

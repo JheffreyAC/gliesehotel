@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `document_type` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla db_gliese.document_type: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla db_gliese.document_type: ~2 rows (aproximadamente)
 INSERT INTO `document_type` (`id`, `description`, `status`) VALUES
 	(1, 'DNI', 1),
 	(2, 'RUC', 1);
@@ -119,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `intent` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla db_gliese.intent: ~10 rows (aproximadamente)
+-- Volcando datos para la tabla db_gliese.intent: ~12 rows (aproximadamente)
 INSERT INTO `intent` (`id`, `token`) VALUES
 	(12, 'gjYSL8sm4porYSQSPo436rnlxTIqTpgfW9jgjnwtfze3caCPGAAZIHGF1n7mlWNvaA863E4TYam55/Pm+LwjiBGPnvSoTQ7QD88mYd5pM4cUpWQgJThJKHGRZL1EsNtsdpBAmg=='),
 	(13, 'gjYSL8sm4porYSQSPo436rnlxTIqTpgfW9jgjnwtfze3caCPGAAZIHGF1n7mlWNvaA863E4TYam55/Pm+LwjiBGPnvSoTQ7QD88mYd5pM4cUpWQgJThJKHGRZL1EsNtsdpBAmg=='),
@@ -235,7 +235,7 @@ CREATE TABLE IF NOT EXISTS `role` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla db_gliese.role: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla db_gliese.role: ~0 rows (aproximadamente)
 INSERT INTO `role` (`id`, `description`, `status`) VALUES
 	(1, 'ADMINISTRADOR', 1);
 
@@ -274,12 +274,12 @@ DROP TABLE IF EXISTS `supplier`;
 CREATE TABLE IF NOT EXISTS `supplier` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_document_type` int NOT NULL,
-  `name` varchar(100) CHARACTER SET utf8mb3 NOT NULL,
+  `name` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `document_number` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
-  `address` varchar(150) CHARACTER SET utf8mb3 DEFAULT NULL,
-  `phone` varchar(20) CHARACTER SET utf8mb3 DEFAULT NULL,
-  `business_name` varchar(256) CHARACTER SET utf8mb3 DEFAULT NULL,
-  `email` varchar(50) CHARACTER SET utf8mb3 DEFAULT NULL,
+  `address` varchar(150) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `phone` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `business_name` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `email` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
   `status` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `document_number` (`document_number`),
@@ -289,10 +289,10 @@ CREATE TABLE IF NOT EXISTS `supplier` (
 
 -- Volcando datos para la tabla db_gliese.supplier: ~4 rows (aproximadamente)
 INSERT INTO `supplier` (`id`, `id_document_type`, `name`, `document_number`, `address`, `phone`, `business_name`, `email`, `status`) VALUES
-	(1, 1, 'ALEXANDER', '71695889', 'lopez de zuñiga', '915959584', 'R&amp;J ACTION', 'generateindollars@gmail.com', 1),
-	(3, 1, 'JEREMI', '72003664', 'Av 1 de mayo', '936672334', 'J&amp;amp;D ACTION', 'jeregr.21042002@gmail.com12', 1),
-	(4, 1, 'RUBEN DARIO', '721368235', 'Chancay Lopez 04', '987975591', 'R&amp;R ACTION', 'rubendario7tu@gmail.com', 1),
-	(5, 1, 'JEREMI ARMANDO GONZALES RUEDA', '7', 'Av 1 de mayo', '8', 'J&amp;D ACTION ', 'jeregr.21042002@gmail.com', 1);
+	(1, 1, 'ALEXANDER', '71695889', 'lopez de zuñiga', '915959584', 'R&J ACTION', 'generateindollars@gmail.com', 1),
+	(3, 1, 'JEREMI', '12345678', 'Av 1 de mayo', '936672334', 'JYD ACTION', 'jeregr.21042002@gmail.com12', 1),
+	(4, 1, 'RUBEN DARIO', '12345679', 'Chancay Lopez 04', '987975591', 'R&amp;R ACTION', 'rubendario7tu@gmail.com', 1),
+	(5, 1, 'JEREMI ARMANDO GONZALES RUEDA', '71695880', 'Av 1 de mayo', '8', 'ACTION', 'jeregr.21042002@gmail.com', 1);
 
 -- Volcando estructura para tabla db_gliese.user
 DROP TABLE IF EXISTS `user`;
@@ -326,7 +326,7 @@ INSERT INTO `user` (`id`, `id_role`, `id_document_type`, `first_name`, `last_nam
 	(1, 1, 2, 'Diego', 'Uriarte chancafe', '10123456781', 'Chancay', '913085587', 'grjere698@gmail.com', 'admin', '5a6d4d35597a41334e6a4a6a5a4459784d7a51355a6a457a596d593159324d7a597a566d4d5445784e7a633d', NULL, 1, 1, 1680330202),
 	(13, 1, 1, 'Jeremi', 'Gonzales', '8', 'Av. 1 de mayo 1031', '913085589', 'grjere698@gmail.com', 'admin2', '5a6d4d35597a41334e6a4a6a5a4459784d7a51355a6a457a596d593159324d7a597a566d4d5445784e7a633d', NULL, 1, 1, NULL),
 	(15, 1, 1, 'Ruben', 'Dario', '4', 'Av. 1 de mayo 1031', '999888777', 'essaulherrerasangay601@gmail.com', 'admin3', '5a6d4d35597a41334e6a4a6a5a4459784d7a51355a6a457a596d593159324d7a597a566d4d5445784e7a633d', NULL, 1, 1, NULL),
-	(18, 1, 1, 'Alex', 'Diaz', '88888', 'Calichera', '8', 'generateindollars@gmail.com12', 'admin4', 'admin', NULL, 1, 1, NULL);
+	(18, 1, 1, 'Alex', 'Diaz', '88888888', 'Calichera', '333333333333333333333333', 'generateindollars@gmail.com12', 'admin4', 'admin', NULL, 1, 1, 1681001999);
 
 -- Volcando estructura para tabla db_gliese.user_campus
 DROP TABLE IF EXISTS `user_campus`;

@@ -8,7 +8,7 @@ if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
     $protocol = "http://"; 
 }
 // --
-$base_url =  $protocol . $_SERVER['HTTP_HOST'] .  '/Personal/gliese/';
+$base_url =  $protocol . $_SERVER['HTTP_HOST'] .  '/gliese/';
 
 // --
 define('BASE_URL', $base_url);
