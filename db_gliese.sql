@@ -16,12 +16,10 @@
 
 
 -- Volcando estructura de base de datos para db_gliese
-DROP DATABASE IF EXISTS `db_gliese`;
 CREATE DATABASE IF NOT EXISTS `db_gliese` /*!40100 DEFAULT CHARACTER SET utf8mb3 */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `db_gliese`;
 
 -- Volcando estructura para tabla db_gliese.campus
-DROP TABLE IF EXISTS `campus`;
 CREATE TABLE IF NOT EXISTS `campus` (
   `id` int NOT NULL AUTO_INCREMENT,
   `description` varchar(45) NOT NULL,
@@ -36,22 +34,21 @@ INSERT INTO `campus` (`id`, `description`, `status`) VALUES
 	(3, 'LIMA', 1);
 
 -- Volcando estructura para tabla db_gliese.categories
-DROP TABLE IF EXISTS `categories`;
 CREATE TABLE IF NOT EXISTS `categories` (
   `id` int NOT NULL AUTO_INCREMENT,
   `description` varchar(120) NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
+  `name` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
 
 -- Volcando datos para la tabla db_gliese.categories: ~2 rows (aproximadamente)
-INSERT INTO `categories` (`id`, `description`, `status`) VALUES
-	(2, 'VAMO A PROGRAMAR', 1),
-	(3, 'VENDEDORGF', 1);
+INSERT INTO `categories` (`id`, `description`, `status`, `name`) VALUES
+	(2, 'VAMO A PROGRAMAR', 1, 'xD'),
+	(3, 'VENDEDORGF', 1, 'Sol');
 
 -- Volcando estructura para tabla db_gliese.detail_income
-DROP TABLE IF EXISTS `detail_income`;
 CREATE TABLE IF NOT EXISTS `detail_income` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_product` int NOT NULL,
@@ -67,7 +64,6 @@ CREATE TABLE IF NOT EXISTS `detail_income` (
 -- Volcando datos para la tabla db_gliese.detail_income: ~0 rows (aproximadamente)
 
 -- Volcando estructura para tabla db_gliese.document_type
-DROP TABLE IF EXISTS `document_type`;
 CREATE TABLE IF NOT EXISTS `document_type` (
   `id` int NOT NULL AUTO_INCREMENT,
   `description` varchar(45) NOT NULL,
@@ -81,7 +77,6 @@ INSERT INTO `document_type` (`id`, `description`, `status`) VALUES
 	(2, 'RUC', 1);
 
 -- Volcando estructura para tabla db_gliese.income
-DROP TABLE IF EXISTS `income`;
 CREATE TABLE IF NOT EXISTS `income` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_supplier` int NOT NULL,
@@ -112,12 +107,11 @@ INSERT INTO `income` (`id`, `id_supplier`, `id_user`, `id_voucher_type`, `id_pay
 	(1, 1, 13, 1, 1, 'B001', '00000001', '2023-03-30 21:43:58', 0.18, NULL, NULL, 100.50, '1');
 
 -- Volcando estructura para tabla db_gliese.intent
-DROP TABLE IF EXISTS `intent`;
 CREATE TABLE IF NOT EXISTS `intent` (
   `id` int NOT NULL AUTO_INCREMENT,
   `token` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb3;
 
 -- Volcando datos para la tabla db_gliese.intent: ~12 rows (aproximadamente)
 INSERT INTO `intent` (`id`, `token`) VALUES
@@ -132,10 +126,10 @@ INSERT INTO `intent` (`id`, `token`) VALUES
 	(20, '3ckmMmMWPQfjL1f5lUk3P+kf38KcpJca/H8FExPCtPDZ6qvN/JaaZAMP/yevdj6Kglp/jhDZhTnnjOs88mh6FM8au67U+FLaEFtG5Jktwhs9e0rjGrfCbbLWnhojZWb53P1/Jg=='),
 	(21, 'ao4rLnLR32VGiEXTRJnRDvUa0/YeDi30TSIcPdbYLAdF8SS54edHQXF3yx6rCs3XBfuHr4C04kmqU9XJd5Ya5YlMZSdQDgCZTykvcHIrHGC+QrXzHtu8YLeshLb3W5pmQW5avw=='),
 	(22, '4M2cNr72yhLkmPpw+xXJt82moY7QeBgsAWNznGMkjnIbP3LrxA8OFdi3itOI9y38HC0rsQrgxKnE43AKUpVTTnRM/yUME4sFTUVKX/iWYvsYdkqcfh8P662f+Apoj0/chlz3Og=='),
-	(23, '4LDRDYaAaQu9fMJdJdpk43GN4uDk4tNzN6RZEhYdSJqSXlCSuDNPZA+wqVY5RVTw+qNyOVA+YbNjZrkXDMINumRg1st8sftzpcQvvp57tbDD3077aHoHnOP2CJ+78V8795lA1g==');
+	(23, '4LDRDYaAaQu9fMJdJdpk43GN4uDk4tNzN6RZEhYdSJqSXlCSuDNPZA+wqVY5RVTw+qNyOVA+YbNjZrkXDMINumRg1st8sftzpcQvvp57tbDD3077aHoHnOP2CJ+78V8795lA1g=='),
+	(24, 'qQ82xrb5o3w/NUv8+4xU3QLIFSXYmLoFuXE4B8CQGn5vlKZRYBJaVRLyM6go8SAdHb0bSD6w/gARnwrZINKjOwYHjqpb5gTRDYxSsV1gxnzTknpZP2DT7G139Qbvi0uNpXY+6Q==');
 
 -- Volcando estructura para tabla db_gliese.menu
-DROP TABLE IF EXISTS `menu`;
 CREATE TABLE IF NOT EXISTS `menu` (
   `id` int NOT NULL AUTO_INCREMENT,
   `description` varchar(80) NOT NULL,
@@ -153,7 +147,6 @@ INSERT INTO `menu` (`id`, `description`, `icon`, `order`) VALUES
 	(5, 'Administración', 'sliders', 5);
 
 -- Volcando estructura para tabla db_gliese.payment_type
-DROP TABLE IF EXISTS `payment_type`;
 CREATE TABLE IF NOT EXISTS `payment_type` (
   `id` int NOT NULL AUTO_INCREMENT,
   `description` varchar(50) DEFAULT NULL,
@@ -168,7 +161,6 @@ INSERT INTO `payment_type` (`id`, `description`, `status`) VALUES
 	(3, 'Transferencia', 1);
 
 -- Volcando estructura para tabla db_gliese.permission
-DROP TABLE IF EXISTS `permission`;
 CREATE TABLE IF NOT EXISTS `permission` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_role` int NOT NULL,
@@ -198,7 +190,6 @@ INSERT INTO `permission` (`id`, `id_role`, `id_sub_menu`, `status`) VALUES
 	(20, 1, 17, 1);
 
 -- Volcando estructura para tabla db_gliese.products
-DROP TABLE IF EXISTS `products`;
 CREATE TABLE IF NOT EXISTS `products` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_category` int DEFAULT NULL,
@@ -227,7 +218,6 @@ INSERT INTO `products` (`id`, `id_category`, `description`, `stock`, `code`, `st
 	(97, 3, 'DESC 08', 80, '08', 1, NULL, 1);
 
 -- Volcando estructura para tabla db_gliese.role
-DROP TABLE IF EXISTS `role`;
 CREATE TABLE IF NOT EXISTS `role` (
   `id` int NOT NULL AUTO_INCREMENT,
   `description` varchar(45) NOT NULL,
@@ -240,7 +230,6 @@ INSERT INTO `role` (`id`, `description`, `status`) VALUES
 	(1, 'ADMINISTRADOR', 1);
 
 -- Volcando estructura para tabla db_gliese.sub_menu
-DROP TABLE IF EXISTS `sub_menu`;
 CREATE TABLE IF NOT EXISTS `sub_menu` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_menu` int NOT NULL,
@@ -270,7 +259,6 @@ INSERT INTO `sub_menu` (`id`, `id_menu`, `description`, `icon`, `url`, `order`) 
 	(17, 3, 'Nota de credito', 'circle', 'Creditnote', 5);
 
 -- Volcando estructura para tabla db_gliese.supplier
-DROP TABLE IF EXISTS `supplier`;
 CREATE TABLE IF NOT EXISTS `supplier` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_document_type` int NOT NULL,
@@ -295,7 +283,6 @@ INSERT INTO `supplier` (`id`, `id_document_type`, `name`, `document_number`, `ad
 	(5, 1, 'JEREMI ARMANDO GONZALES RUEDA', '71695880', 'Av 1 de mayo', '8', 'ACTION', 'jeregr.21042002@gmail.com', 1);
 
 -- Volcando estructura para tabla db_gliese.user
-DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_role` int NOT NULL,
@@ -311,7 +298,6 @@ CREATE TABLE IF NOT EXISTS `user` (
   `image_url` varchar(100) DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
   `active` tinyint(1) DEFAULT '1',
-  `ts_start` bigint DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_UNIQUE` (`user`),
   UNIQUE KEY `document_number_UNIQUE` (`document_number`),
@@ -322,14 +308,13 @@ CREATE TABLE IF NOT EXISTS `user` (
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb3;
 
 -- Volcando datos para la tabla db_gliese.user: ~4 rows (aproximadamente)
-INSERT INTO `user` (`id`, `id_role`, `id_document_type`, `first_name`, `last_name`, `document_number`, `address`, `telephone`, `email`, `user`, `password`, `image_url`, `status`, `active`, `ts_start`) VALUES
-	(1, 1, 2, 'Diego', 'Uriarte chancafe', '10123456781', 'Chancay', '913085587', 'grjere698@gmail.com', 'admin', '5a6d4d35597a41334e6a4a6a5a4459784d7a51355a6a457a596d593159324d7a597a566d4d5445784e7a633d', NULL, 1, 1, 1680330202),
-	(13, 1, 1, 'Jeremi', 'Gonzales', '8', 'Av. 1 de mayo 1031', '913085589', 'grjere698@gmail.com', 'admin2', '5a6d4d35597a41334e6a4a6a5a4459784d7a51355a6a457a596d593159324d7a597a566d4d5445784e7a633d', NULL, 1, 1, NULL),
-	(15, 1, 1, 'Ruben', 'Dario', '4', 'Av. 1 de mayo 1031', '999888777', 'essaulherrerasangay601@gmail.com', 'admin3', '5a6d4d35597a41334e6a4a6a5a4459784d7a51355a6a457a596d593159324d7a597a566d4d5445784e7a633d', NULL, 1, 1, NULL),
-	(18, 1, 1, 'Alex', 'Diaz', '88888888', 'Calichera', '333333333333333333333333', 'generateindollars@gmail.com12', 'admin4', 'admin', NULL, 1, 1, 1681001999);
+INSERT INTO `user` (`id`, `id_role`, `id_document_type`, `first_name`, `last_name`, `document_number`, `address`, `telephone`, `email`, `user`, `password`, `image_url`, `status`, `active`) VALUES
+	(1, 1, 2, 'Diego', 'Uriarte chancafe', '10123456781', 'Chancay', '913085587', 'grjere698@gmail.com', 'admin', '5a6d4d35597a41334e6a4a6a5a4459784d7a51355a6a457a596d593159324d7a597a566d4d5445784e7a633d', NULL, 1, 1),
+	(13, 1, 1, 'Jeremi', 'Gonzales', '8', 'Av. 1 de mayo 1031', '913085589', 'grjere698@gmail.com', 'admin2', '5a6d4d35597a41334e6a4a6a5a4459784d7a51355a6a457a596d593159324d7a597a566d4d5445784e7a633d', NULL, 1, 1),
+	(15, 1, 1, 'Ruben', 'Dario', '4', 'Av. 1 de mayo 1031', '999888777', 'essaulherrerasangay601@gmail.com', 'admin3', '5a6d4d35597a41334e6a4a6a5a4459784d7a51355a6a457a596d593159324d7a597a566d4d5445784e7a633d', NULL, 1, 1),
+	(18, 1, 1, 'Alex', 'Diaz', '88888888', 'Calichera', '333333333333333333333333', 'generateindollars@gmail.com12', 'admin4', 'admin', NULL, 1, 1);
 
 -- Volcando estructura para tabla db_gliese.user_campus
-DROP TABLE IF EXISTS `user_campus`;
 CREATE TABLE IF NOT EXISTS `user_campus` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_user` int NOT NULL,
@@ -358,7 +343,6 @@ INSERT INTO `user_campus` (`id`, `id_user`, `id_campus`, `status`) VALUES
 	(25, 18, 3, 1);
 
 -- Volcando estructura para tabla db_gliese.voucher_type
-DROP TABLE IF EXISTS `voucher_type`;
 CREATE TABLE IF NOT EXISTS `voucher_type` (
   `id` int NOT NULL,
   `description` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
