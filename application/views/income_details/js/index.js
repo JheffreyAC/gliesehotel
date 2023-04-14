@@ -1,4 +1,102 @@
 // -- Functions
+// --
+function destroy_datatable_income() {
+    // --
+    $('#datatables-income').dataTable().fnDestroy();
+}
+
+// --
+function refresh_datatable_income() {
+    // --
+    $('#datatables-income').DataTable().ajax.reload();
+}
+
+// --
+function load_datatable_income() {
+    // --
+    destroy_datatable_income();
+    // --
+    let dataTable = $('#datatables-income').DataTable({
+        // --
+        ajax: {
+            url: BASE_URL + '',
+            cache: false,
+        },
+        columns: [
+            { data: 'first_name' },
+        ],
+        // dom: functions.head_datatable(),
+        // buttons: functions.custom_buttons_datatable([0,1], '#create_user_modal'), // -- Number of columns
+        language: {
+            url: BASE_URL + 'public/assets/json/languaje-es.json'
+        }
+    })
+
+    // --
+    dataTable.on('xhr', function() {
+        // --
+        var data = dataTable.ajax.json();
+        // --
+        functions.toast_message(data.type, data.msg, data.status);
+    });
+}
+
+// --
+function destroy_datatable_income_products() {
+    // --
+    $('#datatables-income-products').dataTable().fnDestroy();
+}
+
+// --
+function refresh_datatable_income_products() {
+    // --
+    $('#datatables-income-products').DataTable().ajax.reload();
+}
+
+// --
+function load_datatable_income_products() {
+    // --
+    destroy_datatable_income_products();
+    // --
+    let dataTable = $('#datatables-income-products').DataTable({
+        // --
+        ajax: {
+            url: BASE_URL + 'Products/get_products',
+            cache: false,
+        },
+        columns: [
+            {
+                class: 'center',
+                render: function (data, type, row) {
+                    // --
+                    return (
+                        '<button class="btn btn-sm btn-info btn-round btn-icon btn_update" data-process-key="'+ row.id_product +'">' +
+                        feather.icons['plus'].toSvg({ class: 'font-small-4' }) +
+                        '</button>'
+                    );
+                }
+            },
+            { data: 'code' },
+            { data: 'category' },
+            { data: 'description' },      
+            { data: 'stock' },
+            
+        ],
+        // dom: functions.head_datatable(),
+        // buttons: functions.custom_buttons_datatable([2], '#create_product_modal'), // -- Number of columns
+        language: {
+            url: BASE_URL + 'public/assets/json/languaje-es.json'
+        }
+    })
+
+    // --
+    dataTable.on('xhr', function() {
+        // --
+        var data = dataTable.ajax.json();
+        // --
+        functions.toast_message(data.type, data.msg, data.status);
+    });
+}
 
 // --
 function get_business_name() {
@@ -90,68 +188,8 @@ function get_payment_type() {
     })
 }
 
-// --
-function create_income(form) {
-    // --
-    $('#btn_create_income').prop('disabled', true);
-    // --
-    let params = new FormData(form);
-    // --
-    $.ajax({
-        url: BASE_URL + 'Test/create_income',
-        type: 'POST',
-        data: params,
-        dataType: 'json',
-        contentType: false,
-        processData: false,
-        cache: false,
-        beforeSend: function() {
-            console.log('Cargando...');
-        },
-        success: function(data) {
-            // --
-            functions.toast_message(data.type, data.msg, data.status);
-            // --
-            if (data.status === 'OK') {
-                // --
-                $('#create_income_modal').modal('hide');
-                form.reset();
-                refresh_datatable();
-
-            } else {
-                // --
-                $('#btn_create_income').prop('disabled', false);
-            }
-        }
-    })
-}
-
-// -- Events
-
-// -- Reset forms
-$(document).on('click', '.reset', function() {
-    // --
-    $('#create_income_form').validate().resetForm();
-})
-
-// -- Validate form
-$('#create_income_form').validate({
-    // --
-    submitHandler: function(form) {
-        create_income(form);
-    }
-})
-
-// -- Reset form on modal hidden
-$('.modal').on('hidden.bs.modal', function () {
-    // --
-    $(this).find('form')[0].reset();
-    // --
-    $('#btn_create_income').prop('disabled', false);
-});
-
-
+load_datatable_income();
+load_datatable_income_products();
 get_payment_type();
 get_business_name();
 get_voucher_type();
-// --
