@@ -118,7 +118,7 @@ CREATE TABLE IF NOT EXISTS `intent` (
   `id` int NOT NULL AUTO_INCREMENT,
   `token` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb3;
 
 -- Volcando datos para la tabla db_gliese.intent: ~13 rows (aproximadamente)
 INSERT INTO `intent` (`id`, `token`) VALUES
@@ -134,7 +134,8 @@ INSERT INTO `intent` (`id`, `token`) VALUES
 	(21, 'ao4rLnLR32VGiEXTRJnRDvUa0/YeDi30TSIcPdbYLAdF8SS54edHQXF3yx6rCs3XBfuHr4C04kmqU9XJd5Ya5YlMZSdQDgCZTykvcHIrHGC+QrXzHtu8YLeshLb3W5pmQW5avw=='),
 	(22, '4M2cNr72yhLkmPpw+xXJt82moY7QeBgsAWNznGMkjnIbP3LrxA8OFdi3itOI9y38HC0rsQrgxKnE43AKUpVTTnRM/yUME4sFTUVKX/iWYvsYdkqcfh8P662f+Apoj0/chlz3Og=='),
 	(23, '4LDRDYaAaQu9fMJdJdpk43GN4uDk4tNzN6RZEhYdSJqSXlCSuDNPZA+wqVY5RVTw+qNyOVA+YbNjZrkXDMINumRg1st8sftzpcQvvp57tbDD3077aHoHnOP2CJ+78V8795lA1g=='),
-	(24, 'qQ82xrb5o3w/NUv8+4xU3QLIFSXYmLoFuXE4B8CQGn5vlKZRYBJaVRLyM6go8SAdHb0bSD6w/gARnwrZINKjOwYHjqpb5gTRDYxSsV1gxnzTknpZP2DT7G139Qbvi0uNpXY+6Q==');
+	(24, 'qQ82xrb5o3w/NUv8+4xU3QLIFSXYmLoFuXE4B8CQGn5vlKZRYBJaVRLyM6go8SAdHb0bSD6w/gARnwrZINKjOwYHjqpb5gTRDYxSsV1gxnzTknpZP2DT7G139Qbvi0uNpXY+6Q=='),
+	(25, 'wwDgSp8/w8HlzFp4ixnFeGaa3QjTF8WqFCDzMjLIMDyDinMVMTjDcmBK7WLGJ1fBtsBsQh4MFZs8YWD1w9IwpWYck99EKXOeHzyZaOqvWzaAvoNO6IiO/Exl5evaBVFqZr2uFw==');
 
 -- Volcando estructura para tabla db_gliese.menu
 DROP TABLE IF EXISTS `menu`;
@@ -181,7 +182,7 @@ CREATE TABLE IF NOT EXISTS `permission` (
   KEY `FK_PERMISSION_SUB_MENU` (`id_sub_menu`),
   CONSTRAINT `FK_PERMISSION_ROLE` FOREIGN KEY (`id_role`) REFERENCES `role` (`id`) ON DELETE CASCADE,
   CONSTRAINT `FK_PERMISSION_SUB_MENU` FOREIGN KEY (`id_sub_menu`) REFERENCES `sub_menu` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb3;
 
 -- Volcando datos para la tabla db_gliese.permission: ~13 rows (aproximadamente)
 INSERT INTO `permission` (`id`, `id_role`, `id_sub_menu`, `status`) VALUES
@@ -197,7 +198,8 @@ INSERT INTO `permission` (`id`, `id_role`, `id_sub_menu`, `status`) VALUES
 	(17, 1, 14, 1),
 	(18, 1, 15, 1),
 	(19, 1, 16, 1),
-	(20, 1, 17, 1);
+	(20, 1, 17, 1),
+	(21, 1, 18, 1);
 
 -- Volcando estructura para tabla db_gliese.products
 DROP TABLE IF EXISTS `products`;
@@ -218,17 +220,16 @@ CREATE TABLE IF NOT EXISTS `products` (
   CONSTRAINT `FK_PRODUCTS_CATEGORIES` FOREIGN KEY (`id_category`) REFERENCES `categories` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=133 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla db_gliese.products: ~4 rows (aproximadamente)
+-- Volcando datos para la tabla db_gliese.products: ~9 rows (aproximadamente)
 INSERT INTO `products` (`id`, `id_category`, `description`, `stock`, `code`, `status`, `expiration_date`, `status_expiration_date`, `ts_start`) VALUES
-	(97, 2, 'DESC 01', 52, '01', 1, NULL, 1, 0),
+	(97, 2, 'DESC 01', 52, '01', 1, NULL, 1, 1681254999),
 	(112, 3, 'DESC 02', 90, '02', 1, NULL, 1, 1681250641),
 	(115, 2, 'DESC 03', 90, '03', 1, NULL, 1, 1681250783),
 	(116, 3, 'DESC 04', 15, '04', 1, NULL, 1, 0),
 	(117, 3, 'DESC 05', 150, '05', 1, NULL, 1, 1681249710),
 	(129, 3, 'DESC 06', 60, '06', 1, NULL, 1, 1681251158),
 	(130, 3, 'DESC 07', 70, '07', 1, NULL, 1, 0),
-	(131, 2, 'DESC 08', 15, '08', 1, NULL, 1, 1681251540),
-	(132, 3, 'DESC 09', 63, '09', 1, NULL, 1, 0);
+	(131, 2, 'DESC 08', 15, '08', 1, NULL, 1, 1681251540);
 
 -- Volcando estructura para tabla db_gliese.role
 DROP TABLE IF EXISTS `role`;
@@ -255,9 +256,9 @@ CREATE TABLE IF NOT EXISTS `sub_menu` (
   PRIMARY KEY (`id`),
   KEY `FK_SUB_MENU_MENU` (`id_menu`),
   CONSTRAINT `FK_SUB_MENU_MENU` FOREIGN KEY (`id_menu`) REFERENCES `menu` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla db_gliese.sub_menu: ~13 rows (aproximadamente)
+-- Volcando datos para la tabla db_gliese.sub_menu: ~14 rows (aproximadamente)
 INSERT INTO `sub_menu` (`id`, `id_menu`, `description`, `icon`, `url`, `order`) VALUES
 	(1, 1, 'Dashboards', 'circle', 'Dashboards', 1),
 	(6, 2, 'Productos', 'circle', 'Products', 1),
@@ -271,7 +272,8 @@ INSERT INTO `sub_menu` (`id`, `id_menu`, `description`, `icon`, `url`, `order`) 
 	(14, 3, 'Facturación por venta', 'circle', 'Billingpersale', 2),
 	(15, 3, 'Ticket', 'circle', 'Ticket', 3),
 	(16, 3, 'Proforma', 'circle', 'Proforma', 4),
-	(17, 3, 'Nota de credito', 'circle', 'Creditnote', 5);
+	(17, 3, 'Nota de credito', 'circle', 'Creditnote', 5),
+	(18, 3, 'Transportista', 'circle', 'Carrier', 1);
 
 -- Volcando estructura para tabla db_gliese.supplier
 DROP TABLE IF EXISTS `supplier`;
@@ -324,7 +326,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   CONSTRAINT `FK_USER_ROLE` FOREIGN KEY (`id_role`) REFERENCES `role` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla db_gliese.user: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla db_gliese.user: ~4 rows (aproximadamente)
 INSERT INTO `user` (`id`, `id_role`, `id_document_type`, `first_name`, `last_name`, `document_number`, `address`, `telephone`, `email`, `user`, `password`, `image_url`, `status`, `active`) VALUES
 	(1, 1, 2, 'Diego', 'Uriarte chancafe', '10123456781', 'Chancay', '913085587', 'grjere698@gmail.com', 'admin', '5a6d4d35597a41334e6a4a6a5a4459784d7a51355a6a457a596d593159324d7a597a566d4d5445784e7a633d', NULL, 1, 1),
 	(13, 1, 1, 'Jeremi', 'Gonzales', '8', 'Av. 1 de mayo 1031', '913085589', 'grjere698@gmail.com', 'admin2', '5a6d4d35597a41334e6a4a6a5a4459784d7a51355a6a457a596d593159324d7a597a566d4d5445784e7a633d', NULL, 1, 1),
@@ -345,7 +347,7 @@ CREATE TABLE IF NOT EXISTS `user_campus` (
   CONSTRAINT `FK_USER_CAMPUS_USER` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla db_gliese.user_campus: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla db_gliese.user_campus: ~12 rows (aproximadamente)
 INSERT INTO `user_campus` (`id`, `id_user`, `id_campus`, `status`) VALUES
 	(1, 1, 1, 1),
 	(2, 1, 2, 1),

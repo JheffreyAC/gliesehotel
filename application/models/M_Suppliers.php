@@ -181,8 +181,7 @@ class M_Suppliers extends Model {
         return $response;
     }
 
-    // -- 
-     // --
+    // --
 	public function get_business_name() {
         // --
         try {
