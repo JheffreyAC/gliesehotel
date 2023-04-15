@@ -18,9 +18,8 @@ class M_Products extends Model {
                         p.description,
                         p.stock,
                         p.code,
-                        p.expiration_date,
-                        p.status_expiration_date,
-                        p.status
+                        p.status,
+                        p.ts_start
                     FROM products p
                     INNER JOIN categories c ON c.id = p.id_category
                 WHERE p.status = 1';
@@ -54,9 +53,8 @@ class M_Products extends Model {
                     p.description,
                     p.stock,
                     p.code,
-                    p.expiration_date,
-                    p.status_expiration_date,
-                    p.status
+                    p.status,
+                    p.ts_start
                 FROM products p
                 INNER JOIN categories c ON c.id = p.id_category
                 WHERE p.id = :id_product AND p.status = 1';
@@ -88,16 +86,16 @@ class M_Products extends Model {
                 id_category, 
                 description,
                 stock,
-                expiration_date,
-                code
+                code,
+                ts_start
             ) 
             VALUES 
             (
                 :id_category,
                 :description,
                 :stock,
-                :expiration_date,
-                :code     
+                :code,
+                :ts_start     
             )';
             // --
             $result = $this->pdo->perform($sql, $bind);
@@ -117,8 +115,8 @@ class M_Products extends Model {
         return $response;
     }
 
-     // --
-     public function update_product($bind) {
+    // --
+    public function update_product($bind) {
         // --
         try {
             // --
@@ -127,8 +125,8 @@ class M_Products extends Model {
                     id_category = :id_category,
                     description = :description,
                     stock = :stock,
-                    expiration_date = :expiration_date,
-                    code = :code
+                    code = :code,
+                    ts_start = :ts_start
             WHERE id = :id_product';
             // --
             $result = $this->pdo->perform($sql, $bind);

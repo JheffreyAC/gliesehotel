@@ -172,79 +172,88 @@ class C_Products extends Controller {
 
     // --
     public function create_product() {
+    // --
+    $this->functions->validate_session($this->segment->get('isActive'));
+    // --
+    $request = $_SERVER['REQUEST_METHOD'];
+    // --
+    if ($request === 'POST') {
         // --
-        $this->functions->validate_session($this->segment->get('isActive'));
+        $input = json_decode(file_get_contents('php://input'), true);
+        if (empty($input)) {
+            $input = filter_input_array(INPUT_POST);
+        }
         // --
-        $request = $_SERVER['REQUEST_METHOD'];
-        // --
-        if ($request === 'POST') {
+        if (!empty($input['id_category']) && 
+            !empty($input['description']) &&
+            !empty($input['stock']) &&
+            !empty($input['code']) &&
+            isset($input['ts_start'])
+        ) {
             // --
-            $input = json_decode(file_get_contents('php://input'), true);
-            if (empty($input)) {
-                $input = filter_input_array(INPUT_POST);
+            $id_category = $this->functions->clean_string($input['id_category']);
+            $description = $this->functions->clean_string(strtoupper($input['description']));
+            $stock = $this->functions->clean_string($input['stock']);
+            $code = $this->functions->clean_string($input['code']);
+            $ts_start = $this->functions->clean_string($input['ts_start']);
+            
+            // Replace dash with 0 if ts_start is a dash
+            if ($ts_start === '-') {
+                $ts_start = 0;
+            } else {
+                // Convert ts_start to a 10-digit integer
+                $ts_start = intval($ts_start);
+                $ts_start = str_pad($ts_start, 10, "0", STR_PAD_LEFT);
             }
+
             // --
-            if (!empty($input['id_category']) &&
-                !empty($input['description']) &&
-                !empty($input['stock']) &&
-                !empty($input['code']) &&
-                !empty($input['expiration_date'])
-            ) {
+            $bind = array(
+                'id_category' => $id_category,
+                'description' => $description,
+                'stock' => $stock,
+                'code' => $code,
+                'ts_start' => $ts_start
+            );
+            // --
+            $obj = $this->load_model('Products');
+            $response = $obj->create_product($bind);
+            // --
+            switch ($response['status']) {
                 // --
-                $id_category = $this->functions->clean_string($input['id_category']);
-                $description = $this->functions->clean_string(strtoupper($input['description']));
-                $stock = $this->functions->clean_string($input['stock']);
-                $code = $this->functions->clean_string($input['code']);
-                $expiration_date = $this->functions->clean_string($input['expiration_date']);
-                // --
-                $bind = array(
-                    'id_category' => $id_category,
-                    'description' => $description,
-                    'stock' => $stock,
-                    'code' => $code,
-                    'expiration_date' => $expiration_date
-                );
-                
-                // --
-                $obj = $this->load_model('Products');
-                $response = $obj->create_product($bind);
-                // --
-                switch ($response['status']) {
+                case 'OK':
                     // --
-                    case 'OK':
-                        // --
-                        $json = array(
-                            'status' => 'OK',
-                            'type' => 'success',
-                            'msg' => 'Registro almacenado en el sistema con éxito.',
-                            // 'msg' => ,
-                            'data' => array()
-                        );
-                        // --
-                        break;
+                    $json = array(
+                        'status' => 'OK',
+                        'type' => 'success',
+                        'msg' => 'Producto creado en el sistema con éxito.',
+                        'data' => array()
+                    );
+                    // --
+                    break;
 
-                    case 'ERROR':
-                        // --
-                        $json = array(
-                            'status' => 'ERROR',
-                            'type' => 'warning',
-                            'msg' => 'No fue posible guardar el registro ingresado, verificar.',
-                            'data' => array(),
-                        );
-                        // --
-                        break;
+                case 'ERROR':
+                    // --
+                    $json = array(
+                        'status' => 'ERROR',
+                        'type' => 'warning',
+                        'msg' => 'No fue posible crear el producto ingresado, verificar.',
+                        'data' => array(),
+                    );
+                    // --
+                    break;
 
-                    case 'EXCEPTION':
-                        // --
-                        $json = array(
-                            'status' => 'ERROR',
-                            'type' => 'error',
-                            'msg' => $response['result']->getMessage(),
-                            'data' => array()
-                        );
-                        // --
-                        break;
-                }
+                case 'EXCEPTION':
+                    // --
+                    $json = array(
+                        'status' => 'ERROR',
+                        'type' => 'error',
+                        'msg' => $response['result']->getMessage(),
+                        'data' => array()
+                    );
+                    // --
+                    break;
+            }
+    
             } else {
                 // --
                 $json = array(
@@ -254,7 +263,8 @@ class C_Products extends Controller {
                     'data' => array()
                 );
             }
-            
+    
+    
         } else {
             // --
             $json = array(
@@ -264,12 +274,13 @@ class C_Products extends Controller {
                 'data' => array()
             ); 
         }
-
+    
+    
         // --
         header('Content-Type: application/json');
         echo json_encode($json);
-        
     }
+    
     
 
     // --
@@ -291,7 +302,7 @@ class C_Products extends Controller {
                 !empty($input['description']) &&
                 !empty($input['stock']) &&
                 !empty($input['code']) &&
-                !empty($input['expiration_date'])
+                !empty($input['ts_start'])
             ) {
                 // --
                 $id_product = $this->functions->clean_string($input['id_product']);
@@ -299,7 +310,8 @@ class C_Products extends Controller {
                 $description = $this->functions->clean_string(strtoupper($input['description']));
                 $stock = $this->functions->clean_string($input['stock']);
                 $code = $this->functions->clean_string($input['code']);
-                $expiration_date = $this->functions->clean_string($input['expiration_date']);
+                $ts_start = $this->functions->clean_string($input['ts_start']);
+
                 // --
                 $bind = array(
                     'id_product' => $id_product,
@@ -307,7 +319,7 @@ class C_Products extends Controller {
                     'description' => $description,
                     'stock' => $stock,
                     'code' => $code,
-                    'expiration_date' => $expiration_date
+                    'ts_start' => time() //TimeStart
 
                 );
                 // --

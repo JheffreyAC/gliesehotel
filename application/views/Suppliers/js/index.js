@@ -172,7 +172,6 @@ function update_supplier(form) {
     })
 }
 
-
 // -- Events
 
 // --
@@ -211,7 +210,6 @@ $(document).on('click', '.btn_update', function() {
     // --
     $('#update_supplier_modal').modal('show');
 })
-
 
 // --
 $(document).on('click', '.btn_delete', function() {

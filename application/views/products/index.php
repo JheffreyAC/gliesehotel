@@ -93,10 +93,10 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-12" id="expiration_date" style="display: none;">
+                                        <div class="col-12" id="ts_start" style="display: none;">
                                             <div>
                                                 <label class="form-label">Fecha de expiración</label>
-                                                <input type="date" name="expiration_date" class="form-control" data-msg="" />
+                                                <input type="date" name="ts_start" class="form-control" data-msg="" />
                                             </div>
                                         </div>
                                         <br>
@@ -157,10 +157,10 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-12" id="update_expiration_date" style="display: none;">
+                                        <div class="col-12" id="update_ts_start" style="display: none;">
                                             <div>
                                                 <label class="form-label">Fecha de expiración</label>
-                                                <input type="date" name="expiration_date" class="form-control" data-msg="" />
+                                                <input type="date" name="ts_start" id="fecha_expiracion" class="form-control" data-msg="" />
                                             </div>
                                         </div>
                                         <br>

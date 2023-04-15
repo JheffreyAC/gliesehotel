@@ -141,7 +141,16 @@ class M_Users extends Model {
                         'id_campus' => $value
                     );
                     // --
-                    $sql_insert = 'INSERT INTO user_campus (id_user, id_campus) VALUES (:id_user, :id_campus)';
+                    $sql_insert = 'INSERT INTO user_campus 
+                    (
+                            id_user, 
+                            id_campus
+                    ) 
+                    VALUES 
+                    (
+                            :id_user, 
+                            :id_campus
+                    )';
                     $result_insert = $this->pdo->perform($sql_insert, $bind_campus);
                     // --
                     if (!$result_insert) {

@@ -187,7 +187,7 @@ $(document).on('click', '.btn_delete', function() {
 // -- Redirect new controller
 $(document).on('click', '.create-new', function() {
     // --
-    window.location.assign(BASE_URL + 'Test');
+    window.location.assign(BASE_URL + 'Income_Details');
 })
 
 // -- Reset forms
