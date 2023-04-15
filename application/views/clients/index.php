@@ -38,7 +38,7 @@
                                         <tr>
                                             <th>Nombre</th>
                                             <th>Tipo de documento</th>.
-                                            <th>Número de documento</th>            
+                                            <th>Nº de documento</th>            
                                             <th>Telefono</th>
                                             <th>Direccion</th>
                                             <th>Email</th>

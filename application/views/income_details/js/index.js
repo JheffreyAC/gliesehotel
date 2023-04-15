@@ -232,21 +232,18 @@ $(document).on('click', '.btn_add', function() {
             // --
             if (data.status === 'OK') {
                 // --
-                let item = data.data
-                // --
-                // $('#update_product_form :input[name=id_product]').val(item.id_product);
-                // $('#update_product_form :input[name=id_category]').val(item.id_category);
-                // $('#update_product_form :input[name=description]').val(item.description);
-                // $('#update_product_form :input[name=stock]').val(item.stock);
-                // $('#update_product_form :input[name=code]').val(item.code);
-                // $('#update_product_form :input[name=ts_start]').val(item.ts_start);
-                // --
-                console.log(item)
+                var table = $('#add_products').DataTable();
+                $.each(data, function(_index, fila) {
+                        table.row.add([
+                            fila + '.-',
+                            fila.code,
+                            fila.description
+                        ]);
+                });
+                table.draw();
             }
         }
     })
-    // --
-    // $('#update_product_modal').modal('show');
 })
 
 load_datatable_income();

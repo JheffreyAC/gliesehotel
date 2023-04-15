@@ -172,87 +172,87 @@ class C_Products extends Controller {
 
     // --
     public function create_product() {
-    // --
-    $this->functions->validate_session($this->segment->get('isActive'));
-    // --
-    $request = $_SERVER['REQUEST_METHOD'];
-    // --
-    if ($request === 'POST') {
         // --
-        $input = json_decode(file_get_contents('php://input'), true);
-        if (empty($input)) {
-            $input = filter_input_array(INPUT_POST);
-        }
+        $this->functions->validate_session($this->segment->get('isActive'));
         // --
-        if (!empty($input['id_category']) && 
-            !empty($input['description']) &&
-            !empty($input['stock']) &&
-            !empty($input['code']) &&
-            isset($input['ts_start'])
-        ) {
+        $request = $_SERVER['REQUEST_METHOD'];
+        // --
+        if ($request === 'POST') {
             // --
-            $id_category = $this->functions->clean_string($input['id_category']);
-            $description = $this->functions->clean_string(strtoupper($input['description']));
-            $stock = $this->functions->clean_string($input['stock']);
-            $code = $this->functions->clean_string($input['code']);
-            $ts_start = $this->functions->clean_string($input['ts_start']);
-            
-            // Replace dash with 0 if ts_start is a dash
-            if ($ts_start === '-') {
-                $ts_start = 0;
-            } else {
-                // Convert ts_start to a 10-digit integer
-                $ts_start = intval($ts_start);
-                $ts_start = str_pad($ts_start, 10, "0", STR_PAD_LEFT);
+            $input = json_decode(file_get_contents('php://input'), true);
+            if (empty($input)) {
+                $input = filter_input_array(INPUT_POST);
             }
-
             // --
-            $bind = array(
-                'id_category' => $id_category,
-                'description' => $description,
-                'stock' => $stock,
-                'code' => $code,
-                'ts_start' => $ts_start
-            );
-            // --
-            $obj = $this->load_model('Products');
-            $response = $obj->create_product($bind);
-            // --
-            switch ($response['status']) {
+            if (!empty($input['id_category']) && 
+                !empty($input['description']) &&
+                !empty($input['stock']) &&
+                !empty($input['code']) &&
+                isset($input['ts_start'])
+            ) {
                 // --
-                case 'OK':
-                    // --
-                    $json = array(
-                        'status' => 'OK',
-                        'type' => 'success',
-                        'msg' => 'Producto creado en el sistema con éxito.',
-                        'data' => array()
-                    );
-                    // --
-                    break;
+                $id_category = $this->functions->clean_string($input['id_category']);
+                $description = $this->functions->clean_string(strtoupper($input['description']));
+                $stock = $this->functions->clean_string($input['stock']);
+                $code = $this->functions->clean_string($input['code']);
+                $ts_start = $this->functions->clean_string($input['ts_start']);
+                
+                // Replace dash with 0 if ts_start is a dash
+                if ($ts_start === '-') {
+                    $ts_start = 0;
+                } else {
+                    // Convert ts_start to a 10-digit integer
+                    $ts_start = intval($ts_start);
+                    $ts_start = str_pad($ts_start, 10, "0", STR_PAD_LEFT);
+                }
 
-                case 'ERROR':
+                // --
+                $bind = array(
+                    'id_category' => $id_category,
+                    'description' => $description,
+                    'stock' => $stock,
+                    'code' => $code,
+                    'ts_start' => $ts_start
+                );
+                // --
+                $obj = $this->load_model('Products');
+                $response = $obj->create_product($bind);
+                // --
+                switch ($response['status']) {
                     // --
-                    $json = array(
-                        'status' => 'ERROR',
-                        'type' => 'warning',
-                        'msg' => 'No fue posible crear el producto ingresado, verificar.',
-                        'data' => array(),
-                    );
-                    // --
-                    break;
+                    case 'OK':
+                        // --
+                        $json = array(
+                            'status' => 'OK',
+                            'type' => 'success',
+                            'msg' => 'Producto creado en el sistema con éxito.',
+                            'data' => array()
+                        );
+                        // --
+                        break;
 
-                case 'EXCEPTION':
-                    // --
-                    $json = array(
-                        'status' => 'ERROR',
-                        'type' => 'error',
-                        'msg' => $response['result']->getMessage(),
-                        'data' => array()
-                    );
-                    // --
-                    break;
-            }
+                    case 'ERROR':
+                        // --
+                        $json = array(
+                            'status' => 'ERROR',
+                            'type' => 'warning',
+                            'msg' => 'No fue posible crear el producto ingresado, verificar.',
+                            'data' => array(),
+                        );
+                        // --
+                        break;
+
+                    case 'EXCEPTION':
+                        // --
+                        $json = array(
+                            'status' => 'ERROR',
+                            'type' => 'error',
+                            'msg' => $response['result']->getMessage(),
+                            'data' => array()
+                        );
+                        // --
+                        break;
+                }
     
             } else {
                 // --
@@ -280,8 +280,6 @@ class C_Products extends Controller {
         header('Content-Type: application/json');
         echo json_encode($json);
     }
-    
-    
 
     // --
     public function update_product() {

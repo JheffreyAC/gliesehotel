@@ -12,19 +12,19 @@ class M_Clients extends Model {
         try {
             // --
             $sql = 'SELECT 
-            c.id AS id_clients,
-            c.id_document_type,
-            dt.description AS document_type,
-            c.name,
-            c.document_number,
-            c.address,
-            c.phone,
-            c.business_name,
-            c.email,
-            c.status
-        FROM clients c
-        INNER JOIN document_type dt ON dt.id = c.id_document_type
-        WHERE c.status = 1';
+                    c.id AS id_clients,
+                    c.id_document_type,
+                    dt.description AS document_type,
+                    c.name,
+                    c.document_number,
+                    c.address,
+                    c.phone,
+                    c.business_name,
+                    c.email,
+                    c.status
+                FROM clients c
+                INNER JOIN document_type dt ON dt.id = c.id_document_type
+                WHERE c.status = 1';
             // --
             $result = $this->pdo->fetchAll($sql);
             // --
@@ -48,20 +48,20 @@ class M_Clients extends Model {
         // --
         try {
             // --
-            $sql = '  SELECT 
-            c.id AS id_clients,
-            c.id_document_type,
-            dt.description AS document_type,
-            c.name,
-            c.document_number,
-            c.address,
-            c.phone,
-            c.business_name,
-            c.email,
-            c.status
-        FROM clients c
-        INNER JOIN document_type dt ON dt.id = c.id_document_type
-        WHERE c.status = 1';
+            $sql = 'SELECT 
+                    c.id AS id_clients,
+                    c.id_document_type,
+                    dt.description AS document_type,
+                    c.name,
+                    c.document_number,
+                    c.address,
+                    c.phone,
+                    c.business_name,
+                    c.email,
+                    c.status
+                FROM clients c
+                INNER JOIN document_type dt ON dt.id = c.id_document_type
+                WHERE c.status = 1';
             // --
             $result = $this->pdo->fetchOne($sql, $bind);
             // --
@@ -137,7 +137,7 @@ class M_Clients extends Model {
                     phone = :phone,
                     email = :email,
                     business_name = :business_name
-            WHERE id = :id_clients';
+                WHERE id = :id_clients';
             // --
             $result = $this->pdo->perform($sql, $bind);
             // --

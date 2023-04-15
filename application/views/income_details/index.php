@@ -74,7 +74,7 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="card">
-                                            <table class="table" id="datatables-income">
+                                            <table class="table" id="add_products">
                                                 <thead>
                                                     <tr>
                                                         <th>Acciones</th>
