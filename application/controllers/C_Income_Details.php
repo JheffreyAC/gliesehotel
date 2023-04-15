@@ -18,6 +18,7 @@ class C_Income_Details extends Controller {
         $this->view->set_view('index');     // -- Load View
     }
 
+
     
 
 }

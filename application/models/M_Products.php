@@ -115,8 +115,8 @@ class M_Products extends Model {
         return $response;
     }
 
-     // --
-     public function update_product($bind) {
+    // --
+    public function update_product($bind) {
         // --
         try {
             // --
