@@ -88,7 +88,7 @@
                                         <div class="col-12">
                                             <div>
                                                 <label class="form-label">Email</label>
-                                                <input type="email" name="Email" class="form-control" placeholder="user@example.com" data-msg="" />
+                                                <input type="email" name="email" class="form-control" placeholder="user@example.com" data-msg="" />
                                             </div>
                                         </div>
                                         <div class="col-12">
