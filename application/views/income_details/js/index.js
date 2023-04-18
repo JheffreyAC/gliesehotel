@@ -228,23 +228,34 @@ $(document).on('click', '.btn_add', function() {
         contentType: false,
         processData: true,
         cache: false,
+        beforeSend: function() {
+            console.log('Cargando...');
+        },
         success: function(data) {
             // --
             if (data.status === 'OK') {
-                // --
-                var table = $('#add_products').DataTable();
-                $.each(data, function(_index, fila) {
-                        table.row.add([
-                            fila + '.-',
-                            fila.code,
-                            fila.description
-                        ]);
-                });
-                table.draw();
+                // Obtener referencia a la tabla de productos en la ventana principal
+                var table = $('#add_products');
+                
+                // Agregar una nueva fila a la tabla con los datos del producto seleccionado
+                table.append(`
+                    <tr>
+                        <td><button class="btn btn-danger btn-delete-product">Eliminar</button></td>
+                        <td>${data.code}</td>
+                        <td>${data.description}</td>
+                        <td>${data.category}</td>
+                    </tr>
+                `);
             }
         }
     })
-})
+});
+
+$(document).on('click', '.btn-delete-product', function() {
+    // Eliminar la fila correspondiente al botón "Eliminar" clickeado
+    $(this).closest('tr').remove();
+});
+
 
 load_datatable_income();
 load_datatable_income_products();
