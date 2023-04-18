@@ -39,12 +39,33 @@ class C_Products extends Controller {
             switch ($response['status']) {
                 // --
                 case 'OK':
+                    $data = array();
+                    // --
+                    foreach ($response['result'] as $item) {
+                        // --
+                        $date = "";
+                        // --
+                        if (intval($item['ts_start']) !== 0) {
+                            $date = date("Y-m-d", $item['ts_start']);
+                        }
+                        // --
+                        $data[] = array(
+                            'id_product' => $item['id_product'],
+                            'id_category' => $item['id_category'],
+                            'category' => $item['category'],
+                            'description' => $item['description'],
+                            'stock' => $item['stock'],
+                            'code' => $item['code'],
+                            'status' => $item['status'],
+                            'ts_start' => $date,
+                        );
+                    }
                     // --
                     $json = array(
                         'status' => 'OK',
                         'type' => 'success',
                         'msg' => $this->messages->message['list'],
-                        'data' => $response['result']
+                        'data' => $data
                     );
                     // --
                     break;
@@ -188,7 +209,7 @@ class C_Products extends Controller {
                 !empty($input['description']) &&
                 !empty($input['stock']) &&
                 !empty($input['code']) &&
-                isset($input['ts_start'])
+                !empty($input['ts_start'])
             ) {
                 // --
                 $id_category = $this->functions->clean_string($input['id_category']);
