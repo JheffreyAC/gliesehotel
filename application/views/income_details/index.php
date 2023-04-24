@@ -93,6 +93,7 @@
                                 <!-- /Table -->
 
                                 <div class="col-12">
+                                    <button id="btn_update_guardar" type="submit" class="btn btn-secondary">Guardar</button>
                                     <button type="button" class="btn btn-secondary" onclick="window.location.href='Income/index.php'">Cancelar</button>
                                 </div>
                             </form>

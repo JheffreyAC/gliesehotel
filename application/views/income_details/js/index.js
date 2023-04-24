@@ -248,24 +248,25 @@ $(document).on('click', '.btn_add', function() {
 });
 
 function getHtml(item) {
-    var stock=1;
-    var purchase_price=1;
-    var sale_price=1;
+    var stock = 1;
+    var purchase_price = 1;
+    var sale_price = 1;
+    var subtotal = stock * purchase_price;
     return ` <tr>
     <td><button class="btn btn-danger btn-delete-product">X</button></td>
     <td>${item.description}</td>
-    <td><input type="number" step="1" name="stock[]" id="stock'+cont+'" value="${+stock}" min=1 class="form-control"></td>
-    <td><input type="number" step="1" name="purchase_price[]" id="purchase_price'+cont+'" value="${purchase_price}" min=1 class="form-control"></td>
-    ${getPor()}
-    <td><input type="number" step="1" name="sale_price[]" value="${sale_price}" min=1 class="form-control" ></td>
-    <td><span name="subtotal" id="subtotal'+cont+'">aun falta</span></td>
-</tr>`
+    <td><input type="number"  name="stock[]" value="${stock}" class="form-control" oninput="calcularSubtotal(this)"></td>
+    <td><input type="number" step="0.1" name="purchase_price[]" value="${purchase_price}" min=0.1 class="form-control" oninput="calcularSubtotal(this)"></td>
+    ${getPercentage()}
+    <td><input type="number" step="0.1" name="sale_price[]" value="${sale_price}" min=0.1 class="form-control" ></td>
+    <td><span class="subtotal" data-value="${subtotal}">${subtotal.toFixed(2)}</span></td>
+    </tr>`
 }
 
-function getPor() {
+function getPercentage() {
     return `
     <td>
-        <select name="price_percentage[]" id="price_percentage'+cont+'" class="form-control">
+        <select name="price_percentage[]" id="price_percentage'+cont+'" class="form-control" onchange="calcularSubtotal(this)">
             '<option value="10">10%</option>'+
             '<option value="15">15%</option>'+
             '<option value="20">20%</option>'+
@@ -279,15 +280,37 @@ function getPor() {
     </td>`
 }
 
-function calcularSubtotal() {
-    $('#add_products tr').each(function(i, row) {
-        var stock = parseInt($(row).find('input[name="stock[]"]').val());
-        var purchasePrice = parseInt($(row).find('input[name="purchase_price[]"]').val());
-        var subtotal = (stock * purchasePrice);
-        $(row).find('span[name="subtotal"]').text(subtotal);
-      });
-  }
-  
+function calcularSubtotal(element) {
+    var row = $(element).closest('tr');
+    var stock = parseInt(row.find('input[name="stock[]"]').val());
+    var purchasePrice = parseFloat(row.find('input[name="purchase_price[]"]').val());
+    var percentage = parseInt(row.find('select[name="price_percentage[]"]').val());
+    var salePrice = parseFloat(row.find('input[name="sale_price[]"]').val());
+    var subtotal = stock * purchasePrice;
+    var newSalePrice = (subtotal + (subtotal * (percentage / 100))) / stock;
+    
+    row.find('span.subtotal').text(subtotal.toFixed(2));
+    row.find('input[name="sale_price[]"]').val(newSalePrice.toFixed(2));
+    row.find('span.subtotal').attr('data-value', subtotal.toFixed(2));
+}
+
+
+/*function calcularTotales()
+{
+	var sub=document.getElementsByName("subtotal");
+	var total=0.0;
+	for (var i = 0; i < sub.length; i++) {
+		total+= document.getElementsByName("subtotal")[i].value;
+	}
+
+	$("#total").html("S/. "+total.toFixed(2));
+	$("#total_compra").val(total.toFixed(2));
+	evaluar();
+
+
+} */
+
+
 
 $(document).on('click', '.btn-delete-product', function() {
     // Delete the row corresponding to the button "x" clicked
