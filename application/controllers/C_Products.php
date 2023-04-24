@@ -46,7 +46,8 @@ class C_Products extends Controller {
                         $date = "";
                         // --
                         if (intval($item['ts_start']) !== 0) {
-                            $date = date("Y-m-d", $item['ts_start']);
+                            $date = date("d-m-Y", $item['ts_start']);
+
                         }
                         // --
                         $data[] = array(
@@ -217,15 +218,16 @@ class C_Products extends Controller {
                 $stock = $this->functions->clean_string($input['stock']);
                 $code = $this->functions->clean_string($input['code']);
                 $ts_start = $this->functions->clean_string($input['ts_start']);
-                
+                // Save the selected date in a variable
+                $selected_date = $ts_start;
+
                 // Replace dash with 0 if ts_start is a dash
                 if ($ts_start === '-') {
                     $ts_start = 0;
                 } else {
-                    // Convert ts_start to a 10-digit integer
-                    $ts_start = intval($ts_start);
-                    $ts_start = str_pad($ts_start, 10, "0", STR_PAD_LEFT);
+                    $ts_start = strtotime($ts_start);
                 }
+
 
                 // --
                 $bind = array(
@@ -302,6 +304,7 @@ class C_Products extends Controller {
         echo json_encode($json);
     }
 
+
     // --
     public function update_product() {
         // --
@@ -330,6 +333,7 @@ class C_Products extends Controller {
                 $stock = $this->functions->clean_string($input['stock']);
                 $code = $this->functions->clean_string($input['code']);
                 $ts_start = $this->functions->clean_string($input['ts_start']);
+                $ts_start = $this->functions->clean_string(strtotime($ts_start));
 
                 // --
                 $bind = array(
@@ -338,7 +342,7 @@ class C_Products extends Controller {
                     'description' => $description,
                     'stock' => $stock,
                     'code' => $code,
-                    'ts_start' => time() //TimeStart
+                    'ts_start' => $ts_start //TimeStart
 
                 );
                 // --
