@@ -88,12 +88,13 @@
                                             <div>
                                                 <label class="form-label">¿Tiene fecha de expiración?</label>
                                                 <select name="has_expiration" class="form-select select2" data-msg="" required onchange="showAddExpirationDate(this)">
+                                                    <option value="" disabled selected>Seleccionar</option>
                                                     <option value="0">No</option>
                                                     <option value="1">Sí</option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-12" id="ts_start" style="display: none;">
+                                        <div class="col-12" id="ts_start">
                                             <div>
                                                 <label class="form-label">Fecha de expiración</label>
                                                 <input type="date" name="ts_start" class="form-control" data-msg="" />
@@ -152,6 +153,7 @@
                                             <div>
                                                 <label class="form-label">¿Tiene fecha de expiración?</label>
                                                 <select name="has_expiration" class="form-select select2" data-msg="" required onchange="showUpdateExpirationDate(this)">
+                                                    <option value="" disabled selected>Seleccionar</option>
                                                     <option value="0">No</option>
                                                     <option value="1">Sí</option>
                                                 </select>
