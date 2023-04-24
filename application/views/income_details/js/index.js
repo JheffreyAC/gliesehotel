@@ -214,6 +214,7 @@ function get_series() {
 // -- Events
 
 //--
+//--
 $(document).on('click', '.btn_add', function() {
     // --
     let value = $(this).attr('data-process-key');
@@ -234,25 +235,62 @@ $(document).on('click', '.btn_add', function() {
         success: function(data) {
             // --
             if (data.status === 'OK') {
-                // Obtener referencia a la tabla de productos en la ventana principal
+                // Get reference to the products table in the main window
                 var table = $('#add_products');
                 
-                // Agregar una nueva fila a la tabla con los datos del producto seleccionado
-                table.append(`
-                    <tr>
-                        <td><button class="btn btn-danger btn-delete-product">Eliminar</button></td>
-                        <td>${data.code}</td>
-                        <td>${data.description}</td>
-                        <td>${data.category}</td>
-                    </tr>
-                `);
+                let item = data.data
+                // Add a new row to the table with the data of the selected product
+                table.append(getHtml(item));
+                calcularSubtotal();
             }
         }
     })
 });
 
+function getHtml(item) {
+    var stock=1;
+    var purchase_price=1;
+    var sale_price=1;
+    return ` <tr>
+    <td><button class="btn btn-danger btn-delete-product">X</button></td>
+    <td>${item.description}</td>
+    <td><input type="number" step="1" name="stock[]" id="stock'+cont+'" value="${+stock}" min=1 class="form-control"></td>
+    <td><input type="number" step="1" name="purchase_price[]" id="purchase_price'+cont+'" value="${purchase_price}" min=1 class="form-control"></td>
+    ${getPor()}
+    <td><input type="number" step="1" name="sale_price[]" value="${sale_price}" min=1 class="form-control" ></td>
+    <td><span name="subtotal" id="subtotal'+cont+'">aun falta</span></td>
+</tr>`
+}
+
+function getPor() {
+    return `
+    <td>
+        <select name="price_percentage[]" id="price_percentage'+cont+'" class="form-control">
+            '<option value="10">10%</option>'+
+            '<option value="15">15%</option>'+
+            '<option value="20">20%</option>'+
+            '<option value="25">25%</option>'+
+            '<option value="30">30%</option>'+
+           
+            '<option value="40">40%</option>'+
+           
+            '<option value="50">50%</option>'+
+        </select>
+    </td>`
+}
+
+function calcularSubtotal() {
+    $('#add_products tr').each(function(i, row) {
+        var stock = parseInt($(row).find('input[name="stock[]"]').val());
+        var purchasePrice = parseInt($(row).find('input[name="purchase_price[]"]').val());
+        var subtotal = (stock * purchasePrice);
+        $(row).find('span[name="subtotal"]').text(subtotal);
+      });
+  }
+  
+
 $(document).on('click', '.btn-delete-product', function() {
-    // Eliminar la fila correspondiente al botón "Eliminar" clickeado
+    // Delete the row corresponding to the button "x" clicked
     $(this).closest('tr').remove();
 });
 
