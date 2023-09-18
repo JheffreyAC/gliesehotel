@@ -40,7 +40,7 @@
                                             <th>Categoria</th>
                                             <th>Descripcion</th>          
                                             <th>Stock</th>  
-                                            <th>Expiration Date</th> 
+                                            <!-- <th>Expiration Date</th>  -->
                                             <th>Acciones</th> 
                                         </tr>
                                     </thead>
@@ -84,23 +84,7 @@
                                             </label>
                                             <input type="text" name="description" class="form-control" placeholder="Descripción" autofocus data-msg="" required />
                                         </div>
-                                        <div class="col-12">
-                                            <div>
-                                                <label class="form-label">¿Tiene fecha de expiración?</label>
-                                                <select name="has_expiration" class="form-select select2" data-msg="" required onchange="showAddExpirationDate(this)">
-                                                    <option value="" disabled selected>Seleccionar</option>
-                                                    <option value="0">No</option>
-                                                    <option value="1">Sí</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-12" id="ts_start">
-                                            <div>
-                                                <label class="form-label">Fecha de expiración</label>
-                                                <input type="date" name="ts_start" class="form-control" data-msg="" />
-                                            </div>
-                                        </div>
-                                        <br>
+                                        
                                         <div class="col-12 text-center">
                                             <button id="btn_create_product" type="submit" class="btn btn-primary mt-2 me-1">Guardar</button>
                                             <button type="reset" class="btn btn-outline-secondary mt-2 reset" data-bs-dismiss="modal" aria-label="Close">
@@ -149,23 +133,7 @@
                                             <input type="text" name="description" class="form-control"placeholder="Descripción" autofocus data-msg="" required />
                                         </div>
                                         <input type="hidden" name="id_product">
-                                        <div class="col-12">
-                                            <div>
-                                                <label class="form-label">¿Tiene fecha de expiración?</label>
-                                                <select name="has_expiration" class="form-select select2" data-msg="" required onchange="showUpdateExpirationDate(this)">
-                                                    <option value="" disabled selected>Seleccionar</option>
-                                                    <option value="0">No</option>
-                                                    <option value="1">Sí</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-12" id="update_ts_start" style="display: none;">
-                                            <div>
-                                                <label class="form-label">Fecha de expiración</label>
-                                                <input type="date" name="ts_start" id="fecha_expiracion" class="form-control" data-msg="" />
-                                            </div>
-                                        </div>
-                                        <br>
+                                        
                                         <div class="col-12 text-center">
                                             <button id="btn_update_campus" type="submit" class="btn btn-primary mt-2 me-1">Guardar</button>
                                             <button type="reset" class="btn btn-outline-secondary mt-2 reset" data-bs-dismiss="modal" aria-label="Close">

@@ -47,7 +47,7 @@ function login() {
                 // --
                 if (data.status === 'OK') {
                     // -- Redirect
-                    window.location.replace(BASE_URL + 'Dashboards');
+                    window.location.replace(BASE_URL + 'Reservation');
                 } else {
                     // --
                     toastr['error'](data.msg, 'Ups!', {

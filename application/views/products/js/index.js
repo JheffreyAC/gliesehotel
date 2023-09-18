@@ -28,7 +28,7 @@ function load_datatable() {
             { data: 'category' },
             { data: 'description' },      
             { data: 'stock' },    
-            { data: 'ts_start'},
+         /**{ data: 'ts_start'},*/ 
             {
                 class: 'center',
                 render: function (data, type, row) {
@@ -126,67 +126,7 @@ function create_product(form) {
     });
 }
 
-//--
-function clearSelect(select) {
-    select.selectedIndex = 0;
-    select.querySelector('option[value="0"]').selected = true;
-  }
 
-  document.getElementById('create_product_form').addEventListener('submit', function() {
-    const hasExpiration = document.querySelector('select[name="has_expiration"]');
-    clearSelect(hasExpiration);
-  });
-  
-  
-
-//--
-const form = document.querySelector('#create_product_form');
-const hasExpiration = form.querySelector('select[name="has_expiration"]');
-const expirationDate = form.querySelector('#ts_start');
-const resetBtn = form.querySelector('.reset');
-
-form.querySelectorAll('input, select').forEach((el) => {
-    el.value = localStorage.getItem(el.name) || el.value;
-});
-
-//--
-function showAddExpirationDate() {
-    const isExpiration = hasExpiration.value === '1';
-    const display = isExpiration ? 'block' : 'none';
-    const inputType = isExpiration ? 'date' : 'text';
-    const inputValue = isExpiration ? '' : '-';
-    const inputVisibility = isExpiration ? 'visible' : 'hidden';
-  
-    expirationDate.style.display = display;
-    expirationDate.innerHTML = `<div><label class="form-label">${isExpiration ? 'Fecha de expiración' : ''}</label><input type="${inputType}" name="ts_start" class="form-control" data-msg="" value="${inputValue}" /></div>`;
-    document.querySelector('#ts_start input').style.visibility = inputVisibility;
-}
-
-hasExpiration.addEventListener('change', showAddExpirationDate);
-form.addEventListener('submit', () => {
-    form.querySelectorAll('input, select').forEach((el) => {
-        localStorage.setItem(el.name, el.value);
-    });
-});
-
-resetBtn.addEventListener('click', () => {
-    form.reset();
-    showAddExpirationDate();
-});
-
-showAddExpirationDate();
-
-//--
-function showUpdateExpirationDate(select) {
-    // --
-    var expirationDate = document.getElementById("update_ts_start");
-    if (select.value == 1) {
-        expirationDate.style.display = "block";
-        expirationDate.innerHTML = '<div><label class="form-label">Fecha de expiración</label><input type="date" name="ts_start" class="form-control" data-msg="" /></div>';
-    } else {
-        expirationDate.style.display = "none";
-    }
-}
 
 
 //--

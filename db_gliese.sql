@@ -17,7 +17,7 @@
 
 -- Volcando estructura de base de datos para db_gliese
 DROP DATABASE IF EXISTS `db_gliese`;
-CREATE DATABASE IF NOT EXISTS `db_gliese` /*!40100 DEFAULT CHARACTER SET utf8mb3 */ /*!80016 DEFAULT ENCRYPTION='N' */;
+CREATE DATABASE IF NOT EXISTS `db_gliese`;
 USE `db_gliese`;
 
 -- Volcando estructura para tabla db_gliese.campus
