@@ -1,6 +1,6 @@
 <head>
 <meta charset='utf-8' />
-<script src='./js/index.global.js'></script>
+<!-- <script src='./js/index.global.js'></script> -->
 <script>
 
   document.addEventListener('DOMContentLoaded', function() {
@@ -129,7 +129,20 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="card p-2">
-                                <div id='calendar' class='container'></div>
+                            <table class="table" id="datatable-reservation">
+                                    <thead>
+                                        <tr>
+                                            <th>Codigo</th>
+                                            <th>Checkin</th>
+                                            <th>checkout</th>          
+                                            <th>Habitacion</th>
+                                            <th>Huesped</th>  
+                                            <!-- <th>Expiration Date</th>  -->
+                                            <th>Acciones</th> 
+                                        </tr>
+                                    </thead>
+                                </table>
+                                <!-- <div id='calendar' class='container'></div> -->
                             </div>
                         </div>
                     </div>
