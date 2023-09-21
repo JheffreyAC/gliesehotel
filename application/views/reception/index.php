@@ -31,15 +31,15 @@
                             <form method="POST" enctype="multipart/form-data" id="update_habitacion_form" class="row" onsubmit="return false">
                                 <div class="col-12">
                                     <label class="form-label">Tipo de Habitación</label>
-                                    <input type="text" name="type_name" class="form-control" placeholder="Tipo de Habitación" autofocus data-msg="" required />
+                                    <input type="text" name="type_name" class="form-control" placeholder="Tipo de Habitación" autofocus data-msg="" disabled />
                                 </div>
                                 <div class="col-12">
                                     <label class="form-label">Límite de Personas</label>
-                                    <input type="text" name="person_limit" class="form-control" placeholder="Límite de Personas" data-msg="" required />
+                                    <input type="text" name="person_limit" class="form-control" placeholder="Límite de Personas" data-msg="" disabled />
                                 </div>
                                 <div class="col-12">
                                     <label class="form-label">Tipo de Cama</label>
-                                    <input type="text" name="bed_name" class="form-control" placeholder="Tipo de Cama" data-msg="" required />
+                                    <input type="text" name="bed_name" class="form-control" placeholder="Tipo de Cama" data-msg="" disabled />
                                 </div>
                                 <div class="col-12">
                                     <label class="form-label">Estado de Habitación</label>
@@ -61,6 +61,15 @@
                                 <div class="col-12">
                                     <label class="form-label">Tiempo de Hospedaje</label>
                                     <input type="text" name="bed_name" class="form-control" placeholder="Tiempo de Hospedaje" data-msg="" required />
+                                </div>
+
+                                <div class="col-12">
+                                    <label class="form-label">Fecha de Inicio</label>
+                                    <input type="date" name="bed_name" class="form-control" placeholder="Dirección" data-msg="" required />
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Fecha de Termino</label>
+                                    <input type="date" name="bed_name" class="form-control" placeholder="Dirección" data-msg="" required />
                                 </div>
                                 <div class="col-12">
                                     <label class="form-label">Precio</label>

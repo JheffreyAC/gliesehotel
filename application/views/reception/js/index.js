@@ -20,14 +20,14 @@ function load_data() {
 
         $.each(data.data, function (index, row) {
           const estadoHabitacion = row.room_status;
-          const bgClass = colorsRooms[estadoHabitacion] || 'bg-success';
+          const bgClass = colorsRooms[estadoHabitacion] || 'success';
           // console.log(bgClass); // Si no coincide, usa 'bg-success'
           $('#data-container').append(`
                   <div style="display: flex; justify-content: center; flex-wrap: wrap; margin: 4px;">
                   <div class="container shadow bg-${bgClass} round" style="width: 250px; height: 100%;  display: flex; justify-content: center; align-items: center;flex-direction:column;gap:30px; padding: 20px;" title=${row.room_status}>
                       <div class="d-flex align-items-center flex-column" style="height: 70px;">
                           <span class="text-light" style="text-align: center; font-size: 17px; font-weight: bold;width: 100%;">${row.type_name}</span>
-                          <span class="text-light" style="text-align: center; font-size: 11px; font-weight: bold;width: 100%;">${row.bed_name}</span>
+                          <span class="text-light" style="text-align: center; font-size: 11px; font-weight: bold;width: 100%;">${row.bed_type}</span>
                           <span class="d-flex justify-content-center align-items-center h3 gap-1 text-light" style="color:#000;height: 100%; margin-top: 10px;">
                           <i class="fa-solid fa-people-group"></i>
                            <p class="text-light">${row.person_limit}</p>
