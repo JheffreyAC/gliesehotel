@@ -36,5 +36,40 @@ class M_Accessories extends Model {
       // --
       return $response;
     }
+    public function create_accessories($bind) {
+        // --
+        try {
+            // --
+            $sql = 'INSERT INTO accesory
+            (
+                
+                accesory_description,
+                accesory_price,
+                accesory_stock
+            ) 
+            VALUES 
+            (
+                
+                :accesory_description,
+                :accesory_price,
+                :accesory_stock    
+            )';
+            // --
+            $result = $this->pdo->perform($sql, $bind);
+            // --
+            if ($result) {
+                // --
+                $response = array('status' => 'OK', 'result' => array());
+            } else {
+                // --
+                $response = array('status' => 'ERROR', 'result' => array());
+            }
+        } catch (PDOException $e) {
+            // --
+            $response = array('status' => 'EXCEPTION', 'result' => $e);
+        }
+        // --
+        return $response;
+    }
 }
 
