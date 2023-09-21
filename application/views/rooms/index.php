@@ -48,15 +48,7 @@
                                 <div class="col-12">
                                     <label class="form-label">Tipo de Habitación</label>
                                     <select name="id_type" class="form-select">
-                                        <option value="1">
-                                            Simple
-                                        </option>
-                                        <option value="2">
-                                            Doble
-                                        </option>
-                                        <option value="3">
-                                            Triple
-                                        </option>
+
                                     </select>
                                 </div>
                                 <div class="col-12">

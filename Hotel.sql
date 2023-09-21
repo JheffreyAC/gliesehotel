@@ -425,19 +425,19 @@ CREATE TABLE IF NOT EXISTS `room` (
 
 -- Volcando datos para la tabla db_gliese.room: ~12 rows (aproximadamente)
 /*!40000 ALTER TABLE `room` DISABLE KEYS */;
-INSERT INTO `room` (`id_room`, `room_number`, `room_description`, `room_status`, `id_type`) VALUES
-	(1, '01', 'Simple', 'Disponible', 1),
-	(2, '02', 'Doble', 'Disponible', 2),
-	(3, '03', 'Triple', 'Disponible', 3),
-	(4, '04', 'Doble', 'Disponible', 2),
-	(5, '05', 'Triple', 'Disponible', 3),
-	(6, '06', 'Simple', 'Disponible', 1),
-	(7, '07', 'Doble', 'Disponible', 2),
-	(8, '08', 'Triple', 'Disponible', 3),
-	(9, '09', 'Doble', 'Disponible', 2),
-	(10, '10', 'Simple', 'Disponible', 1),
-	(11, '11', 'Simple', 'Disponible', 1),
-	(12, '12', 'Triple', 'Disponible', 3);
+INSERT INTO `room` (`id_room`, `room_number`, `room_status`, `id_type`) VALUES
+	(1, '01',  'Disponible', 1),
+	(2, '02',  'Disponible', 2),
+	(3, '03', 'Disponible', 3),
+	(4, '04', 'Disponible', 2),
+	(5, '05',  'Disponible', 3),
+	(6, '06', 'Disponible', 1),
+	(7, '07', 'Disponible', 2),
+	(8, '08', 'Disponible', 3),
+	(9, '09',  'Disponible', 2),
+	(10, '10',  'Disponible', 1),
+	(11, '11',  'Disponible', 1),
+	(12, '12',  'Disponible', 3);
 /*!40000 ALTER TABLE `room` ENABLE KEYS */;
 
 -- Volcando estructura para tabla db_gliese.room_type

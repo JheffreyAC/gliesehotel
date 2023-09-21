@@ -112,6 +112,31 @@ function update_habitacion(form) {
   })
 }
 
+// -- Funciones
+
+function cargarOpciones() {
+  $.ajax({
+    url: BASE_URL + 'Rooms/get_rooms', // URL del script PHP
+    dataType: 'json',
+    success: function (data) {
+      var select = $('#opcionesSelect');
+      select.empty(); // Eliminar las opciones existentes
+
+      // Agregar las nuevas opciones desde los datos obtenidos del servidor
+      for (var i = 0; i < data.length; i++) {
+        select.append($('<option>', {
+          value: data[i].id_type,
+          text: data[i].type_name
+        }));
+      }
+    }
+  });
+}
+
+// Llamar a la función para cargar las opciones al cargar la página
+cargarOpciones();
+
+
 // -- Eventos
 
 // --
