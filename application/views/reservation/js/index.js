@@ -73,7 +73,6 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     // --
     var calendarEl = document.getElementById('calendar');
-    var paym
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
         nextDayThreshold: '00:00:00',
@@ -129,7 +128,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                             select.prop("selectedIndex", 3);
                         }
 
-
+                        allPrices = [];
                         allPrices.push(datas.price_temporary);
                         allPrices.push(datas.price_half);
                         allPrices.push(datas.price_day);
@@ -141,8 +140,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                         $('input[name=birth_date]').val(datas.birth_date);
                         $('input[name=address]').val(datas.address);
 
-                        $('input[name=price_venta_fo]').val(datas.precio_comida);
-                        $('input[name=price_venta_ac]').val(datas.precio_accesorio);
+                        $('input[name=price_venta_fo]').val(datas.precio_comida == undefined ? "00" : datas.precio_comida);
+                        $('input[name=price_venta_ac]').val(datas.precio_accesorio == undefined ? "00" : datas.precio_accesorio);
+
+                        $('input[name=price_extra]').val("00")
+                        $('input[name=price_all]').val()
                         
                     }
                 })
@@ -155,15 +157,17 @@ document.addEventListener('DOMContentLoaded', async function() {
 });
 
 var allPrices = [];
-console.log(allPrices);
+
 
 function pagoReservation(fechaIn, fechaOut, prices){
+    console.log(prices);
     let fechaInicio = new Date(fechaIn);
     let fechaFin = new Date(fechaOut);
     let milisegundosInicio = fechaInicio.getTime();
     let milisegundosFin = fechaFin.getTime();
 
     let horas = (milisegundosFin - milisegundosInicio) / (1000 * 60 * 60);
+    console.log(horas);
 
     if( horas <= 4 ){
         $('input[name=price_room]').val(prices[0]);

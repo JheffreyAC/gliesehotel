@@ -154,7 +154,7 @@
                                         </div>
                                         <div class="col-12">
                                             <label class="form-label">Pago venta</label>
-                                            <input type="text" name="price_venta_fo" class="form-control" placeholder="Pago" data-msg="" required />
+                                            <input type="number" name="price_venta_fo" class="form-control" placeholder="Pago" data-msg="" disabled required />
                                         </div>
                                     </div>
 
@@ -165,7 +165,7 @@
                                         </div>
                                         <div class="col-12">
                                             <label class="form-label">Pago venta</label>
-                                            <input type="text" name="price_venta_ac" class="form-control" placeholder="Pago" data-msg="" required />
+                                            <input type="number" name="price_venta_ac" class="form-control" placeholder="Pago" data-msg="" disabled required />
                                         </div>
                                     </div>
 
@@ -175,11 +175,11 @@
                                     </div>
                                     <div class="col-6">
                                         <label class="form-label">Monto total</label>
-                                        <input type="text" name="" class="form-control" placeholder="Total" data-msg="" required />
+                                        <input type="number" name="price_all" class="form-control" placeholder="Total" data-msg="" required />
                                     </div>
                                     <div class="col-6">
                                         <label class="form-label">Monto extra</label>
-                                        <input type="text" name="" class="form-control" placeholder="Extra" data-msg="" required />
+                                        <input type="number" name="price_extra" class="form-control" placeholder="Extra" data-msg="" required />
                                     </div>
 
                                     <!--  -->
