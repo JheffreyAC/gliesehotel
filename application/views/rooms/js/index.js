@@ -1,4 +1,20 @@
+// -- Functions
+
+// --
+function destroy_datatable() {
+  // --
+  $('#datatable-rooms').dataTable().fnDestroy();
+}
+
+// --
+function refresh_datatable() {
+  // --
+  $('#datatable-rooms').DataTable().ajax.reload();
+}
+
 function load_datatable() {
+  // --
+  destroy_datatable();
   let dataTable = $('#datatable-rooms').DataTable({
     ajax: {
       url: BASE_URL + 'Rooms/get_rooms',
@@ -15,11 +31,11 @@ function load_datatable() {
         render: function (data, type, row) {
           // --
           return (
-            '<button class="btn btn-sm btn-info btn-round btn-icon btn_update" data-process-key="' + row.room_number + '">' +
+            '<button class="btn btn-sm btn-info btn-round btn-icon btn_update" data-process-key="' + row.id_room + '">' +
             feather.icons['edit'].toSvg({ class: 'font-small-4' }) +
             '</button>'
             + ' ' +
-            '<button  class="btn btn-sm btn-danger btn-round btn-icon btn_delete" data-process-key="' + row.room_number + '">' +
+            '<button  class="btn btn-sm btn-danger btn-round btn-icon btn_delete" data-process-key="' + row.id_room + '">' +
             feather.icons['trash-2'].toSvg({ class: 'font-small-4' }) +
             '</button>'
           );
@@ -77,6 +93,46 @@ function create_habitacion(form) {
 }
 
 
+// -- Funciones
+
+function cargarOpciones() {
+
+  $.ajax({
+    url: BASE_URL + 'Rooms/get_option_rooms',
+    type: 'GET',
+    dataType: 'json', // Espera una respuesta JSON
+    cache: false,
+    success: function (data) {
+      if (data.status === 'OK') {
+
+        $('.opcionesSelect').empty();
+
+
+        $.each(data.data, function (index, row) {
+
+          console.log(row.id_type);
+          $('.opcionesSelect').append(`
+                  <option value=${row.id_type}>${row.type_name}</option>
+                  `);
+        });
+        functions.toast_message(data.type, data.msg, data.status);
+      } else {
+
+        functions.toast_message(data.type, data.msg, data.status);
+      }
+    },
+    error: function () {
+      console.error('Fallo al obtener los datos.');
+
+      functions.toast_message('error', 'Error al obtener los datos', 'Error');
+    }
+  });
+}
+// Llamar a la función para cargar las opciones al cargar la página
+
+
+
+
 function update_habitacion(form) {
   // --
   $('#btn_update_habitacion').prop('disabled', true);
@@ -84,7 +140,7 @@ function update_habitacion(form) {
   let params = new FormData(form);
   // --
   $.ajax({
-    url: BASE_URL + 'Habitacion/update_habitacion', // Reemplaza 'update_habitacion' con la ruta correcta de actualización de habitaciones
+    url: BASE_URL + 'Rooms/update_rooms',
     type: 'POST',
     data: params,
     dataType: 'json',
@@ -96,6 +152,7 @@ function update_habitacion(form) {
     },
     success: function (data) {
       // --
+      console.log(data);
       functions.toast_message(data.type, data.msg, data.status);
       // --
       if (data.status === 'OK') {
@@ -112,30 +169,6 @@ function update_habitacion(form) {
   })
 }
 
-// -- Funciones
-
-function cargarOpciones() {
-  $.ajax({
-    url: BASE_URL + 'Rooms/get_rooms', // URL del script PHP
-    dataType: 'json',
-    success: function (data) {
-      var select = $('#opcionesSelect');
-      select.empty(); // Eliminar las opciones existentes
-
-      // Agregar las nuevas opciones desde los datos obtenidos del servidor
-      for (var i = 0; i < data.length; i++) {
-        select.append($('<option>', {
-          value: data[i].id_type,
-          text: data[i].type_name
-        }));
-      }
-    }
-  });
-}
-
-// Llamar a la función para cargar las opciones al cargar la página
-cargarOpciones();
-
 
 // -- Eventos
 
@@ -144,10 +177,10 @@ $(document).on('click', '.btn_update', function () {
   // --
   let value = $(this).attr('data-process-key');
   // --
-  let params = { 'id_habitacion': value } // Asegúrate de que coincida con el nombre correcto del parámetro
+  let params = { 'id_room': value } // Asegúrate de que coincida con el nombre correcto del parámetro
   // --
   $.ajax({
-    url: BASE_URL + 'Habitacion/get_habitacion_by_id', // Reemplaza 'get_habitacion_by_id' con la ruta correcta para obtener habitaciones por ID
+    url: BASE_URL + 'Rooms/get_room_by_id',
     type: 'GET',
     data: params,
     dataType: 'json',
@@ -160,8 +193,10 @@ $(document).on('click', '.btn_update', function () {
         // --
         let item = data.data
         // --
-        $('#update_habitacion_form :input[name=id_habitacion]').val(item.id);
-        $('#update_habitacion_form :input[name=description]').val(item.description);
+        $('#update_habitacion_form :input[name=id_room]').val(item.id_room);
+        $('#update_habitacion_form :input[name=room_number]').val(item.room_number);
+        $('#update_habitacion_form :input[name="id_type"]').val(item.id_type);
+        $('#update_habitacion_form :input[name=room_status]').val(item.room_status);
         // -- Otras asignaciones de valores para los campos de actualización
       }
     }
@@ -171,6 +206,47 @@ $(document).on('click', '.btn_update', function () {
 })
 
 // -- Otras funciones y eventos necesarios
+$(document).on('click', '.btn_delete', function () {
+  // --
+  let value = $(this).attr('data-process-key');
+  // --
+  let params = { 'id_room': value }
+  // --
+  Swal.fire({
+    title: '¿Estás seguro?',
+    text: '¡No podrás revertir esto!',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Si, eliminar!',
+    cancelButtonText: 'No, cancelar!',
+    customClass: {
+      confirmButton: 'btn btn-primary',
+      cancelButton: 'btn btn-outline-danger ms-1'
+    },
+    buttonsStyling: false,
+    preConfirm: _ => {
+      return $.ajax({
+        url: BASE_URL + 'Rooms/delete_rooms',
+        type: 'POST',
+        data: params,
+        dataType: 'json',
+        cache: false,
+        success: function (data) {
+          // --
+          functions.toast_message(data.type, data.msg, data.status);
+          // --
+          if (data.status === 'OK') {
+            // --
+            refresh_datatable();
+          }
+        }
+      })
+    }
+  }).then(result => {
+    if (result.isConfirmed) {
+    }
+  });
+})
 
 // -- Reset forms
 $(document).on('click', '.reset', function () {
@@ -206,3 +282,5 @@ $('.modal').on('hidden.bs.modal', function () {
 
 
 load_datatable();
+
+cargarOpciones();
