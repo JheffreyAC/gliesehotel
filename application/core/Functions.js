@@ -12,7 +12,7 @@ class Functions {
         let bytes = []
         // --
         for (i; i < l; i += 2) {
-          bytes.push(parseInt(string.substr(i, 2), 16))
+            bytes.push(parseInt(string.substr(i, 2), 16))
         }
         // --
         let code = String.fromCharCode.apply(String, bytes)
@@ -43,7 +43,7 @@ class Functions {
         // --
         return code
     }
-    
+
     /**
      * Toast message
      * @param {*} type 
@@ -68,7 +68,7 @@ class Functions {
     }
 
 
-   
+
     /**
      * Verified if you have the permissions for this view
      * @param {*} view 
@@ -121,36 +121,36 @@ class Functions {
                 className: 'btn btn-outline-secondary dropdown-toggle me-2',
                 text: feather.icons['share'].toSvg({ class: 'font-small-4 me-50' }) + '<span>Exportar</span>',
                 buttons: [
-                {
-                    extend: 'print',
-                    text: feather.icons['printer'].toSvg({ class: 'font-small-4 me-50' }) + 'Print',
-                    className: 'dropdown-item',
-                    exportOptions: { columns: columns }
-                },
-                {
-                    extend: 'csv',
-                    text: feather.icons['file-text'].toSvg({ class: 'font-small-4 me-50' }) + 'Csv',
-                    className: 'dropdown-item',
-                    exportOptions: { columns: columns }
-                },
-                {
-                    extend: 'excel',
-                    text: feather.icons['file'].toSvg({ class: 'font-small-4 me-50' }) + 'Excel',
-                    className: 'dropdown-item',
-                    exportOptions: { columns: columns }
-                },
-                {
-                    extend: 'pdf',
-                    text: feather.icons['clipboard'].toSvg({ class: 'font-small-4 me-50' }) + 'Pdf',
-                    className: 'dropdown-item',
-                    exportOptions: { columns: columns }
-                },
-                {
-                    extend: 'copy',
-                    text: feather.icons['copy'].toSvg({ class: 'font-small-4 me-50' }) + 'Copy',
-                    className: 'dropdown-item',
-                    exportOptions: { columns: columns }
-                }
+                    {
+                        extend: 'print',
+                        text: feather.icons['printer'].toSvg({ class: 'font-small-4 me-50' }) + 'Print',
+                        className: 'dropdown-item',
+                        exportOptions: { columns: columns }
+                    },
+                    {
+                        extend: 'csv',
+                        text: feather.icons['file-text'].toSvg({ class: 'font-small-4 me-50' }) + 'Csv',
+                        className: 'dropdown-item',
+                        exportOptions: { columns: columns }
+                    },
+                    {
+                        extend: 'excel',
+                        text: feather.icons['file'].toSvg({ class: 'font-small-4 me-50' }) + 'Excel',
+                        className: 'dropdown-item',
+                        exportOptions: { columns: columns }
+                    },
+                    {
+                        extend: 'pdf',
+                        text: feather.icons['clipboard'].toSvg({ class: 'font-small-4 me-50' }) + 'Pdf',
+                        className: 'dropdown-item',
+                        exportOptions: { columns: columns }
+                    },
+                    {
+                        extend: 'copy',
+                        text: feather.icons['copy'].toSvg({ class: 'font-small-4 me-50' }) + 'Copy',
+                        className: 'dropdown-item',
+                        exportOptions: { columns: columns }
+                    }
                 ],
                 init: function (api, node, config) {
                     $(node).removeClass('btn-secondary');
@@ -181,8 +181,8 @@ class Functions {
     get_parameter_by_name(name) {
         name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
         var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-        results = regex.exec(location.search);
-        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+            results = regex.exec(location.search);
+        return results === null ? "" : decodeURIComponent(results[2].replace(/\+/g, " "));
     }
 
 }

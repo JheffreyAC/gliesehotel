@@ -1,6 +1,3 @@
-
-
-
 // --
 function load_datatable() {
     // --
@@ -14,21 +11,21 @@ function load_datatable() {
         columns: [
             { data: 'id_food' },
             { data: 'food_description' },
-            { data: 'food_price' }, 
-            { data: 'food_stock' },    
-            { data: 'tipo_food' },      
-         /**{ data: 'ts_start'},*/ 
+            { data: 'food_price' },
+            { data: 'food_stock' },
+            { data: 'tipo_food' },
+            /**{ data: 'ts_start'},*/
             {
                 class: 'center',
                 render: function (data, type, row) {
                     // --
-                    
+
                     return (
-                        '<button class="btn btn-sm btn-info btn-round btn-icon btn_update" data-process-key="'+ row.id_food +'">' +
+                        '<button class="btn btn-sm btn-info btn-round btn-icon btn_update" data-process-key="' + row.id_food + '">' +
                         feather.icons['edit'].toSvg({ class: 'font-small-4' }) +
                         '</button>'
-                        + ' ' + 
-                        '<button  class="btn btn-sm btn-danger btn-round btn-icon btn_delete" data-process-key="'+ row.id_food +'">' +
+                        + ' ' +
+                        '<button  class="btn btn-sm btn-danger btn-round btn-icon btn_delete" data-process-key="' + row.id_food + '">' +
                         feather.icons['trash-2'].toSvg({ class: 'font-small-4' }) +
                         '</button>'
                     );
@@ -43,7 +40,7 @@ function load_datatable() {
     })
 
     // --
-    dataTable.on('xhr', function() {
+    dataTable.on('xhr', function () {
         // --
         var data = dataTable.ajax.json();
         // --
