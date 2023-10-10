@@ -301,6 +301,17 @@ $('#room_rate').on('change', function () {
 })
 
 
+function money() {
+  const selectElement = document.getElementById("priceSelectOption");
+  const inputElement = document.getElementById("payment_all");
+  let selectedValue = selectElement.value;
+
+  inputElement.value = selectedValue;
+}
+// Agrega un controlador de eventos para el cambio en el select
+$('#priceSelectOption').on('change', function () {
+  money();
+});
 
 
 function guestDocument() {
