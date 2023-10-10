@@ -178,28 +178,6 @@ document.addEventListener('DOMContentLoaded', async function() {
 
 var allPrices = [];
 
-function dateTimeReservation(check_date, op){
-    let dateOptions = { year: 'numeric', month: 'numeric', day: '2-digit' };
-    let timeOptions = { hour: '2-digit', minute: '2-digit', second: undefined };
-    
-    let checkinDate = new Date(check_date);
-    
-    let formattedDate = checkinDate.toLocaleString('es-PE', dateOptions); 
-    formattedDate = formattedDate.replace(/\//g, '-');
-    formattedDate = formattedDate.split("-").reverse().join("-");
-    formattedDate = formattedDate.split("-").map(x => x.padStart(2, '0')).join("-");
-
-    let formattedTime = checkinDate.toLocaleString('es-PE', timeOptions);
-
-    if(op == "day"){
-        return formattedDate;
-    }else if(op == "time"){
-        return formattedTime;
-    }else{
-        return "error, passed variable function";
-    }
-}
-
 // --
 
 function paymentReservation(dateIn, dateOut, prices){
@@ -231,7 +209,7 @@ function paymentReservation(dateIn, dateOut, prices){
         payment+= paymentHours;
 
         console.log(`horasReserva: ${horas}  dias: ${dias}  horas: ${horasRes}   pagoHoras: ${paymentHours}  pagado: ${payment}`);
-        return $('input[name=price_room]').val(payment);        
+        return $('input[name=price_room]').val('S/ ' + payment.toLocaleString("es-ES", {minimumFractionDigits: 2, maximumFractionDigits: 2}));        
     }
 } 
 

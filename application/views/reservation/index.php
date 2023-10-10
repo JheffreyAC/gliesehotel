@@ -107,7 +107,7 @@
                                     </div>
                                     <div class="col-6">
                                         <label class="form-label">Precio</label>
-                                        <input type="number" name="price_room" class="form-control" placeholder="Precio" data-msg="" disabled required/>
+                                        <input type="text" name="price_room" class="form-control" placeholder="Precio" data-msg="" disabled required/>
                                     </div>
 
 
