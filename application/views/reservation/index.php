@@ -1,40 +1,39 @@
+<!-- BEGIN: Content-->
+<div class="app-content content ">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper container-xxl p-0">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+            <!-- Reservations Starts -->
+            <section id="reservations">
 
-    <!-- BEGIN: Content-->
-    <div class="app-content content ">
-        <div class="content-overlay"></div>
-        <div class="header-navbar-shadow"></div>
-        <div class="content-wrapper container-xxl p-0">
-            <div class="content-header row">
-            </div>
-            <div class="content-body">
-                <!-- Reservations Starts -->
-                <section id="reservations">
-                    
-                    <!-- Header title -->
-                    <div class="content-header row">
-                        <div class="content-header-left col-md-9 col-12 mb-2">
-                            <div class="row breadcrumbs-top"> 
-                                <div class="col-12">
+                <!-- Header title -->
+                <div class="content-header row">
+                    <div class="content-header-left col-md-9 col-12 mb-2">
+                        <div class="row breadcrumbs-top">
+                            <div class="col-12">
                                 <h2 class="content-header-title float-start mb-0">Lista de <?php echo strtolower($selected_sub_menu); ?></h2>
-                                    <div class="breadcrumb-wrapper">
-                                        <ol class="breadcrumb">
-                                            <li class="breadcrumb-item"><a href="#"><?php echo $selected_menu; ?></a>
-                                            </li>
-                                            <li class="breadcrumb-item active"><span><?php echo $selected_sub_menu; ?></span>
-                                            </li>
-                                        </ol>
-                                    </div>
+                                <div class="breadcrumb-wrapper">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="#"><?php echo $selected_menu; ?></a>
+                                        </li>
+                                        <li class="breadcrumb-item active"><span><?php echo $selected_sub_menu; ?></span>
+                                        </li>
+                                    </ol>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- /Header title-->
+                </div>
+                <!-- /Header title-->
 
-                    <!-- Table -->
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card p-2">
-                                <!-- <table class="table" id="datatable-reservation">
+                <!-- Table -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card p-2">
+                            <!-- <table class="table" id="datatable-reservation">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
@@ -44,29 +43,29 @@
                                         </tr>
                                     </thead>
                                 </table> -->
-                                <div id='calendar'></div>
-                            </div>
+                            <div id='calendar'></div>
                         </div>
                     </div>
-                    <!-- /Table -->
+                </div>
+                <!-- /Table -->
 
-                    <!-- Update Permission Modal -->
-                    <div class="modal fade" id="update_reservation_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+                <!-- Update Permission Modal -->
+                <div class="modal fade" id="update_reservation_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
                     <div class="modal-dialog modal-xl modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header bg-transparent">
                                 <button type="reset" class="btn-close reset" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body px-sm-5 pb-5">
-                                <div class="row breadcrumbs-top"> 
+                                <div class="row breadcrumbs-top">
                                     <div class="col-12 d-flex aling-items-end justify-content-between">
                                         <h4 class="content-header-title">Reserva</h2>
-                                        <span id="idReservation"></span>
+                                            <span id="idReservation"></span>
                                     </div>
                                 </div>
                                 <!-- ROOM -->
                                 <div class="col-12 mb-2 d-flex flex-wrap justify-content-center">
-                                    <h1 class="text-center mb-1">Habitación <span class="fs-4" id="numRoom"></span></h1>        
+                                    <h1 class="text-center mb-1">Habitación <span class="fs-4" id="numRoom"></span></h1>
                                 </div>
                                 <form method="POST" enctype="multipart/form-data" id="update_reservation_form" class="row" onsubmit="return false">
                                     <div class="col-4">
@@ -108,7 +107,7 @@
                                     </div>
                                     <div class="col-6">
                                         <label class="form-label">Precio</label>
-                                        <input type="number" name="price_room" class="form-control" placeholder="Precio" data-msg="" disabled required/>
+                                        <input type="number" name="price_room" class="form-control" placeholder="Precio" data-msg="" disabled required />
                                     </div>
                                     <!-- GUEST -->
                                     <div class="text-center mb-1">
@@ -198,10 +197,10 @@
                 </div>
                 <!--/ Update Permission Modal -->
 
-                </section>
-                <!-- Reservations ends -->
+            </section>
+            <!-- Reservations ends -->
 
-            </div>
         </div>
     </div>
-    <!-- END: Content-->
+</div>
+<!-- END: Content-->

@@ -10,7 +10,7 @@ class M_Reception extends Model
   public function get_rooms()
   {
     try {
-      $sql = 'SELECT room.room_number, room.room_status,room.id_type ,room_type.bed_type, room_type.type_name, room_type.person_limit, room_type.price_temporary, room_type.price_half, room_type.price_day
+      $sql = 'SELECT room.id_room,room.room_number, room.room_status, room_type.bed_type, room_type.type_name, room_type.person_limit, room_type.price_temporary, room_type.price_half, room_type.price_day
       FROM room 
       JOIN room_type ON room.id_type = room_type.id_type ORDER BY 1';
       $result = $this->pdo->fetchAll($sql);
@@ -33,9 +33,9 @@ class M_Reception extends Model
     // --
     try {
       // --
-      $sql = 'SELECT room.room_number, room.room_status, room_type.bed_type, room_type.type_name, room_type.person_limit, room_type.price_temporary, room_type.price_half, room_type.price_day
+      $sql = 'SELECT room.id_room,room.room_number, room.room_status, room_type.bed_type, room_type.type_name, room_type.person_limit, room_type.price_temporary, room_type.price_half, room_type.price_day
       FROM room 
-      JOIN room_type ON room.id_type = room_type.id_type WHERE room.room_number = :room_number';
+      JOIN room_type ON room.id_type = room_type.id_type WHERE room.id_room = :id_room';
       // --
       $result = $this->pdo->fetchOne($sql, $bind);
       // --
@@ -71,6 +71,95 @@ class M_Reception extends Model
       return $e;
     }
 
+    return $response;
+  }
+
+  public function create_guest_reservation($bind)
+  {
+    try {
+      // --
+      $sql = 'INSERT INTO guest (document_type, document_number, first_names, last_names, address, company_name) VALUES (:document_type, :document_number, :first_names, :last_names, :address,:company_name)';
+      // --
+      $result = $this->pdo->perform($sql, $bind);
+      // --
+      if ($result) {
+        // --
+        $response = array('status' => 'OK', 'result' => array());
+      } else {
+        // --
+        $response = array('status' => 'ERROR', 'result' => array());
+      }
+    } catch (PDOException $e) {
+      // --
+      $response = array('status' => 'EXCEPTION', 'result' => $e);
+    }
+    // --
+    return $response;
+  }
+
+  public function get_guest($bind)
+  {
+    try {
+      $sql = 'SELECT id_guest, document_type, document_number, first_names, last_names, company_name
+      FROM guest 
+      WHERE (document_type = :document_type AND document_number LIKE :document_number)';
+      $result = $this->pdo->fetchAll($sql, $bind);
+
+      if ($result) {
+        $response = array('status' => 'OK', 'result' => $result);
+      } else {
+        $response = array('status' => 'ERROR', 'result' => array());
+      }
+    } catch (PDOException $e) {
+      $response = array('status' => 'EXCEPTION', 'result' => $e);
+    }
+    return $response;
+  }
+
+
+  public function create_reservation($bind)
+  {
+    try {
+      // --
+      $sql = 'INSERT INTO reservation (checkin_date, checkin_time,checkout_date,checkout_time, id_room, id_guest,payment_room,payment_sales,payment_extra,payment_all) VALUES (:checkin_date, :checkin_time, :checkout_date, :checkout_time, :id_room, :id_guest,:payment_room,null,null,:payment_all)';
+      // --
+      $result = $this->pdo->perform($sql, $bind);
+      // --
+      if ($result) {
+        // --
+        $response = array('status' => 'OK', 'result' => array());
+      } else {
+        // --
+        $response = array('status' => 'ERROR', 'result' => array());
+      }
+    } catch (PDOException $e) {
+      // --
+      $response = array('status' => 'EXCEPTION', 'result' => $e);
+    }
+    // --
+    return $response;
+  }
+
+
+
+
+
+
+
+  public function get_rooms_price($bind)
+  {
+    try {
+      $sql = 'SELECT id_type,type_name,person_limit,price_temporary, price_half, price_day FROM room_type WHERE type_name = :type_name';
+      $result = $this->pdo->fetchAll($sql, $bind);
+
+      if ($result) {
+        $response = array('status' => 'OK', 'result' => $result);
+      } else {
+        $response = array('status' => 'ERROR', 'result' => array());
+      }
+    } catch (PDOException $e) {
+      $response = array('status' => 'EXCEPTION', 'result' => $e);
+    }
     return $response;
   }
 }

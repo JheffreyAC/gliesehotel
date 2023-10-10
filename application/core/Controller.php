@@ -1,10 +1,11 @@
-<?php 
+<?php
 // -- Libraries
 require APP_VENDOR . 'autoload.php';
 
 // -- Class Controller
-abstract class Controller {
-    
+abstract class Controller
+{
+
     // -- View
     protected $view;
     // -- Functions
@@ -17,7 +18,8 @@ abstract class Controller {
     protected $messages;
 
     // -- Construct
-    public function __construct() {
+    public function __construct()
+    {
         // -- 
         $this->view = new View(new Request);
         $this->functions = new Functions();
@@ -35,20 +37,20 @@ abstract class Controller {
     abstract public function index();
 
     // --
-    public function load_model($model) {
+    public function load_model($model)
+    {
         // --
         $model = 'M_' . $model; // -- Example -> M_Dashboards
-        $route_model = ROOT . 'application'. DS .'models' . DS .$model . '.php';
+        $route_model = ROOT . 'application' . DS . 'models' . DS . $model . '.php';
 
         // --
         if (is_readable($route_model)) {
             // --
-			require_once $route_model;
-			$model = new $model;
-			return $model;
-		} else {
-			throw new Exception('Error of model');
-		}
+            require_once $route_model;
+            $model = new $model;
+            return $model;
+        } else {
+            throw new Exception('Error of model');
+        }
     }
-
 }

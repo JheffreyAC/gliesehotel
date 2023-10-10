@@ -8,13 +8,13 @@
             <div class="content-body">
                 <!-- Roles Starts -->
                 <section id="roles">
-                    
+
                     <!-- Header title -->
                     <div class="content-header row">
                         <div class="content-header-left col-md-9 col-12 mb-2">
-                            <div class="row breadcrumbs-top"> 
+                            <div class="row breadcrumbs-top">
                                 <div class="col-12">
-                                <h2 class="content-header-title float-start mb-0">Lista de <?php echo strtolower($selected_sub_menu); ?></h2>
+                                    <h2 class="content-header-title float-start mb-0">Lista de <?php echo strtolower($selected_sub_menu); ?></h2>
                                     <div class="breadcrumb-wrapper">
                                         <ol class="breadcrumb">
                                             <li class="breadcrumb-item"><a href="#"><?php echo $selected_menu; ?></a>
@@ -37,7 +37,7 @@
                                     <thead>
                                         <tr>
                                             <th>Descripción</th>
-                                           <!--  <th data-i18n="Created date">Created Date</th> -->
+                                            <!--  <th data-i18n="Created date">Created Date</th> -->
                                             <th>Acciones</th>
                                         </tr>
                                     </thead>
@@ -92,7 +92,7 @@
                                                 <div id="create_role_menu">
                                                 </div>
                                             </div>
-                                            
+
                                         </div>
                                         <div class="col-12 text-center mt-2">
                                             <button id="btn_create_role" type="submit" class="btn btn-primary mt-2 me-1">Guardar</button>
@@ -146,14 +146,14 @@
                                                     </td>
                                                 </tr>
                                             </table>
-                                          
+
                                             <div class="col-12">
                                                 <h5 class="mt-1 pt-10">Permisos</h5>
                                                 <br>
                                                 <div id="update_role_menu">
                                                 </div>
                                             </div>
-                                            
+
                                         </div>
                                         <input type="hidden" name="id_role">
                                         <div class="col-12 text-center mt-2">

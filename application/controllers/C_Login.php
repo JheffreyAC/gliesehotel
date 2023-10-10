@@ -1,14 +1,17 @@
 <?php
 // --
-class C_Login extends Controller {
+class C_Login extends Controller
+{
 
     // --
-    public function __construct() {
-		parent::__construct();
+    public function __construct()
+    {
+        parent::__construct();
     }
-    
+
     // --
-    public function index() {
+    public function index()
+    {
         // --
         $this->functions->check_session($this->segment->get('isActive'));
         $this->view->set_js('index');
@@ -16,7 +19,8 @@ class C_Login extends Controller {
     }
 
     // --
-    public function login() { 
+    public function login()
+    {
         // ---
         $request = $_SERVER['REQUEST_METHOD'];
         // --
@@ -28,7 +32,7 @@ class C_Login extends Controller {
             }
             // --
             if (
-                isset($input['user']) && 
+                isset($input['user']) &&
                 isset($input['password'])
             ) {
                 // --
@@ -41,7 +45,7 @@ class C_Login extends Controller {
                 $bind = array(
                     'user' => $user,
                     'password' => $password,
-                    'status' => 1 
+                    'status' => 1
                 );
                 // --
                 $cookieToken = $this->segment->get('tokenUser');
@@ -51,7 +55,7 @@ class C_Login extends Controller {
                 $total_count = 0;
                 // --
                 if ($response_intent['status'] == 'OK') {
-                    $total_count = intval($response_intent['result']['total_count']); 
+                    $total_count = intval($response_intent['result']['total_count']);
                 }
                 // -- ingresar un validador de tiempo, máximo 10min
                 // -- eliminar los token generados (como máximo en el 3er intento "cuando hace login")
@@ -63,13 +67,13 @@ class C_Login extends Controller {
                     $json = array(
                         'status' => 'ERROR',
                         'msg' => 'Excedio el número de intentos, contacte con su administrador.'
-                    ); 
+                    );
                 } else {
                     // --
                     $response = $obj_login->get_user($bind);
                     // --
                     switch ($response['status']) {
-                        // --
+                            // --
                         case 'OK':
                             // --
                             $result_user = $response['result'][0]; // -- First
@@ -82,13 +86,13 @@ class C_Login extends Controller {
                             $response_validate = $obj_login->validate_user($bind_validate);
                             // --
                             switch ($response_validate['status']) {
-                                // --
+                                    // --
                                 case 'OK':
                                     // --
                                     $campus = array();
                                     // --
                                     foreach ($response['result'] as $item) {
-                                    // --
+                                        // --
                                         $campus[] = array('id' => $item['id_campus'], 'description' => $item['description_campus']);
                                     }
                                     // --
@@ -154,7 +158,7 @@ class C_Login extends Controller {
                                     );
                                     // --
                                     break;
-                
+
                                 case 'EXCEPTION':
                                     // --
                                     $json = array(
@@ -163,7 +167,7 @@ class C_Login extends Controller {
                                     );
                                     // --
                                     break;
-                                }
+                            }
                             break;
 
                         case 'ERROR':
@@ -201,26 +205,24 @@ class C_Login extends Controller {
                             break;
                     }
                 }
-
             } else {
                 // --
                 $json = array(
                     'status' => 'ERROR',
                     'msg' => 'Verificar parámetros.'
-                ); 
+                );
             }
         } else {
             // --
             $json = array(
                 'status' => 'ERROR',
                 'msg' => 'Método no permitido.'
-            ); 
+            );
         }
 
-      
+
         // --
         header('Content-Type: application/json');
         echo json_encode($json);
     }
-
 }

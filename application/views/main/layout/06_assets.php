@@ -41,11 +41,11 @@
 
 
     <!-- BEGIN: Index JS -->
-    <?php 
+    <?php
     if (isset($params['js']) && count($params['js'])) {
         foreach ($params['js'] as $js) { ?>
             <script src="<?php echo  $js; ?>"></script>
-        <?php
+    <?php
         }
     }
     ?>
@@ -58,7 +58,7 @@
     <!-- BEGIN: Lenguajes JS-->
     <script src="<?php echo BASE_URL ?>public/app-assets/js/scripts/lenguajes.js"></script>
     <!-- END: Lenguajes JS-->
-    
+
     <!-- -->
     <script>
         $(window).on('load', function() {
@@ -71,9 +71,11 @@
             // --
         })
     </script>
+
+
+
     <!-- -->
-</body>
-<!-- END: Body-->
+    </body>
+    <!-- END: Body-->
 
-</html>
-
+    </html>
