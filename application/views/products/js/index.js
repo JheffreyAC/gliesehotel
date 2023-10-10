@@ -3,13 +3,13 @@
 // --
 function destroy_datatable() {
     // --
-    $('#datatable-products').dataTable().fnDestroy();
+    $('#datatable-sales-food').dataTable().fnDestroy();
 }
 
 // --
 function refresh_datatable() {
     // --
-    $('#datatable-products').DataTable().ajax.reload();
+    $('#datatable-sales-food').DataTable().ajax.reload();
 }
 
 // --
@@ -17,7 +17,7 @@ function load_datatable() {
     // --
     destroy_datatable();
     // --
-    let dataTable = $('#datatable-products').DataTable({
+    let dataTable = $('#datatable-sales-food').DataTable({
         // --
         ajax: {
             url: BASE_URL + 'Products/get_products',

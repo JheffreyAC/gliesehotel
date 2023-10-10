@@ -17,6 +17,8 @@ class C_Reservation extends Controller {
         $this->view->set_menu(array('modules' => $this->segment->get('modules'), 'view' => 'Reservation')); // -- Active Menu
         $this->view->set_view('index');     // -- Load View
     }
+
+    // --
     public function get_reservations() { 
       // --
         $this->functions->validate_session($this->segment->get('isActive'));
@@ -45,28 +47,18 @@ class C_Reservation extends Controller {
                         $data[] = array(
                             'id_reservation' => $item['id_reservation'],
                             'checkin_date' => $item['checkin_date'],
+                            'checkin_time' => $item['checkin_time'],
                             'checkout_date' => $item['checkout_date'],
+                            'checkout_time' => $item['checkout_time'],
                             'room_number' => $item['room_number'],
                             'room_status' => $item['room_status'],
                             'type_name' => $item['type_name'],
-                            'person_limit' => $item['person_limit'],
-                            'price_temporary' => $item['price_temporary'],
-                            'price_half' => $item['price_half'],
-                            'price_day' => $item['price_day'],
                             'bed_type' => $item['bed_type'],
                             'document_type' => $item['document_type'],
                             'document_number' => $item['document_number'],
                             'first_names' => $item['first_names'],
                             'last_names' => $item['last_names'],
-                            'birth_date' => $item['birth_date'],
-                            'address' => $item['address'],
-                            'company_name' => $item['company_name'],
-                            'id_accesory' => $item['id_accesory'],
-                            'cantidad_accesorio' => $item['cantidad_accesorio'],
-                            'precio_accesorio' => $item['precio_accesorio'],
-                            'id_food' => $item['id_food'],
-                            'cantidad_comida' => $item['cantidad_comida'],
-                            'precio_comida' => $item['precio_comida']
+                            'company_name' => $item['company_name']
                         );
                     }
                   // --
@@ -117,87 +109,346 @@ class C_Reservation extends Controller {
         echo json_encode($json);
     }
 
+    // --
     public function get_reservation() {
       // --
-      $this->functions->validate_session($this->segment->get('isActive'));
+        $this->functions->validate_session($this->segment->get('isActive'));
       // --
-      $request = $_SERVER['REQUEST_METHOD'];
+        $request = $_SERVER['REQUEST_METHOD'];
       // --
-      if ($request === 'GET') {
+        if ($request === 'GET') {
           // --
-          $input = json_decode(file_get_contents('php://input'), true);
-          if (empty($input)) {
-              $input = filter_input_array(INPUT_GET);
-          }
+            $input = json_decode(file_get_contents('php://input'), true);
+            if (empty($input)) {
+                $input = filter_input_array(INPUT_GET);
+            }
           // --
-          if (!empty($input['id_reservation'])) {
+            if (!empty($input['id_reservation'])) {
               // --
-              $obj = $this->load_model('Reservation');
+                $obj = $this->load_model('Reservation');
               // --
-              $bind = array(
-                  'id_reservation' => intval($input['id_reservation']));
+                $bind = array(
+                    'id_reservation' => intval($input['id_reservation']));
               // --
-              $response = $obj->get_reservation($bind);
+                $response = $obj->get_reservation($bind);
               // --
-              switch ($response['status']) {
+                switch ($response['status']) {
                   // --
-                  case 'OK':
+                    case 'OK':
                       // --
-                      $json = array(
-                          'status' => 'OK',
-                          'type' => 'success',
-                          'msg' => 'Listado de registros encontrados.',
-                          'data' => $response['result']
-                      );
+                        $json = array(
+                            'status' => 'OK',
+                            'type' => 'success',
+                            'msg' => 'Listado de registros encontrados.',
+                            'data' => $response['result']
+                        );
                       // --
-                      break;
+                        break;
 
-                  case 'ERROR':
+                    case 'ERROR':
                       // --
-                      $json = array(
-                          'status' => 'ERROR',
-                          'type' => 'warning',
-                          'msg' => 'No se encontraron registros en el sistema.',
-                          'data' => array(),
-                      );
+                        $json = array(
+                            'status' => 'ERROR',
+                            'type' => 'warning',
+                            'msg' => 'No se encontraron registros en el sistema.',
+                            'data' => array(),
+                        );
                       // --
-                      break;
+                        break;
 
-                  case 'EXCEPTION':
+                    case 'EXCEPTION':
                       // --
-                      $json = array(
-                          'status' => 'ERROR',
-                          'type' => 'error',
-                          'msg' => $response['result']->getMessage(),
-                          'data' => array()
-                      );
+                        $json = array(
+                            'status' => 'ERROR',
+                            'type' => 'error',
+                            'msg' => $response['result']->getMessage(),
+                            'data' => array()
+                        );
                       // --
-                      break;
-              }
-          } else {
+                        break;
+                }
+            } else {
               // --
-              $json = array(
-                  'status' => 'ERROR',
-                  'type' => 'warning',
-                  'msg' => 'No se enviaron los campos necesarios, verificar.',
-                  'data' => array()
-              );
+                $json = array(
+                    'status' => 'ERROR',
+                    'type' => 'warning',
+                    'msg' => 'No se enviaron los campos necesarios, verificar.',
+                    'data' => array()
+                );
+            }
+
+        } else {
+          // --
+            $json = array(
+                'status' => 'ERROR',
+                'type' => 'error',
+                'msg' => 'Método no permitido.',
+                'data' => array()
+            ); 
+        }
+    
+      // --
+        header('Content-Type: application/json');
+        echo json_encode($json);
+    }
+
+// --
+
+public function get_sales_food() {
+    // --
+    $this->functions->validate_session($this->segment->get('isActive'));
+    // --
+    $request = $_SERVER['REQUEST_METHOD'];
+    // --
+    if ($request === 'GET') {
+        // --
+        $input = json_decode(file_get_contents('php://input'), true);
+        if (empty($input)) {
+            $input = filter_input_array(INPUT_GET);
+        }
+        // --
+        if (!empty($input['id_reservation'])) {
+            // --
+            $obj = $this->load_model('Reservation');
+            // --
+            $bind = array(
+                'id_reservation' => intval($input['id_reservation']));
+            // --
+            $response = $obj->get_sales_food($bind);
+            // --
+            switch ($response['status']) {
+                // --
+                case 'OK':
+                    // --
+                    $json = array(
+                        'status' => 'OK',
+                        'type' => 'success',
+                        'msg' => 'Listado de registros encontrados.',
+                        'data' => $response['result']
+                    );
+                    // --
+                    break;
+
+                case 'ERROR':
+                    // --
+                    $json = array(
+                        'status' => 'ERROR',
+                        'type' => 'warning',
+                        'msg' => 'No se encontraron registros en el sistema.',
+                        'data' => array(),
+                    );
+                    // --
+                    break;
+
+                case 'EXCEPTION':
+                    // --
+                    $json = array(
+                        'status' => 'ERROR',
+                        'type' => 'error',
+                        'msg' => $response['result']->getMessage(),
+                        'data' => array()
+                    );
+                    // --
+                    break;
+            }
+        } else {
+            // --
+            $json = array(
+                'status' => 'ERROR',
+                'type' => 'warning',
+                'msg' => 'No se enviaron los campos necesarios, verificar.',
+                'data' => array()
+            );
+        }
+    
+    } else {
+        // --
+        $json = array(
+            'status' => 'ERROR',
+            'type' => 'error',
+            'msg' => 'Método no permitido.',
+            'data' => array()
+        ); 
+    }
+  
+    // --
+    header('Content-Type: application/json');
+    echo json_encode($json);
+}
+
+public function get_sales_accessory() {
+  // --
+  $this->functions->validate_session($this->segment->get('isActive'));
+  // --
+  $request = $_SERVER['REQUEST_METHOD'];
+  // --
+  if ($request === 'GET') {
+      // --
+      $input = json_decode(file_get_contents('php://input'), true);
+      if (empty($input)) {
+          $input = filter_input_array(INPUT_GET);
+      }
+      // --
+      if (!empty($input['id_reservation'])) {
+          // --
+          $obj = $this->load_model('Reservation');
+          // --
+          $bind = array(
+              'id_reservation' => intval($input['id_reservation']));
+          // --
+          $response = $obj->get_sales_accessory($bind);
+          // --
+          switch ($response['status']) {
+              // --
+              case 'OK':
+                  // --
+                  $json = array(
+                      'status' => 'OK',
+                      'type' => 'success',
+                      'msg' => 'Listado de registros encontrados.',
+                      'data' => $response['result']
+                  );
+                  // --
+                  break;
+
+              case 'ERROR':
+                  // --
+                  $json = array(
+                      'status' => 'ERROR',
+                      'type' => 'warning',
+                      'msg' => 'No se encontraron registros en el sistema.',
+                      'data' => array(),
+                  );
+                  // --
+                  break;
+
+              case 'EXCEPTION':
+                  // --
+                  $json = array(
+                      'status' => 'ERROR',
+                      'type' => 'error',
+                      'msg' => $response['result']->getMessage(),
+                      'data' => array()
+                  );
+                  // --
+                  break;
           }
-      
       } else {
           // --
           $json = array(
               'status' => 'ERROR',
-              'type' => 'error',
-              'msg' => 'Método no permitido.',
+              'type' => 'warning',
+              'msg' => 'No se enviaron los campos necesarios, verificar.',
               'data' => array()
-          ); 
+          );
       }
-    
+  
+  } else {
       // --
-      header('Content-Type: application/json');
-      echo json_encode($json);
+      $json = array(
+          'status' => 'ERROR',
+          'type' => 'error',
+          'msg' => 'Método no permitido.',
+          'data' => array()
+      ); 
   }
+
+  // --
+  header('Content-Type: application/json');
+  echo json_encode($json);
+}
+
+// --
+public function update_reservation() {
+    // --
+    $this->functions->validate_session($this->segment->get('isActive'));
+    // --
+    $request = $_SERVER['REQUEST_METHOD'];
+    // --
+    if ($request === 'POST') {
+        // --
+        $input = json_decode(file_get_contents('php://input'), true);
+        if (empty($input)) {
+            $input = filter_input_array(INPUT_POST);
+        }
+        // --
+        if (!empty($input['id_reservation']) &&
+            !empty($input['id_room'])
+        ) {
+            // --
+            $id_reservation = $input['id_reservation'];
+            $id_room = $input['id_room'];
+
+            // $description = strtoupper($this->functions->clean_string($input['description']));
+            // --
+            $bind = array(
+                'id_reservation' => $id_reservation,
+                'id_room' => $id_room,
+                'timestamp_updated' => time()
+            );
+            // --
+            $obj = $this->load_model('Reservation');
+            $response = $obj->update_reservation($bind);
+            // --
+            switch ($response['status']) {
+                // --
+                case 'OK':
+                    // --
+                    $json = array(
+                        'status' => 'OK',
+                        'type' => 'success',
+                        'msg' => 'Registro actualizado en el sistema con éxito.',
+                        'data' => array()
+                    );
+                    // --
+                    break;
+
+                case 'ERROR':
+                    // --
+                    $json = array(
+                        'status' => 'ERROR',
+                        'type' => 'warning',
+                        'msg' => 'No fue posible guardar el registro ingresado, verificar.',
+                        'data' => array(),
+                    );
+                    // --
+                    break;
+
+                case 'EXCEPTION':
+                    // --
+                    $json = array(
+                        'status' => 'ERROR',
+                        'type' => 'error',
+                        'msg' => $response['result']->getMessage(),
+                        'data' => array()
+                    );
+                    // --
+                    break;
+            }
+        } else {
+            // --
+            $json = array(
+                'status' => 'ERROR',
+                'type' => 'warning',
+                'msg' => 'No se enviaron los campos necesarios, verificar.',
+                'data' => array()
+            );
+        }
+        
+    } else {
+        // --
+        $json = array(
+            'status' => 'ERROR',
+            'type' => 'error',
+            'msg' => 'Método no permitido.',
+            'data' => array()
+        ); 
+    }
+
+    // --
+    header('Content-Type: application/json');
+    echo json_encode($json);
+}
 
 
 }

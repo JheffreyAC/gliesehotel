@@ -10,63 +10,38 @@ document.addEventListener('DOMContentLoaded', async function() {
             url: BASE_URL + 'Reservation/get_reservations',
             cache: false,
             success: function (data) {
-              let datos = data.data;
-              for (const elemento of datos) {
-                // --
-                let dateOptions = { year: 'numeric', month: 'numeric', day: '2-digit' };
-                let timeOptions = { hour: '2-digit', minute: '2-digit', second: undefined };
-                
-                let checkinDateIn = new Date(elemento.checkin_date);
-                
-                let formattedDateIn = checkinDateIn.toLocaleString('es-PE', dateOptions); 
-                formattedDateIn = formattedDateIn.replace(/\//g, '-');
-                formattedDateIn = formattedDateIn.split("-").reverse().join("-");
-                formattedDateIn = formattedDateIn.split("-").map(x => x.padStart(2, '0')).join("-");
+                let datas = data.data;
+                for (const element of datas) {
+                    // --
 
-                let formattedTimeIn = checkinDateIn.toLocaleString('es-PE', timeOptions);
+                    let colorEvents;
+                    if(element.room_status == 'Disponible'){
+                        colorEvents = '#28ca6a';
+                    }else if(element.room_status == 'Ocupado'){
+                        colorEvents = '#ea5455';
+                    }else if(element.room_status == 'Limpieza'){
+                        colorEvents = '#25a0fd';
+                    }else if(element.room_status == 'Reservado'){
+                        colorEvents = '#ff9f43';
+                    }
 
-                // --
-                let checkoutDateOut = new Date(elemento.checkout_date);
-
-                let formattedDateOut = checkoutDateOut.toLocaleString('es-PE', dateOptions); 
-                formattedDateOut = formattedDateOut.replace(/\//g, '-');
-                formattedDateOut = formattedDateOut.split("-").reverse().join("-");
-                formattedDateOut = formattedDateOut.split("-").map(x => x.padStart(2, '0')).join("-");
-
-                let formattedTimeOut = checkoutDateOut.toLocaleString('es-PE', timeOptions);
-
-                let colorEvents;
-                if(elemento.room_status == 'Disponible'){
-                    colorEvents = '#28ca6a';
-                }else if(elemento.room_status == 'Ocupado'){
-                    colorEvents = '#ea5455';
-                }else if(elemento.room_status == 'Limpieza'){
-                    colorEvents = '#25a0fd';
-                }else{
-                    colorEvents = '#900012';
-                }
-
-                // --
-                let nuevo_elemento = {
-                    id: `${elemento.id_reservation}`,
-                    title: `(Habitación: ${elemento.room_number} - ${elemento.type_name}   Huesped: ${elemento.first_names} ${elemento.last_names})`,
-                    start: `${formattedDateIn}T${formattedTimeIn}`,
-                    end: `${formattedDateOut}T${formattedTimeOut}`,  
-                    color: colorEvents
-                };
-                events_calendar.push(nuevo_elemento);
-
-                // --
-                // for (const [clave, valor] of Object.entries(elemento)) {
-                //   console.log(`La clave es ${clave} y el valor es ${valor}`);
-                // }
+                    // --
+                    if(!(element.room_status == 'Disponible')){
+                        let new_element = {
+                            id: `${element.id_reservation}`,
+                            title: `(Habitación: ${element.room_number} - ${element.type_name} | Huesped: ${element.first_names} ${element.last_names})`,
+                            start: element.checkin_date,
+                            end: element.checkout_date,  
+                            color: colorEvents
+                        };
+                        events_calendar.push(new_element);
+                    }
             }
             resolve();
         }
     });
     });
 }
-
     let today = new Date();
     let day = today.getDate();
     let formattedPreviousDay = `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
@@ -97,24 +72,61 @@ document.addEventListener('DOMContentLoaded', async function() {
             var eventObj = info.event;
             if (eventObj.id) {
                 $.ajax({
+                    url: BASE_URL + 'Reservation/get_sales_food',
+                    cache: false,
+                    data: {id_reservation: eventObj.id},
+                    success: function (data){
+                        let all_food_price = 0;
+                        for (let element of data.data) {
+                            let price_amount = element.food_price * element.amount_fd;
+                            $('#datatable-sales-food').append('<tr><td>' + element.food_description + '</td><td>' + element.amount_fd + '</td><td> S/ ' + price_amount + '</td></tr>');
+                            all_food_price+= price_amount;
+                        }
+                        $('#datatable-sales-food').append('<tr><td class="fw-bold">Total</td> <td></td> <td class="fw-bold"> S/ ' + all_food_price + '</td></tr>');
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log("AJAX error: " + textStatus + " : " + errorThrown);
+                    }
+                });
+                $.ajax({
+                    url: BASE_URL + 'Reservation/get_sales_accessory',
+                    cache: false,
+                    data: {id_reservation: eventObj.id},
+                    success: function (data){
+                        let all_accessory_price = 0;
+                        for (let element of data.data) {
+                            let price_amount = element.accessory_price * element.amount_ac;
+                            $('#datatable-sales-accessory').append('<tr><td>' + element.accessory_description + '</td><td>' + element.amount_ac + '</td><td> S/ ' + price_amount + '</td></tr>');
+                            all_accessory_price+= price_amount
+                        }
+                        $('#datatable-sales-accessory').append('<tr><td class="fw-bold">Total</td> <td></td> <td class="fw-bold"> S/ ' + all_accessory_price + '</td></tr>');
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log("AJAX error: " + textStatus + " : " + errorThrown);
+                    }
+                });
+                $.ajax({
                     url: BASE_URL + 'Reservation/get_reservation',
                     cache: false,
                     data: {id_reservation: eventObj.id},
                     success: function (data){
                         let datas = data.data;
                         let numReservation = datas.id_reservation.toString().padStart(3, '0');
-
-                        let checkin_date = datas.checkin_date.replace(/.{3}$/, "");
-                        let checkout_date = datas.checkout_date.replace(/.{3}$/, "");
-
+                        // --
+                        console.log(datas);
+                        
+                        $('input[name=id_reservation]').val(datas.id_reservation);
+                        $('input[name=id_room]').val(datas.id_room);
+                        $('input[name=id_guest]').val(datas.id_guest);
                         $('#idReservation').text(numReservation);
                         $('#numRoom').text(datas.room_number);
-
                         $('input[name=type_room]').val(datas.type_name);
                         $('input[name=bed_name]').val(datas.bed_type);
                         $('input[name=person_limit]').val(datas.person_limit);
-                        $('input[name=checkin_date]').val(checkin_date);
-                        $('input[name=checkout_date]').val(checkout_date);
+                        $('input[name=checkin_date]').val(datas.checkin_date);
+                        $('input[name=checkin_time]').val(datas.checkin_time);
+                        $('input[name=checkout_date]').val(datas.checkout_date);
+                        $('input[name=checkout_time]').val(datas.checkout_time);
                         
 
                         var select = $("#mySelect");
@@ -132,20 +144,26 @@ document.addEventListener('DOMContentLoaded', async function() {
                         allPrices.push(datas.price_temporary);
                         allPrices.push(datas.price_half);
                         allPrices.push(datas.price_day);
-                        pagoReservation(checkin_date, checkout_date, allPrices);
+                        paymentReservation(datas.checkin_date, datas.checkout_date, allPrices);
 
                         $('input[name=document_number]').val(datas.document_number);
                         $('input[name=first_names]').val(datas.first_names);
                         $('input[name=last_names]').val(datas.last_names);
-                        $('input[name=birth_date]').val(datas.birth_date);
                         $('input[name=address]').val(datas.address);
 
-                        $('input[name=price_venta_fo]').val(datas.precio_comida == undefined ? "00" : datas.precio_comida);
-                        $('input[name=price_venta_ac]').val(datas.precio_accesorio == undefined ? "00" : datas.precio_accesorio);
+                        $('input[name=price_extra]').val("")
 
-                        $('input[name=price_extra]').val("00")
-                        $('input[name=price_all]').val()
+
+                        let price_room = $('input[name=price_room').val();
+                        let price_food = $('input[name=price_venta_fo').val();
+                        let price_accessory = $('input[name=price_venta_ac').val();
                         
+                        let price_all =
+                            parseInt(price_room) +
+                            (price_food === "" ? 0 : parseInt(price_food)) +
+                            (price_accessory === "" ? 0 : parseInt(price_accessory));
+
+                        $('input[name=price_all]').val(price_all);
                     }
                 })
             }
@@ -156,39 +174,156 @@ document.addEventListener('DOMContentLoaded', async function() {
     calendar.render();
 });
 
+// --
+
 var allPrices = [];
 
+function dateTimeReservation(check_date, op){
+    let dateOptions = { year: 'numeric', month: 'numeric', day: '2-digit' };
+    let timeOptions = { hour: '2-digit', minute: '2-digit', second: undefined };
+    
+    let checkinDate = new Date(check_date);
+    
+    let formattedDate = checkinDate.toLocaleString('es-PE', dateOptions); 
+    formattedDate = formattedDate.replace(/\//g, '-');
+    formattedDate = formattedDate.split("-").reverse().join("-");
+    formattedDate = formattedDate.split("-").map(x => x.padStart(2, '0')).join("-");
 
-function pagoReservation(fechaIn, fechaOut, prices){
-    console.log(prices);
-    let fechaInicio = new Date(fechaIn);
-    let fechaFin = new Date(fechaOut);
+    let formattedTime = checkinDate.toLocaleString('es-PE', timeOptions);
+
+    if(op == "day"){
+        return formattedDate;
+    }else if(op == "time"){
+        return formattedTime;
+    }else{
+        return "error, passed variable function";
+    }
+}
+
+// --
+
+function paymentReservation(dateIn, dateOut, prices){
+    let fechaInicio = new Date(dateIn);
+    let fechaFin = new Date(dateOut);
     let milisegundosInicio = fechaInicio.getTime();
     let milisegundosFin = fechaFin.getTime();
 
     let horas = (milisegundosFin - milisegundosInicio) / (1000 * 60 * 60);
-    console.log(horas);
 
     if( horas <= 4 ){
         $('input[name=price_room]').val(prices[0]);
     }else if( horas > 4 && horas <= 12){
         $('input[name=price_room]').val(prices[1]);
     }else if( horas > 12 ){
-        let dias = Math.floor(horas / 24) + 1;
-        $('input[name=price_room]').val(prices[2] * dias);
+        let dias = Math.floor(horas / 24);
+        let horasRes = horas % 24;
+        let payment = parseInt(prices[2]) * dias;
+        let paymentHours = 0;
+
+        // --
+        if( horasRes > 0 && horasRes <= 4){
+            paymentHours =  parseInt(prices[0]);
+        }else if( horasRes > 4 && horasRes <= 12){
+            paymentHours =  parseInt(prices[1]);
+        }else{
+            paymentHours =  parseInt(prices[2]);
+        }
+        payment+= paymentHours;
+
+        console.log(`horasReserva: ${horas}  dias: ${dias}  horas: ${horasRes}   pagoHoras: ${paymentHours}  pagado: ${payment}`);
+        return $('input[name=price_room]').val(payment);        
     }
 } 
 
-$('input[type="datetime-local"][name="checkout_date"]').on('change', function(){
-    let valCheckin = $('input[name=checkin_date]').val();
-    let valCheckout = $('input[name=checkout_date]').val();
+$('#departure_btn').on('click', function(){
+    let today = new Date();
+    let day = today.getDate();
+    let formattedPreviousDay = `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+    let previousTime = today.toString();
+    let formattedPreviousTime = previousTime.split(" ");
 
-    // let checkin_date = valCheckin.replace(/.{3}$/, "");
-    // let checkout_date = valCheckout.replace(/.{3}$/, "");
+    $('input[name=departure_date]').val(formattedPreviousDay);
+    $('input[name=departure_time]').val(formattedPreviousTime[4].substring(0, 5));
+})
+
+// --
+
+function valDate (){
+    let valCheckin = $('input[name=checkin_date]').val() + " " + $('input[name=checkin_time]').val();
+    let valCheckout= $('input[name=checkout_date]').val() + " " + $('input[name=checkout_time]').val();
     
-    pagoReservation(valCheckin, valCheckout, allPrices);
-});
+    return paymentReservation(valCheckin, valCheckout, allPrices);
+}
 
+$('input[name="checkin_date"]').on('change', ()=>{ valDate() });
+$('input[name="checkin_time"]').on('change', ()=>{ valDate() });
+$('input[name="checkout_date"]').on('change', ()=>{ valDate() });
+$('input[name="checkout_time"]').on('change', ()=>{ valDate() });
+
+
+//--
+function update_reservation(form) {
+    // --
+    $('#btn_update_reservation').prop('disabled', true);
+    // --
+    let params = new FormData(form);
+
+    params.append('id_reservation', $('#update_reservation_form input[name=id_reservation]').val());
+    params.append('id_room', $('#update_reservation_form input[name=id_room]').val());
+    params.append('id_guest', $('#update_reservation_form input[name=id_guest]').val());
+    params.append('checkin_date', $('#update_reservation_form input[name=checkin_date]').val() + ' ' + $('#update_reservation_form input[name=checkin_time]').val());
+    params.append('checkout_date', $('#update_reservation_form input[name=checkout_date]').val()+ ' ' + $('#update_reservation_form input[name=checkout_time]').val());
+    params.append('room_status', $('#update_reservation_form select[name=room_status]').val());
+    params.append('price_all', $('#update_reservation_form input[name=price_all]').val());
+    params.append('price_extra', $('#update_reservation_form input[name=price_extra]').val());
+    params.append('document_type', $('#update_reservation_form select[name=document_type]').val());
+    params.append('document_number', $('#update_reservation_form input[name=document_number]').val());
+    params.append('first_names', $('#update_reservation_form input[name=first_names]').val());
+    params.append('last_names', $('#update_reservation_form input[name=last_names]').val());
+    params.append('birth_date', $('#update_reservation_form input[name=birth_date]').val());
+    params.append('address', $('#update_reservation_form input[name=address]').val());
+
+    for (const [key, value] of params) {
+        // Mostrar el nombre y el valor de cada campo
+        console.log(key, value);
+    }
+    // --
+    $.ajax({
+        url: BASE_URL + 'Reservation/update_reservation',
+        type: 'POST',
+        data: params,
+        dataType: 'json',
+        contentType: false,
+        processData: false,
+        cache: false,
+        beforeSend: function() {
+            console.log('Cargando...');
+        },
+        success: function(data) {
+            // --
+            functions.toast_message(data.type, data.msg, data.status);
+            // --
+            if (data.status === 'OK') {
+                // --
+                $('#update_reservation_modal').modal('hide');
+                // form.reset();
+
+            } else {
+                // --
+                // $('#btn_update_reservation').prop('disabled', false);
+                console.log("Error")
+            }
+        }
+    })
+}
+
+// -- Validate form
+$('#update_reservation_form').validate({
+    // --
+    submitHandler: function(form) {
+        update_reservation(form);
+    }
+})
 
 
 /*!

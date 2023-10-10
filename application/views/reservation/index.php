@@ -34,16 +34,6 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="card p-2">
-                                <!-- <table class="table" id="datatable-reservation">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Room</th>
-                                            <th>Huesped</th>
-                                            <th>Acciones</th>
-                                        </tr>
-                                    </thead>
-                                </table> -->
                                 <div id='calendar'></div>
                             </div>
                         </div>
@@ -68,6 +58,7 @@
                                 <div class="col-12 mb-2 d-flex flex-wrap justify-content-center">
                                     <h1 class="text-center mb-1">Habitación <span class="fs-4" id="numRoom"></span></h1>        
                                 </div>
+                                <!--  -->
                                 <form method="POST" enctype="multipart/form-data" id="update_reservation_form" class="row" onsubmit="return false">
                                     <div class="col-4">
                                         <label class="form-label">Tipo de Habitación</label>
@@ -83,11 +74,19 @@
                                     </div>
                                     <div class="col-6">
                                         <label class="form-label">Fecha de Inicio</label>
-                                        <input type="datetime-local" name="checkin_date" class="form-control" placeholder="Fecha Inicio" data-msg="" required />
+                                        <input type="date" name="checkin_date" class="form-control" placeholder="Fecha Inicio" data-msg="" required />
                                     </div>
                                     <div class="col-6">
                                         <label class="form-label">Fecha de Termino</label>
-                                        <input type="datetime-local" name="checkout_date" class="form-control" placeholder="Fecha Final" data-msg="" required />
+                                        <input type="date" name="checkout_date" class="form-control" placeholder="Fecha Final" data-msg="" required />
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="form-label">Hora de Inicio</label>
+                                        <input type="time" name="checkin_time" class="form-control" placeholder="Fecha Inicio" data-msg="" required />
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="form-label">Hora de Termino</label>
+                                        <input type="time" name="checkout_time" class="form-control" placeholder="Fecha Final" data-msg="" required />
                                     </div>
                                     <div class="col-6">
                                         <label class="form-label">Estado de Habitación</label>
@@ -110,6 +109,8 @@
                                         <label class="form-label">Precio</label>
                                         <input type="number" name="price_room" class="form-control" placeholder="Precio" data-msg="" disabled required/>
                                     </div>
+
+
                                     <!-- GUEST -->
                                     <div class="text-center mb-1">
                                         <h1 class="mb-1 mt-2">Huespéd</h1>
@@ -139,54 +140,90 @@
                                         <input type="text" name="last_names" class="form-control" placeholder="Apellidos" data-msg="" required />
                                     </div>
                                     <div class="col-6">
-                                        <label class="form-label">Fecha de Nacimiento</label>
-                                        <input type="date" name="birth_date" class="form-control" placeholder="Fecha de Nacimiento" data-msg="" required />
-                                    </div>
-                                    <div class="col-6">
                                         <label class="form-label">Dirección</label>
                                         <input type="text" name="address" class="form-control" placeholder="Dirección" data-msg="" required />
                                     </div>
-
-                                    <!-- VENTAS FOOD -->
                                     <div class="col-6">
-                                        <div class="text-center mb-1">
-                                            <h1 class="mb-1 mt-2">Ventas Alimentos</h1>
+                                        <label class="form-label">Empresa</label>
+                                        <input type="text" name="" class="form-control" placeholder="Empresa" data-msg="" required />
+                                    </div>
+
+                                    <!-- VENTAS -->
+                                    <div class="col-12">
+                                        <div class="text-center">
+                                            <h1 class="mt-2">Ventas</h1>
                                         </div>
-                                        <div class="col-12">
-                                            <label class="form-label">Pago venta</label>
-                                            <input type="number" name="price_venta_fo" class="form-control" placeholder="Pago" data-msg="" disabled required />
+                                        <div class="col-12 d-flex">
+                                            <div class="col-6 p-1">
+                                                <div class="text-center mb-1">
+                                                    <h1 class="">Alimentos</h1>
+                                                </div>
+                                                <table class="table" id="datatable-sales-food">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Descripción</th>          
+                                                            <th>Cantidad</th>  
+                                                            <th>Precio</th> 
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                            <div class="col-6 p-1">
+                                                <div class="text-center mb-1">
+                                                    <h1 class="">Accesorios</h1>
+                                                </div>
+                                                <table class="table" id="datatable-sales-accessory">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Descripción</th>          
+                                                            <th>Cantidad</th>  
+                                                            <th>Precio</th> 
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <!-- VENTAS ACCESSORY -->
-                                    <div class="col-6">
-                                        <div class="text-center mb-1">
-                                            <h1 class="mb-1 mt-2">Ventas Accesorios</h1>
-                                        </div>
-                                        <div class="col-12">
-                                            <label class="form-label">Pago venta</label>
-                                            <input type="number" name="price_venta_ac" class="form-control" placeholder="Pago" data-msg="" disabled required />
-                                        </div>
-                                    </div>
-
+                                    
                                     <!-- PAYMENT  -->
-                                    <div class="text-center mb-1">
-                                        <h1 class="mb-1 mt-2">Pago</h1>
-                                    </div>
-                                    <div class="col-6">
-                                        <label class="form-label">Monto total</label>
-                                        <input type="number" name="price_all" class="form-control" placeholder="Total" data-msg="" required />
-                                    </div>
-                                    <div class="col-6">
-                                        <label class="form-label">Monto extra</label>
-                                        <input type="number" name="price_extra" class="form-control" placeholder="Extra" data-msg="" required />
+                                    <div class="col-12">
+                                        <div class="text-center mb-1">
+                                            <h1 class="mb-1 mt-2">Salida</h1>
+                                        </div>
+                                        <div class="col-12 d-flex flex-wrap justify-content-cente align-items-end">
+                                            <div class="col-5 p-1">
+                                                <label class="form-label">Fecha Salida</label>
+                                                <input type="date" name="departure_date" class="form-control" placeholder="Fecha Final" data-msg=""   />
+                                            </div>
+                                            <div class="col-5 p-1">
+                                                <label class="form-label">Hora Salida</label>
+                                                <input type="time" name="departure_time" class="form-control" placeholder="Fecha Inicio" data-msg=""   />
+                                            </div>
+                                            <div class="col-2 p-1">
+                                                <button id="departure_btn" type="button" class="btn btn-secondary mt-2 me-1">Salida</button>
+                                            </div>
+                                            <div class="col-6 p-1">
+                                                <label class="form-label">Monto total</label>
+                                                <input type="number" name="price_all" class="form-control" placeholder="Total" data-msg=""  />
+                                            </div>
+                                            <div class="col-6 p-1 form-group">
+                                                <label class="form-label">Considerar monto extra</label>
+                                                <input type="checkbox" class="form-check-input" data-toggle="toggle" id="myCheckbox" name="myCheckbox" style="width: 13px; height: 13px; margin-top: 5px;">
+
+                                                <input type="number" name="price_extra" class="form-control" placeholder="Extra" data-msg=""  />
+                                            </div>
+                                        </div>
+
                                     </div>
 
                                     <!--  -->
+                                    <input type="hidden" name="id_reservation">
                                     <input type="hidden" name="id_room">
+                                    <input type="hidden" name="id_guest">
                                     <br>
                                     <div class="col-12 text-center mt-2">
-                                        <button id="btn_update_reservation" type="submit" class="btn btn-primary mt-2 me-1">Editar Reserva</button>
+                                        <button id="btn_update_reservation" type="submit" class="btn btn-primary mt-2 me-1">Guardar Reserva</button>
                                         <button type="reset" class="btn btn-outline-secondary mt-2 reset" data-bs-dismiss="modal" aria-label="Close">
                                             <span>Cancelar</span>
                                         </button>

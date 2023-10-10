@@ -24,7 +24,9 @@ function load_data() {
           // console.log(bgClass); // Si no coincide, usa 'bg-success'
           $('#data-container').append(`
                   <div style="display: flex; justify-content: center; flex-wrap: wrap; margin: 4px;">
-                  <div class="container shadow bg-${bgClass} round" style="width: 250px; height: 100%;  display: flex; justify-content: center; align-items: center;flex-direction:column;gap:30px; padding: 20px;" title=${row.room_status}>
+                  <div class="container shadow bg-${bgClass} round" 
+                  title=${row.room_status}
+                  style="width: 250px; height: 100%;  display: flex; justify-content: center; align-items: center;flex-direction:column;gap:30px; padding: 20px;">
                       <div class="d-flex align-items-center flex-column" style="height: 70px;">
                           <span class="text-light" style="text-align: center; font-size: 17px; font-weight: bold;width: 100%;">${row.type_name}</span>
                           <span class="text-light" style="text-align: center; font-size: 11px; font-weight: bold;width: 100%;">${row.bed_type}</span>
@@ -95,14 +97,15 @@ function update_habitacion(form) {
   })
 }
 
+
 $(document).on('click', '.btn_update', function () {
   // --
   let value = $(this).attr('data-process-key');
   // --
-  let params = { 'id_habitacion': value } // Asegúrate de que coincida con el nombre correcto del parámetro
+  let params = { 'room_number': value } // Asegúrate de que coincida con el nombre correcto del parámetro
   // --
   $.ajax({
-    url: BASE_URL + 'Habitacion/get_habitacion_by_id',
+    url: BASE_URL + 'Reception/get_room_by_id',
     type: 'GET',
     data: params,
     dataType: 'json',
@@ -115,8 +118,12 @@ $(document).on('click', '.btn_update', function () {
         // --
         let item = data.data
         // --
-        $('#update_habitacion_form :input[name=id_habitacion]').val(item.id);
-        $('#update_habitacion_form :input[name=description]').val(item.description);
+        $('#update_habitacion_form :input[name=room_number]').val(item.room_number);
+        $('#update_habitacion_form :input[name=type_name]').val(item.type_name);
+        $('#update_habitacion_form :input[name=person_limit]').val(item.person_limit);
+        $('#update_habitacion_form :input[name=bed_type]').val(item.bed_type);
+        $('#update_habitacion_form :input[name=room_status]').val(item.room_status);
+        $('#update_habitacion_form :input[name=price_temporary]').val(item.price_temporary);
         // -- Otras asignaciones de valores para los campos de actualización
       }
     }
@@ -131,5 +138,31 @@ $('#update_habitacion_form').validate({
     update_habitacion(form);
   }
 })
+
+
+function clientDocument() {
+  const documentType = document.getElementById('client_document');
+  const option_document = document.getElementById('option_document');
+  documentType.addEventListener('change', function () {
+    if (documentType.value === 'DNI') {
+      option_document.innerHTML = ` <div class="col-12">
+      <label class="form-label">Nombres</label>
+      <input type="text" name="bed_name" class="form-control" placeholder="Nombres" data-msg="" required />
+  </div>
+  <div class="col-12">
+      <label class="form-label">Apellidos</label>
+      <input type="text" name="bed_name" class="form-control" placeholder="Apellidos" data-msg="" required />
+  </div>`;
+    } else {
+      option_document.innerHTML = ` <div class="col-12">
+      <label class="form-label">Razón Social</label>
+      <input type="text" name="" class="form-control" placeholder="Razón Social" data-msg="" required />
+  </div>`;
+    }
+
+  })
+}
+
+clientDocument();
 
 load_data();
