@@ -21,7 +21,7 @@ function load_data() {
         $.each(data.data, function (index, row) {
           const estadoHabitacion = row.room_status;
           const bgClass = colorsRooms[estadoHabitacion] || 'success';
-          const btnDisabled = estadoHabitacion === 'Ocupado' || estadoHabitacion === 'Reservado' ? 'disabled' : '';
+          const btnDisabled = estadoHabitacion === 'Ocupado' ? 'disabled' : '';
           const btnColor = btnDisabled ? 'bg-dark text-light' : 'bg-light text-dark';
 
           $('#data-container').append(`<div class="card bg-${bgClass} text-light" style="width: 18rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border-radius: 10px;">
@@ -44,9 +44,6 @@ function load_data() {
                 <button class="btn ${btnColor} btn-icon btn-md btn_update" data-process-key="${row.id_room}"  ${btnDisabled}>
                   <i class="fa-solid fa-key"></i>
                 </button>
-                <button class="btn ${btnColor} btn-icon btn-md btn_create_guest" ${btnDisabled} data-bs-toggle="modal" data-bs-target="#create_guest_reservation_modal">
-                  <i class="fa-solid fa-person"></i>
-                </button>
               </div>
           </div>
       </div>`);
@@ -63,6 +60,47 @@ function load_data() {
       functions.toast_message('error', 'Error al obtener los datos', 'Error');
     }
   });
+}
+
+function update_habitacion(form) {
+  // --
+  $('#btn_create_reservation').prop('disabled', true);
+  // --
+  let params = new FormData(form);
+  // --
+  $.ajax({
+    url: BASE_URL + 'Reception/update_state_reservation',
+    type: 'POST',
+    data: params,
+    dataType: 'json',
+    contentType: false,
+    processData: false,
+    cache: false,
+    beforeSend: function () {
+      console.log('Cargando...');
+    },
+    success: function (data) {
+      // --
+      console.log(data);
+      functions.toast_message(data.type, data.msg, data.status);
+      // --
+      if (data.status === 'OK') {
+        // --
+        $('#update_habitacion_modal').modal('hide');
+        form.reset();
+        load_data();
+
+      } else {
+        // --
+        $('#btn_create_reservation').prop('disabled', false);
+      }
+    }, error: function () {
+      console.error('Fallo al obtener los datos.');
+
+      functions.toast_message('error', 'Error al obtener los datos', 'Error');
+    }
+
+  })
 }
 
 
@@ -143,18 +181,25 @@ function create_guest(form) {
   })
 }
 
-
+// -- Validate form
+$('#create_reservation_form').validate({
+  // --
+  submitHandler: function (form) {
+    create_reservation(form);
+    update_habitacion(form);
+  }
+})
 
 // -- Funciones
 
 function filtrarOpciones() {
   const client_document_type = $('#client_document_type').val();
-  const document_number_reservation = $('#document_number_reservation').val();
+  // const document_number_reservation = $('#document_number_reservation').val();
   // console.log(client_document_type, document_number_reservation);
   $.ajax({
     url: BASE_URL + 'Reception/get_guest',
     type: 'GET',
-    data: { document_type: client_document_type, document_number: document_number_reservation },
+    data: { document_type: client_document_type },
     dataType: 'json', // Espera una respuesta JSON
     cache: false,
     success: function (data) {
@@ -192,9 +237,9 @@ function filtrarOpciones() {
 
 
 
-$('#document_number_reservation').on('keyup', function () {
-  filtrarOpciones();
-})
+// $('#document_number_reservation').on('keyup', function () {
+//   filtrarOpciones();
+// })
 
 //--
 $('#client_document_type').on('change', function () {
@@ -296,22 +341,29 @@ function room_rate() {
 }
 
 
-$('#room_rate').on('change', function () {
-  room_rate();
-})
-
-
 function money() {
   const selectElement = document.getElementById("priceSelectOption");
   const inputElement = document.getElementById("payment_all");
   let selectedValue = selectElement.value;
-
-  inputElement.value = selectedValue;
+  console.log(selectedValue);
+  // inputElement.value = selectedValue;
+  $('#priceSelectOption').on('change', function () {
+    selectedValue = this.value;
+    inputElement.value = selectedValue;
+  })
 }
+
+money();
+
+$('#room_rate').on('change', function () {
+  room_rate();
+
+
+})
+
+
+
 // Agrega un controlador de eventos para el cambio en el select
-$('#priceSelectOption').on('change', function () {
-  money();
-});
 
 
 function guestDocument() {
@@ -368,12 +420,7 @@ $(document).on('click', '.reset', function () {
 })
 
 
-$('#create_reservation_form').validate({
-  // --
-  submitHandler: function (form) {
-    create_reservation(form);
-  }
-})
+
 // -- Validate form
 $('#create_guest_reservation_form').validate({
   // --
@@ -382,6 +429,56 @@ $('#create_guest_reservation_form').validate({
   }
 })
 
+
+
+
+
+var inputFechaInicio = document.getElementById("fechaInicio");
+var inputFechaFin = document.getElementById("fechaFin");
+
+// Obtiene la fecha actual en el formato "YYYY-MM-DD"
+var fechaActual = new Date().toISOString().split("T")[0];
+
+// Establece el atributo "min" en la fecha actual para ambos inputs
+inputFechaInicio.setAttribute("min", fechaActual);
+inputFechaFin.setAttribute("min", fechaActual);
+
+
+
+function get_api() {
+  const ruc_number = document.getElementById('document_number').value;
+
+
+  nombre = '';
+  apellidos = '';
+  fetch('https://dniruc.apisperu.com/api/v1/ruc/' + ruc_number + '?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImRlbm9ibzU2OThAbG9jYXdpbi5jb20ifQ.EyjRFR8bKyCk6kFslAqpFp4Lu4p7VdixEjZy8NEJDRI')
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+
+      const uno = data.razonSocial;
+      const dos = data.direccion;
+      const razon_social = document.getElementById('razon_social');
+      const direccion = document.getElementById('direccion');
+
+      razon_social.value = uno;
+      direccion.value = dos;
+      document.getElementById('nombre').value = null;
+      document.getElementById('apellidos').value = null;
+      console.log(uno);
+      console.log(dos);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}
+
+$('#buscar_huesped').on('click', function (e) {
+  e.preventDefault();
+  get_api();
+
+});
+
 load_data();
 guestDocument();
-reservationDocument();
+// reservationDocument();

@@ -169,12 +169,11 @@ class C_Reception extends Controller
       if (empty($input)) {
         $input = filter_input_array(INPUT_GET);
       }
-      if (!empty($input['document_type']) && !empty($input['document_number'])) {
+      if (!empty($input['document_type'])) {
 
         $obj = $this->load_model('Reception');
         $bind = array(
           'document_type' => $input['document_type'], // Puede ser 'DNI' o 'RUC'
-          'document_number' => '%' . $input['document_number'] . '%',
         );
         $response = $obj->get_guest($bind);
 
@@ -538,6 +537,96 @@ class C_Reception extends Controller
       );
     }
 
+    header('Content-Type: application/json');
+    echo json_encode($json);
+  }
+
+  public function update_state_reservation()
+  {
+    // --
+    $this->functions->validate_session($this->segment->get('isActive'));
+    // --
+    $request = $_SERVER['REQUEST_METHOD'];
+    // --
+    if ($request === 'POST') {
+      // --
+      $input = json_decode(file_get_contents('php://input'), true);
+      if (empty($input)) {
+        $input = filter_input_array(INPUT_POST);
+      }
+      // --
+      if (
+        !empty($input['id_room']) &&
+        !empty($input['room_status'])
+      ) {
+        // --
+        $id_room = $this->functions->clean_string($input['id_room']);
+        $room_status = $this->functions->clean_string($input['room_status']);
+        // --
+        $bind = array(
+          'id_room' => $id_room,
+          'room_status' => $room_status
+        );
+        // --
+        $obj = $this->load_model('Reception');
+        $response = $obj->update_state_reservation($bind);
+        // --
+        switch ($response['status']) {
+            // --
+          case 'OK':
+            // --
+            $json = array(
+              'status' => 'OK',
+              'type' => 'success',
+              'msg' => 'Registro actualizado en el sistema con éxito.',
+              'data' => array()
+            );
+            // --
+            break;
+
+          case 'ERROR':
+            // --
+            $json = array(
+              'status' => 'ERROR',
+              'type' => 'warning',
+              'msg' => 'No fue posible guardar el registro ingresado, verificar.',
+              'data' => array(),
+            );
+            // --
+            break;
+
+          case 'EXCEPTION':
+            // --
+            $json = array(
+              'status' => 'ERROR',
+              'type' => 'error',
+              'msg' => $response['result']->getMessage(),
+              'data' => array()
+            );
+            // --
+            break;
+        }
+      } else {
+        // --
+        $json = array(
+          'status' => 'ERROR',
+          'type' => 'warning',
+          'msg' => 'No se enviaron los campos necesarios, verificar.',
+          'data' => array()
+        );
+      }
+    } else {
+      // --
+      $json = array(
+        'status' => 'ERROR',
+        'type' => 'error',
+        'msg' => 'Método no permitido.',
+        'data' => array()
+      );
+    }
+
+
+    // --
     header('Content-Type: application/json');
     echo json_encode($json);
   }

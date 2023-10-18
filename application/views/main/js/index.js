@@ -19,16 +19,16 @@ function initializeSelectors() {
             placeholder: 'Seleccionar',
             language: {
                 noResults: function (params) {
-                  return 'No se encontraron resultados';
+                    return 'No se encontraron resultados';
                 }
             },
             dropdownParent: $this.parent(),
             allowClear: true,
             width: '100%'
         })
-        .change(function () {
-            $(this).valid();
-        });
+            .change(function () {
+                $(this).valid();
+            });
     });
     // --
     $('.select2-search__field').css('width', '100%');
@@ -37,12 +37,11 @@ function initializeSelectors() {
 
 // -- Events
 
-
 /**
  * Logout
  */
 // --
-$(document).on('click', '#dropdown-logout', function() {
+$(document).on('click', '#dropdown-logout', function () {
     // --
     logout()
 })
@@ -53,12 +52,12 @@ function logout() {
     $.ajax({
         url: BASE_URL + 'Main/close_session',
         type: 'POST',
-        dataType:'json',
+        dataType: 'json',
         cache: false,
-        beforeSend: function() {
+        beforeSend: function () {
             console.log('Cargando...');
         },
-        success: function(data) {
+        success: function (data) {
             // --
             if (data.status === 'OK') {
                 // --

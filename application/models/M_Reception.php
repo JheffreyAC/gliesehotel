@@ -102,7 +102,7 @@ class M_Reception extends Model
     try {
       $sql = 'SELECT id_guest, document_type, document_number, first_names, last_names, company_name
       FROM guest 
-      WHERE (document_type = :document_type AND document_number LIKE :document_number)';
+      WHERE (document_type = :document_type)';
       $result = $this->pdo->fetchAll($sql, $bind);
 
       if ($result) {
@@ -141,7 +141,30 @@ class M_Reception extends Model
   }
 
 
+  public function update_state_reservation($bind)
+  {
+    // --
+    try {
+      // --
+      $sql = 'UPDATE room SET room_status=:room_status WHERE id_room=:id_room';
+      // --
+      $result = $this->pdo->perform($sql, $bind);
 
+      // --
+      if ($result) {
+        // --
+        $response = array('status' => 'OK', 'result' => array());
+      } else {
+        // --
+        $response = array('status' => 'ERROR', 'result' => array());
+      }
+    } catch (PDOException $e) {
+      // --
+      $response = array('status' => 'EXCEPTION', 'result' => $e);
+    }
+
+    return $response;
+  }
 
 
 
