@@ -14,7 +14,7 @@
                         <div class="content-header-left col-md-9 col-12 mb-2">
                             <div class="row breadcrumbs-top">
                                 <div class="col-12">
-                                <h2 class="content-header-title float-start mb-0">Lista de ingresos productos</h2>
+                                    <h2 class="content-header-title float-start mb-0">Lista de ingresos productos</h2>
                                 </div>
                             </div>
                         </div>
@@ -63,13 +63,13 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <div class="row mb-3">
                                     <div class="col-12">
                                         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create_income_product_modal">Agregar productos</button>
                                     </div>
                                 </div>
-                           
+
                                 <!-- Table -->
                                 <div class="row">
                                     <div class="col-12">
@@ -101,42 +101,50 @@
                     </div>
                     <!-- End Container to add products -->
 
-                    <!-- Create Income Products Modal -->
-                    <div class="d-flex align-items-center justify-content-center">
-                        <div class="modal fade" id="create_income_product_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
-                            <div class="modal-dialog modal-lg modal-dialog-centered modal-edit-product">
-                                <!-- Contenido del modal -->
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <div class="modal-header bg-transparent pb-3">
-                                            <button type="reset" class="btn-close reset" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body px-sm-5 pb-5">
-                                            <div class="text-center mb-2">
-                                                <h1 class="mb-1">Selecionar Producto</h1>
-                                            </div>
-                                            <table class="table table-striped" id="datatables-income-products">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Acción</th>
-                                                        <th>Codigo</th>
-                                                        <th>Categoría</th>
-                                                        <th>Descripcion</th>
-                                                        <th>Stock</th>
-                                                    </tr>
-                                                </thead>
-                                            </table>
-                                        </div>
+
+
+
+
+                    <div class="modal fade" id="create_income_product_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+                        <div class="modal-dialog modal-dialog-centered modal-edit-product">
+                            <div class="modal-content">
+                                <div class="modal-header bg-transparent">
+                                    <button type="reset" class="btn-close reset" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body px-sm-5 pb-5">
+                                    <div class="text-center mb-2">
+                                        <h1 class="mb-1">Selecionar Producto</h1>
                                     </div>
+                                    <table class="table table-responsive" id="datatables-income-products">
+                                        <thead>
+                                            <tr>
+                                                <th>Acción</th>
+                                                <th>Codigo</th>
+                                                <th>Producto</th>
+                                                <th>Descripción</th>
+                                                <th>Categoria</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
+
+
+
+
+
+
+                    <!-- Create Income Products Modal -->
+
                     <!-- End Create Income Products Modal -->
 
-                </section>   
-                <!-- Permissions ends -->       
+                </section>
+                <!-- Permissions ends -->
             </div>
-        </div> 
+        </div>
     </div>
     <!-- END: Content-->

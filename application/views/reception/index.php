@@ -22,6 +22,7 @@
                     </div>
                 </div>
             </div>
+            <button id="recargar-pagina" class="btn btn-primary">Recargar</button>
             <!--Mostrar numero de habitaciones-->
             <div class="col-12">
                 <div class="card pb-3">
@@ -71,6 +72,9 @@
                                 <div class="col-12">
                                     <label class="form-label">Estado de Habitación</label>
                                     <select name="room_status" class="form-select">
+                                        <option value="0" selected>
+                                            Seleccione estado de la habitacion
+                                        </option>
                                         <option value="Ocupado">
                                             Ocupado
                                         </option>
@@ -105,7 +109,7 @@
                                 </div>
                                 <div class="col-12">
                                     <label class="form-label">Hora de Inicio</label>
-                                    <input type="time" name="checkin_time" class="form-control" data-msg="" />
+                                    <input type="time" name="checkin_time" class="form-control" id="horaInicio" data-msg="" />
                                 </div>
                                 <div class="col-12">
                                     <label class="form-label">Fecha de Termino</label>
@@ -113,36 +117,17 @@
                                 </div>
                                 <div class="col-12">
                                     <label class="form-label">Hora de Termino</label>
-                                    <input type="time" name="checkout_time" class="form-control" data-msg="" />
-                                </div>
-                                <div class="col-12">
-                                    <label class="form-label">Tarifas</label>
-                                    <select id="room_rate" class="form-select">
-                                        <option value="0" selected>
-                                            Seleccione el precio
-                                        </option>
-                                        <option value="Simple">
-                                            Simple
-                                        </option>
-                                        <option value="Doble">
-                                            Doble
-                                        </option>
-                                        <option value="Triple">
-                                            Triple
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-12">
-                                    <label class="form-label">Tarifas</label>
-                                    <select class="form-select" id="priceSelectOption" name="payment_room">
-                                        <option selected>
-                                            Seleccione el precio
-                                        </option>
-                                    </select>
+                                    <input type="time" name="checkout_time" class="form-control" id="horaFin" data-msg="" />
                                 </div>
                                 <div>
-                                    <label class="form-label">Precio Total</label>
-                                    <input type="text" name="payment_all" class="form-control" data-msg="" id="payment_all">
+                                    <label class="form-label">Monto Total</label>
+                                    <input type="text" name="payment_room" class="form-control" data-msg="">
+                                </div>
+                                <div>
+                                    <label class="form-label d-flex pt-1 gap-1">Pago adelantado</label>
+                                    <input type="text" name="pre_payment" class="form-control" data-msg="" id="pre_payment" value="0">
+                                </div>
+                                <div class="col-12" id="state-reservation">
                                 </div>
                                 <input type="hidden" name="id_room">
                                 <div class="col-12">
@@ -192,10 +177,13 @@
                                     <input type="text" name="document_number" class="form-control" placeholder="Busca el numero de documento" data-msg="" id="document_number" required />
                                 </div>
                                 <div class="col-12">
-                                    <label class="form-label">Nombre</label>
-                                    <input type="text" name="first_names" class="form-control" placeholder="Nombre" data-msg="" id="nombre" />
+                                    <button class="btn btn-primary mt-2 me-2 mb-2" id="buscar_huesped">Consultar</button>
                                 </div>
-                                <div class="col-12">
+                                <div class="col-12" id="div_nombre">
+                                    <label class="form-label">Nombre</label>
+                                    <input type="text" name="first_names" class="form-control" placeholder="Nombre" id="nombre" />
+                                </div>
+                                <div class="col-12" id="div_apellido">
                                     <label class="form-label">Apellido</label>
                                     <input type="text" name="last_names" class="form-control" placeholder="Apellido" data-msg="" id="apellido" />
                                 </div>
@@ -203,13 +191,12 @@
                                     <label class="form-label">Dirección</label>
                                     <input type="text" name="address" class="form-control" placeholder="Dirección" data-msg="" id="direccion" />
                                 </div>
-                                <div class="col-12">
+                                <div class="col-12" id="div_razon_social">
                                     <label class="form-label">Razón Social</label>
                                     <input type="text" name="company_name" class="form-control" placeholder="Razón Social" data-msg="" id="razon_social" />
                                 </div>
                                 <div class="col-12">
                                     <button class="btn btn-primary mt-2 me-2" id="btn_create_guest_reservation" type="submit">Agregar Huespéd</button>
-                                    <button class="btn btn-primary mt-2 me-2" id="buscar_huesped">Consultar</button>
                                     <button type="reset" class="btn btn-outline-secondary mt-2 reset" data-bs-dismiss="modal" aria-label="Close">
                                         <span>Cancelar</span>
                                     </button>
@@ -222,6 +209,76 @@
                 </div>
             </div>
             <!--Crear Reserva de habitaciones-->
+
+
+            <div class="modal fade" id="timer_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+                <div class="modal-dialog modal-xl modal-dialog-centered">
+                    <div class="modal-content mx-auto">
+                        <div class="modal-header bg-transparent">
+                            <button type="reset" class="btn-close reset" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body px-sm-5 pb-5">
+                            <form method="POST" enctype="multipart/form-data" id="create_timer_form" class="row" onsubmit="return false">
+                                <div class="text-center mb-2">
+                                    <h1 class="mb-1 mt-4">Sala de espera</h1>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Estado de Habitación</label>
+                                    <select name="room_status" class="form-select">
+                                        <option value="Ocupado">
+                                            Ocupado
+                                        </option>
+                                        <option value="Reservado">
+                                            Reservado
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Lista de Reservas</label>
+                                    <select class="form-select select2 mb-1 optionReservation" name="id_reservation">
+                                        <option value="0">Seleccionar un resultado</option>
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <label for="" class="form-label">
+                                        Numero de Habitación
+                                        <input type="text" class="form-control" name="room_number">
+                                    </label>
+                                </div>
+                                <div class="col-12">
+                                    <label for="" class="form-label">
+                                        ID de Habitacion
+                                        <input type="text" class="form-control" name="id_room">
+                                    </label>
+                                </div>
+                                <div class="col-12">
+                                    <label for="" class="form-label">
+                                        Tipo de Habitación
+                                        <input type="text" class="form-control" name="type_name">
+                                    </label>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Tiempo de espera</label>
+                                    <input type="text" name="" class="form-control" id="timer_time" placeholder="Tiempo de espera">
+                                    <button class="btn btn-primary mt-2 me-2" id="btn_start_timer" type="button">Iniciar</button>
+                                </div>
+                                <div class="col-12">
+                                    <h1 class="text-center mt-2" id="timer">0:00</h1>
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn btn-primary mt-2 me-2" id="btn_remove_reservation" type="submit">Guardar</button>
+                                    <button type="reset" class="btn btn-outline-secondary mt-2 reset" data-bs-dismiss="modal" aria-label="Close">
+                                        <span>Cancelar</span>
+                                    </button>
+                                </div>
+                                <br>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
             <div class="content-body">
             </div>

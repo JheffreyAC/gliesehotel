@@ -77,12 +77,17 @@ class C_Login extends Controller
                         case 'OK':
                             // --
                             $result_user = $response['result'][0]; // -- First
+                            $_SESSION['id_user'] = $result_user['id_user'];
                             // --    
                             $bind_validate = array(
                                 'id_user' => $result_user['id_user'],
                                 'active' => 1
                             );
+
+                            // guarda el id_user para el nav
+
                             // --
+
                             $response_validate = $obj_login->validate_user($bind_validate);
                             // --
                             switch ($response_validate['status']) {

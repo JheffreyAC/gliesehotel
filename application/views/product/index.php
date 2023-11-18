@@ -9,7 +9,7 @@
                     <div class="content-header-left col-md-9 col-12 mb-2">
                         <div class="row breadcrumbs-top">
                             <div class="col-12">
-                                <h2 class="content-header-title float-start mb-0">Lista de Alimentos</h2>
+                                <h2 class="content-header-title float-start mb-0">Lista de Productos</h2>
                                 <div class="breadcrumb-wrapper">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="#"><?php echo $selected_menu; ?></a>
@@ -35,14 +35,17 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            <table class="table" id="datatable-Food">
+                            <table class="table table-responsive" id="datatable-Product">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
+                                        <th>Sku</th>
+                                        <th>Nombre</th>
                                         <th>Descripcion</th>
+                                        <th>Categoria</th>
                                         <th>Precio</th>
-                                        <th>Stock</th>
-                                        <th>Tipo alimento</th>
+                                        <th>Sotck</th>
+                                        <th>Fecha de expriracion</th>
+                                        <th>Estado</th>
                                         <!-- <th>Expiration Date</th>  -->
                                         <th>Acciones</th>
                                     </tr>

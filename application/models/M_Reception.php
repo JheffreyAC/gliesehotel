@@ -116,12 +116,39 @@ class M_Reception extends Model
     return $response;
   }
 
+  public function create_payment($bind)
+  {
+    try {
+      // --
+      $sql = 'INSERT INTO payment (payment_room) VALUES (:payment_room)';
+      // --
+      $result = $this->pdo->perform($sql, $bind);
+      // --
+      if ($result) {
+        // --
+        $response = array('status' => 'OK', 'result' => array());
+      } else {
+        // --
+        $response = array('status' => 'ERROR', 'result' => array());
+      }
+    } catch (PDOException $e) {
+      // --
+      $response = array('status' => 'EXCEPTION', 'result' => $e);
+    }
+    // --
+    return $response;
+  }
+
+
 
   public function create_reservation($bind)
   {
     try {
       // --
-      $sql = 'INSERT INTO reservation (checkin_date, checkin_time,checkout_date,checkout_time, id_room, id_guest,payment_room,payment_sales,payment_extra,payment_all) VALUES (:checkin_date, :checkin_time, :checkout_date, :checkout_time, :id_room, :id_guest,:payment_room,null,null,:payment_all)';
+      $sql = 'INSERT INTO reservation (checkin_date, checkin_time, checkout_date, checkout_time, id_room, id_guest,status)  VALUES (:checkin_date, :checkin_time, :checkout_date, :checkout_time, :id_room, :id_guest,:status);
+
+      INSERT INTO payment (id_reservation, payment_room, pre_payment)  
+      VALUES (LAST_INSERT_ID(),:payment_room, :pre_payment)';
       // --
       $result = $this->pdo->perform($sql, $bind);
       // --
@@ -183,6 +210,124 @@ class M_Reception extends Model
     } catch (PDOException $e) {
       $response = array('status' => 'EXCEPTION', 'result' => $e);
     }
+    return $response;
+  }
+
+  public function update_state_timer($bind)
+  {
+    try {
+      $sql = '
+DELETE FROM payment WHERE id_reservation=:id_reservation;
+DELETE FROM reservation WHERE id_reservation=:id_reservation;
+UPDATE room SET room_status=:room_status WHERE id_room=:id_room;';
+      $result = $this->pdo->fetchAll($sql, $bind);
+
+      if ($result) {
+        $response = array('status' => 'OK', 'result' => $result);
+      } else {
+        $response = array('status' => 'ERROR', 'result' => array());
+      }
+    } catch (PDOException $e) {
+      $response = array('status' => 'EXCEPTION', 'result' => $e);
+    }
+    return $response;
+  }
+
+  public function get_reservation_room($bind)
+  {
+    try {
+      $sql = '
+      SELECT
+      r.id_reservation,
+      r.id_room,
+      r.id_guest,
+      r.status,
+      g.first_names,
+      g.last_names,
+      g.company_name
+    FROM
+      reservation r
+    JOIN
+      guest g ON g.id_guest = r.id_guest
+    WHERE
+      r.id_room = :id_room
+    AND
+      r.status = "Pendiente"
+  ';
+      $result = $this->pdo->fetchAll($sql, $bind);
+
+      if ($result) {
+        $response = array('status' => 'OK', 'result' => $result);
+      } else {
+        $response = array('status' => 'ERROR', 'result' => array());
+      }
+    } catch (PDOException $e) {
+      $response = array('status' => 'EXCEPTION', 'result' => $e);
+    }
+    return $response;
+  }
+
+
+  public function clean_rooms($bind)
+  {
+    // --
+    try {
+      // --
+      $sql = 'UPDATE room SET room_status="Disponible" WHERE id_room=:id_room';
+      // --
+      $result = $this->pdo->perform($sql, $bind);
+
+      // --
+      if ($result) {
+        // --
+        $response = array('status' => 'OK', 'result' => array());
+      } else {
+        // --
+        $response = array('status' => 'ERROR', 'result' => array());
+      }
+    } catch (PDOException $e) {
+      // --
+      $response = array('status' => 'EXCEPTION', 'result' => $e);
+    }
+
+    return $response;
+  }
+  public function date_reservation($bind)
+  {
+    // --
+    try {
+      // --
+      $sql = 'SELECT 
+                  r.id_reservation,
+                  r.checkin_date,
+                  r.checkin_time,
+                  r.checkout_date,
+                  r.checkout_time,
+                  r.status,
+                  r.id_room,
+                  ro.room_number,
+                  ro.room_status
+                FROM reservation r
+                JOIN room ro ON ro.id_room = r.id_room
+                WHERE r.status IN ("Reservado", "Ocupado","Pendiente") AND r.id_room = :id_room
+                AND (CONCAT(r.checkin_date, " ", r.checkin_time) BETWEEN CONCAT(:checkin_date) AND CONCAT(:checkout_date)
+                OR CONCAT(r.checkout_date, " ", r.checkout_time) BETWEEN CONCAT(:checkin_date) AND CONCAT(:checkout_date));
+                ';
+      // --
+      $result = $this->pdo->fetchAll($sql, $bind);
+      // --
+      if (count($result) == 0) {
+        // --
+        $response = array('status' => 'OK', 'result' => $result);
+      } else {
+        // --
+        $response = array('status' => 'ERROR', 'result' => $result);
+      }
+    } catch (PDOException $e) {
+      // --
+      $response = array('status' => 'EXCEPTION', 'result' => $e);
+    }
+    // --
     return $response;
   }
 }

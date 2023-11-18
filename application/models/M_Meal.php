@@ -1,23 +1,21 @@
 <?php 
 // --
-class M_Food extends Model {
+class M_Meal extends Model {
     // --
     public function __construct() {
 		parent::__construct();
     }
-    public function get_food() {
+    public function get_meal() {
       // --
       try {
           // --
               $sql = 'SELECT 
-                      id_food,
-                      food_description,
-                      food_price,
-                      food_stock,
-                      tipo_food
-                    
-                      
-                  FROM food
+
+                      meal.*,
+                      categories.description
+                     
+                  FROM meal
+                  JOIN categories ON meal.id_category=categories.id;
                   
            ';
           // --
@@ -37,5 +35,4 @@ class M_Food extends Model {
       // --
       return $response;
     }
-}
-
+} 

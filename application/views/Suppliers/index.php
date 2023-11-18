@@ -14,7 +14,7 @@
                         <div class="content-header-left col-md-9 col-12 mb-2">
                             <div class="row breadcrumbs-top">
                                 <div class="col-12">
-                                <h2 class="content-header-title float-start mb-0">Lista de <?php echo strtolower($selected_sub_menu); ?></h2>
+                                    <h2 class="content-header-title float-start mb-0">Lista de <?php echo strtolower($selected_sub_menu); ?></h2>
                                     <div class="breadcrumb-wrapper">
                                         <ol class="breadcrumb">
                                             <li class="breadcrumb-item"><a href="#"><?php echo $selected_menu; ?></a>
@@ -33,26 +33,29 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
-                                <table class="table" id="datatable-suppliers">
-                                    <thead>
-                                        <tr>
-                                            <th>Razon Social</th>
-                                            <th>Encargado</th>
-                                            <th>Documento</th>          
-                                            <th>Nº De Documento</th>  
-                                            <th>Email</th> 
-                                            <th>Telefono</th> 
-                                            <th>Direccion</th>
-                                            <th>Acciones</th>  
-                                        </tr>
-                                    </thead>
-                                </table>
+                                <div class="card-body">
+                                    <table class="table table-responsive table-hover w-100" id="datatable-suppliers">
+                                        <thead>
+                                            <tr>
+                                                <th>Razon Social</th>
+                                                <th>Encargado</th>
+                                                <th>Tipo De Documento</th>
+                                                <th>Nº De Documento</th>
+                                                <th>Email</th>
+                                                <th>Telefono</th>
+                                                <th>Direccion</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+
                             </div>
                         </div>
                     </div>
                     <!-- /Table -->
 
-                   
+
                     <!-- Create Supplier Modal -->
                     <div class="modal fade" id="create_supplier_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"> <!--  aria-hidden="true" -->
                         <div class="modal-dialog modal-dialog-centered">
@@ -117,7 +120,7 @@
                     <!--/ Create Supplier Modal -->
 
 
-                    
+
                     <!-- Update Supplier Modal -->
                     <div class="modal fade" id="update_supplier_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"> <!--  aria-hidden="true" -->
                         <div class="modal-dialog modal-dialog-centered">
@@ -167,9 +170,9 @@
                                                 <input type="address" name="address" class="form-control" placeholder="Dirección" data-msg="" />
                                             </div>
                                         </div>
-                                        
+
                                         <input type="hidden" name="id_supplier">
-                                       
+
                                         <div class="col-12 text-center">
                                             <button id="btn_update_supplier" type="submit" class="btn btn-primary mt-2 me-1">Guardar</button>
                                             <button type="reset" class="btn btn-outline-secondary mt-2 reset" data-bs-dismiss="modal" aria-label="Close">

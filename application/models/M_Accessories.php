@@ -10,13 +10,13 @@ class M_Accessories extends Model {
       try {
           // --
               $sql = 'SELECT 
-                      id_accesory,
-                      accesory_description,
-                      accesory_price,
-                      accesory_stock
+                      id_accessory,
+                      accessory_description,
+                      accessory_price,
+                      accessory_stock
                     
                       
-                  FROM accesory
+                  FROM accessory
                   
            ';
           // --

@@ -43,10 +43,10 @@ class C_Accessories extends Controller {
                       // --
                       // --
                       $data[] = array(
-                          'id_accesory' => $item['id_accesory'],
-                          'accesory_description' => $item['accesory_description'],
-                          'accesory_price' => $item['accesory_price'],
-                          'accesory_stock' => $item['accesory_stock'],
+                          'id_accessory' => $item['id_accessory'],
+                          'accessory_description' => $item['accessory_description'],
+                          'accessory_price' => $item['accessory_price'],
+                          'accessory_stock' => $item['accessory_stock'],
                           
                       );
                   }

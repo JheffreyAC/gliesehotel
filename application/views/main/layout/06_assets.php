@@ -72,7 +72,7 @@
         })
     </script>
 
-
+    <script src="<?php echo BASE_URL ?>public/app-assets/js/scripts/calendar/index.global.js"></script>
 
     <!-- -->
     </body>

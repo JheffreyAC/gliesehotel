@@ -15,6 +15,7 @@
                     <li class="nav-item"><a class="nav-link menu-toggle" href="#"><i class="ficon" data-feather="menu"></i></a></li>
                 </ul>
                 <ul class="nav navbar-nav bookmark-icons">
+
                     <!-- <li class="nav-item d-none d-lg-block"><a class="nav-link" href="app-email.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Email"><i class="ficon" data-feather="mail"></i></a></li>
                     <li class="nav-item d-none d-lg-block"><a class="nav-link" href="app-chat.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Chat"><i class="ficon" data-feather="message-square"></i></a></li>
                     <li class="nav-item d-none d-lg-block"><a class="nav-link" href="app-calendar.html" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Calendar"><i class="ficon" data-feather="calendar"></i></a></li>
@@ -30,7 +31,16 @@
                     </li>
                 </ul> -->
             </div>
+            <ul class="nav navbar-nav list-unstyled d-flex justify-content-center align-items-center ">
+                <li class="d-flex align-items-center">
+                    <b id="company">
+
+                    </b>
+                </li>
+            </ul>
             <ul class="nav navbar-nav align-items-center ms-auto">
+
+
                 <li class="nav-item dropdown dropdown-language"><a class="nav-link dropdown-toggle" id="dropdown-flag" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="flag-icon flag-icon-pe"></i><span class="selected-language">Español</span></a>
                     <!-- <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-flag">
@@ -146,7 +156,11 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown dropdown-user"><a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <div class="user-nav d-sm-flex d-none"><span class="user-name fw-bolder"></span><span class="user-status">Admin</span></div><span class="avatar"><img class="round" src="<?php echo BASE_URL ?>public/app-assets/images/portrait/small/avatar-s-11.jpg" alt="avatar" height="40" width="40"><span class="avatar-status-online"></span></span>
+                        <div class="user-nav d-sm-flex d-none"><span class="user-name fw-bolder"></span>
+                            <span class="user-status d-flex flex-column">
+                                Admin
+                            </span>
+                        </div><span class="avatar"><img class="round" src="<?php echo BASE_URL ?>public/app-assets/images/portrait/small/avatar-s-11.jpg" alt="avatar" height="40" width="40"><span class="avatar-status-online"></span></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-user">
                         <a class="dropdown-item" id="dropdown-logout"><i class="me-50" data-feather="power"></i> <span>Cerrar Sesión</span></a>
